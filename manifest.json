@@ -1,0 +1,21 @@
+{
+  "name": "Jan Mohammad - Portfolio",
+  "short_name": "Jan's Portfolio",
+  "description": "Software Engineer | Full Stack Developer | Open Source Contributor",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#38bdf8",
+  "icons": [
+    {
+      "src": "../Image/loo1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "../Image/loo1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 
