@@ -2711,3 +2711,11 @@ body.custom-cursor-active {
     margin-bottom: 1.5rem;
   }
 } 
+
+.fa-supabase {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background: url("https://cdn.simpleicons.org/supabase/3FCF8E") no-repeat center;
+  background-size: contain;
+}
