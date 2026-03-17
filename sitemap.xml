@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main portfolio page -->
   <url>
     <loc>https://jansiddiqui.github.io/portfolio/</loc>
-    <lastmod>2024-03-20</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-03-16</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-</urlset> 
+
+  <!-- Case study pages -->
+  <url>
+    <loc>https://jansiddiqui.github.io/portfolio/projects/courage-library.html</loc>
+    <lastmod>2025-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,296 @@
+/* ═══════════════════════════════════════════════════════════
+   COURAGE LIBRARY — CASE STUDY  (case-study.css) — FINAL
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── CSS VARIABLES ────────────────────────────────────────── */
+:root {
+  --bg-primary: #1e293b;
+  --bg-secondary: #0f172a;
+  --text-primary: #fff;
+  --text-secondary: #cbd5e1;
+  --accent-color: #38bdf8;
+  --card-bg: linear-gradient(135deg, #1e293b, #0f172a);
+}
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --accent-color: #0ea5e9;
+  --card-bg: linear-gradient(135deg, #f8fafc, #f1f5f9);
+}
+
+/* ── KILL BLEEDING GLOBAL STYLES ─────────────────────────── */
+header {
+  position: static !important; background: transparent !important;
+  backdrop-filter: none !important; box-shadow: none !important;
+  height: auto !important; min-height: unset !important;
+  z-index: auto !important; padding: 0 !important;
+}
+section:not(.cs-section):not(.cs-cta-section) {
+  max-width: unset; padding: 0; margin: 0; scroll-margin-top: 0;
+}
+section:not(.cs-section):not(.cs-cta-section) h2 {
+  all: unset; display: block; font-family: 'Poppins', sans-serif;
+}
+footer:not(.cs-footer) { background: transparent; padding: 0; margin: 0; }
+#particles-js, .scroll-progress, .custom-cursor,
+.back-to-top, .cookie-consent { display: none !important; }
+
+/* ── BASE ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── BACK NAV ─────────────────────────────────────────────── */
+.cs-back-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.8rem 2rem;
+  background: rgba(15,23,42,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(56,189,248,0.12);
+}
+[data-theme="light"] .cs-back-nav { background: rgba(248,250,252,0.95); }
+.cs-back-btn, .cs-live-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.87rem; font-weight: 500; text-decoration: none;
+  padding: 0.4rem 1rem; border-radius: 25px;
+  transition: all 0.25s ease; white-space: nowrap;
+}
+.cs-back-btn { color: var(--text-secondary); border: 1px solid rgba(56,189,248,0.2); }
+.cs-back-btn:hover { color: var(--accent-color); border-color: rgba(56,189,248,0.45); background: rgba(56,189,248,0.06); transform: translateX(-2px); }
+.cs-live-btn { background: var(--accent-color); color: #0f172a; font-weight: 600; border: none; }
+.cs-live-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(56,189,248,0.4); }
+
+/* ── MAIN LAYOUT ──────────────────────────────────────────── */
+.cs-main {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.cs-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  display: flex; flex-direction: column; align-items: center;
+}
+.cs-hero-badge {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent-color);
+  background: rgba(56,189,248,0.1);
+  border: 1px solid rgba(56,189,248,0.25);
+  border-radius: 20px; padding: 4px 14px;
+  margin-bottom: 0.9rem;
+}
+.cs-title {
+  font-size: clamp(2rem, 5vw, 3rem); font-weight: 700;
+  color: var(--text-primary); line-height: 1.15; margin-bottom: 0.9rem;
+}
+.cs-subtitle {
+  font-size: 1rem; color: var(--text-secondary);
+  line-height: 1.75; max-width: 620px; margin-bottom: 1.5rem;
+}
+.cs-meta-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 0.5rem 1.5rem; margin-bottom: 1.2rem;
+}
+.cs-meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.83rem; color: var(--text-secondary); }
+.cs-meta-item i { color: var(--accent-color); font-size: 0.72rem; }
+.cs-meta-item a { color: var(--accent-color); text-decoration: none; border-bottom: 1px solid rgba(56,189,248,0.3); transition: border-color 0.2s; }
+.cs-meta-item a:hover { border-bottom-color: var(--accent-color); }
+.cs-tech-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem; }
+.cs-tech-pills span {
+  font-size: 0.74rem; font-weight: 500;
+  background: rgba(56,189,248,0.08); color: var(--accent-color);
+  border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 3px 10px;
+  transition: all 0.2s;
+}
+.cs-tech-pills span:hover { background: rgba(56,189,248,0.16); transform: translateY(-1px); }
+
+/* ── HERO IMAGE ───────────────────────────────────────────── */
+.cs-image-block {
+  margin: 0 0 2.5rem;
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid rgba(56,189,248,0.15);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  max-height: 460px;
+}
+.cs-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.6s ease; }
+.cs-image-block:hover .cs-hero-img { transform: scale(1.015); }
+
+/* ── SECTIONS ─────────────────────────────────────────────── */
+/* KEY FIX: only padding-bottom for divider gap, margin-bottom is small */
+.cs-section {
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(56,189,248,0.08);
+}
+.cs-section:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 1.5rem; }
+
+.cs-section-label {
+  display: inline-block;
+  font-size: 0.67rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--accent-color);
+  background: rgba(56,189,248,0.08);
+  border: 1px solid rgba(56,189,248,0.18);
+  border-radius: 20px; padding: 3px 11px;
+  margin-bottom: 0.6rem;
+}
+
+.cs-section h2 {
+  all: unset; display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 700; color: var(--text-primary);
+  margin-bottom: 0.7rem; line-height: 1.25;
+}
+
+.cs-section > p {
+  color: var(--text-secondary);
+  line-height: 1.78; margin-bottom: 0.7rem;
+  font-size: 0.96rem; max-width: 740px;
+}
+
+/* ── STATS ROW ────────────────────────────────────────────── */
+.cs-stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1rem; margin-top: 1.5rem;
+}
+.cs-stat {
+  background: var(--card-bg); border: 1px solid rgba(56,189,248,0.12);
+  border-radius: 12px; padding: 1.2rem 0.8rem; text-align: center; transition: all 0.3s ease;
+}
+.cs-stat:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.3); box-shadow: 0 8px 24px rgba(56,189,248,0.1); }
+.cs-stat-num { display: block; font-size: 1.8rem; font-weight: 700; color: var(--accent-color); line-height: 1; margin-bottom: 0.35rem; }
+.cs-stat-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── PROBLEM GRID ─────────────────────────────────────────── */
+.cs-problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.cs-problem-card { background: var(--card-bg); border: 1px solid rgba(239,68,68,0.15); border-radius: 12px; padding: 1.2rem; transition: all 0.3s ease; }
+.cs-problem-card:hover { border-color: rgba(239,68,68,0.35); transform: translateY(-3px); }
+.cs-problem-card i { font-size: 1.2rem; color: #ef4444; margin-bottom: 0.6rem; display: block; }
+.cs-problem-card h4 { font-size: 0.93rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem; }
+.cs-problem-card p { font-size: 0.84rem; color: var(--text-secondary); margin: 0; line-height: 1.55; }
+
+/* ── FEATURE LIST ─────────────────────────────────────────── */
+.cs-feature-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+.cs-feature {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: var(--card-bg); border: 1px solid rgba(56,189,248,0.1);
+  border-radius: 12px; padding: 1.1rem; transition: all 0.3s ease;
+}
+.cs-feature:hover { border-color: rgba(56,189,248,0.3); transform: translateX(4px); }
+.cs-feature-icon { width: 40px; height: 40px; min-width: 40px; background: rgba(56,189,248,0.1); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; color: var(--accent-color); flex-shrink: 0; }
+.cs-feature h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
+.cs-feature p { font-size: 0.86rem; margin: 0; line-height: 1.6; color: var(--text-secondary); }
+
+/* ── TECH DECISIONS ───────────────────────────────────────── */
+.cs-decision-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.cs-decision { background: var(--card-bg); border: 1px solid rgba(56,189,248,0.1); border-radius: 12px; padding: 1.2rem; transition: all 0.3s ease; }
+.cs-decision:hover { border-color: rgba(56,189,248,0.3); transform: translateY(-2px); }
+.cs-decision h4 { font-size: 0.9rem; font-weight: 600; color: var(--accent-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.45rem; }
+.cs-decision h4 i { font-size: 0.85rem; flex-shrink: 0; }
+.cs-decision p { font-size: 0.85rem; margin: 0; line-height: 1.65; color: var(--text-secondary); }
+
+/* ── CHALLENGES ───────────────────────────────────────────── */
+.cs-challenge-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+.cs-challenge { display: flex; gap: 1rem; align-items: flex-start; background: var(--card-bg); border: 1px solid rgba(56,189,248,0.08); border-radius: 12px; padding: 1.1rem; transition: all 0.3s ease; }
+.cs-challenge:hover { border-color: rgba(56,189,248,0.2); transform: translateX(3px); }
+.cs-challenge-num { font-size: 1.8rem; font-weight: 700; color: rgba(56,189,248,0.15); line-height: 1; min-width: 36px; flex-shrink: 0; }
+.cs-challenge h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
+.cs-challenge p { font-size: 0.86rem; margin: 0; line-height: 1.65; color: var(--text-secondary); }
+
+/* ── LEARNINGS ────────────────────────────────────────────── */
+.cs-learning-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.cs-learning-card {
+  background: var(--card-bg); border: 1px solid rgba(56,189,248,0.1);
+  border-radius: 12px; padding: 1.3rem;
+  transition: all 0.3s ease;
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.cs-learning-card:hover { transform: translateY(-3px); border-color: rgba(56,189,248,0.3); }
+.cs-learning-card i { font-size: 1.3rem; color: var(--accent-color); }
+.cs-learning-card p { font-size: 0.87rem; margin: 0; line-height: 1.7; color: var(--text-secondary); }
+
+/* ── CTA SECTION ──────────────────────────────────────────── */
+.cs-cta-section {
+  text-align: center; padding: 2.5rem 2rem;
+  background: var(--card-bg);
+  border: 1px solid rgba(56,189,248,0.18);
+  border-radius: 18px; margin-bottom: 2rem;
+}
+.cs-cta-section h2 {
+  all: unset; display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 700; color: var(--text-primary);
+  margin-bottom: 0.4rem;
+  text-align: center;
+}
+.cs-cta-section > p { color: var(--text-secondary); margin-bottom: 1.6rem; font-size: 0.93rem; }
+.cs-cta-buttons { display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap; }
+.cs-cta-buttons .btn {
+  padding: 0.72rem 1.5rem; font-size: 0.9rem; border-radius: 25px;
+  text-decoration: none; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: all 0.3s ease; background: var(--accent-color); color: #0f172a;
+  border: 2px solid transparent;
+}
+.cs-cta-buttons .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56,189,248,0.35); }
+.cs-cta-buttons .btn-outline { background: transparent; border: 2px solid var(--accent-color); color: var(--accent-color); }
+.cs-cta-buttons .btn-outline:hover { background: var(--accent-color); color: #0f172a; }
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+.cs-footer {
+  text-align: center; padding: 1.8rem 2rem;
+  color: var(--text-secondary); font-size: 0.87rem;
+  border-top: 1px solid rgba(56,189,248,0.1);
+}
+.cs-footer a { color: var(--accent-color); text-decoration: none; }
+.cs-footer a:hover { text-decoration: underline; }
+
+/* ── THEME TOGGLE ─────────────────────────────────────────── */
+.theme-toggle {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--bg-secondary); border: 2px solid rgba(56,189,248,0.2);
+  color: var(--text-primary); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000;
+}
+.theme-toggle:hover { border-color: var(--accent-color); transform: scale(1.1); }
+
+/* ── MOBILE ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cs-back-nav { padding: 0.7rem 1rem; }
+  .cs-back-btn, .cs-live-btn { font-size: 0.78rem; padding: 0.32rem 0.75rem; }
+  .cs-main { padding: 4.5rem 1.1rem 3rem; }
+  .cs-section { padding-bottom: 2rem; margin-bottom: 2rem; }
+  .cs-image-block { margin-bottom: 2rem; }
+  .cs-stats-row { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .cs-stat-num { font-size: 1.5rem; }
+  .cs-problem-grid { grid-template-columns: 1fr; }
+  .cs-decision-grid { grid-template-columns: 1fr; }
+  .cs-learning-grid { grid-template-columns: 1fr; }
+  .cs-feature { padding: 1rem; }
+  .cs-feature-icon { width: 36px; height: 36px; min-width: 36px; }
+  .cs-challenge { padding: 1rem; }
+  .cs-cta-section { padding: 1.8rem 1.1rem; }
+  .cs-cta-buttons { flex-direction: column; align-items: center; }
+  .cs-cta-buttons .btn { width: 100%; max-width: 260px; justify-content: center; }
+  .theme-toggle { bottom: 1rem; right: 1rem; width: 38px; height: 38px; }
+}
+@media (max-width: 480px) {
+  .cs-title { font-size: 1.6rem; }
+  .cs-stats-row { grid-template-columns: repeat(2, 1fr); }
+}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Courage Library — Case Study by Jan Mohammad. How I co-founded and built an EdTech platform for 1,200+ government exam aspirants in Kanpur, UP.">
+  <meta property="og:title" content="Courage Library — Case Study | Jan Mohammad">
+  <meta property="og:description" content="How I co-founded and engineered an EdTech platform serving government exam aspirants across India.">
+  <meta property="og:image" content="../Image/library.png">
+  <link rel="icon" href="../Image/loo1.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="case-study.css">
+  <!-- Apply saved theme BEFORE render to prevent flash -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+  <title>Courage Library — Case Study | Jan Mohammad</title>
+</head>
+<body>
+
+  <!-- Back nav -->
+  <div class="cs-back-nav">
+    <a href="../index.html" class="cs-back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+    <a href="https://www.couragelibrary.in" target="_blank" rel="noopener noreferrer" class="cs-live-btn">
+      <i class="fas fa-external-link-alt"></i> Visit Live Site
+    </a>
+  </div>
+
+  <main class="cs-main">
+
+    <!-- Hero -->
+    <div class="cs-hero">
+      <div class="cs-hero-badge">Case Study</div>
+      <h1 class="cs-title">Courage Library</h1>
+      <p class="cs-subtitle">Co-founding and engineering an EdTech platform for India's government exam aspirants — from zero to 1,200+ articles, mock tests, and a physical study center.</p>
+
+      <div class="cs-meta-row">
+        <div class="cs-meta-item"><i class="fas fa-user"></i><span>Co-Founder & Solo Developer</span></div>
+        <div class="cs-meta-item"><i class="fas fa-calendar"></i><span>2024 – Present</span></div>
+        <div class="cs-meta-item"><i class="fas fa-map-marker-alt"></i><span>Kanpur, Uttar Pradesh</span></div>
+        <div class="cs-meta-item"><i class="fas fa-link"></i><a href="https://www.couragelibrary.in" target="_blank" rel="noopener noreferrer">couragelibrary.in</a></div>
+      </div>
+
+      <div class="cs-tech-pills">
+        <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span><span>TailwindCSS</span>
+        <span>Supabase</span><span>Google Tag Manager</span><span>Formspree</span><span>Vercel</span>
+      </div>
+    </div>
+
+    <!-- Project image -->
+    <div class="cs-image-block">
+      <img src="../Image/library.png"
+           alt="Courage Library — EdTech platform screenshot"
+           class="cs-hero-img"
+           onerror="this.parentElement.style.background='linear-gradient(135deg,#1e293b,#0f172a)';this.parentElement.style.minHeight='220px';this.style.display='none'">
+    </div>
+
+    <!-- ── OVERVIEW ─────────────────────────────── -->
+    <section class="cs-section">
+      <div class="cs-section-label">01 — Overview</div>
+      <h2>What is Courage Library?</h2>
+      <p>Courage Library is a hybrid EdTech platform designed for aspirants preparing for Indian government competitive exams — SSC, Banking, Railway, Defence, and UPSC. It combines an online learning platform with a physical study center in Kanpur Nagar, UP.</p>
+      <p>I co-founded this with four co-founders and took ownership of the entire technical side — from day one architecture decisions to ongoing feature development.</p>
+
+      <div class="cs-stats-row">
+        <div class="cs-stat"><span class="cs-stat-num">1,200+</span><span class="cs-stat-label">Published Articles</span></div>
+        <div class="cs-stat"><span class="cs-stat-num">5+</span><span class="cs-stat-label">Co-Founders</span></div>
+        <div class="cs-stat"><span class="cs-stat-num">4</span><span class="cs-stat-label">Exam Categories</span></div>
+        <div class="cs-stat"><span class="cs-stat-num">1</span><span class="cs-stat-label">Physical Study Center</span></div>
+      </div>
+    </section>
+
+    <!-- ── PROBLEM ─────────────────────────────── -->
+    <section class="cs-section">
+      <div class="cs-section-label">02 — The Problem</div>
+      <h2>What we set out to solve</h2>
+      <p>Government exam aspirants in tier-2 and tier-3 cities like Kanpur face a fragmented preparation experience — expensive coaching institutes, scattered online resources with no quality control, and zero personalized tracking.</p>
+
+      <div class="cs-problem-grid">
+        <div class="cs-problem-card">
+          <i class="fas fa-rupee-sign"></i>
+          <h4>Expensive coaching</h4>
+          <p>Quality offline coaching in Kanpur costs ₹20,000–₹50,000+ per course, out of reach for most aspirants.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-random"></i>
+          <h4>Scattered resources</h4>
+          <p>No single trusted source for SSC + Banking + Railway + UPSC content with consistent quality and updates.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-chart-line"></i>
+          <h4>No progress tracking</h4>
+          <p>Aspirants had no way to measure performance, identify weak areas, or benchmark against peers.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-map-marker"></i>
+          <h4>No local study community</h4>
+          <p>Solo preparation at home with no structured environment, accountability, or peer learning.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SOLUTION ────────────────────────────── -->
+    <section class="cs-section">
+      <div class="cs-section-label">03 — The Solution</div>
+      <h2>What we built</h2>
+      <p>Courage Library delivers a dual model — a free-to-access online platform with structured content + an affordable physical study center in Kanpur. I was responsible for the full technical implementation.</p>
+
+      <div class="cs-feature-list">
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-book"></i></div>
+          <div>
+            <h4>Structured content library</h4>
+            <p>1,200+ articles organized by exam type, topic, and difficulty. Built a custom content pipeline for structured CSV-to-database upload using Supabase.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-clipboard-check"></i></div>
+          <div>
+            <h4>Mock test system</h4>
+            <p>Full-featured mock test dashboard with timer, scoring, leaderboard with podium layout, percentile ring, and skeleton loaders. Built as separate HTML/CSS/JS files per architectural requirements.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-trophy"></i></div>
+          <div>
+            <h4>Leaderboard & analytics</h4>
+            <p>Percentile-based leaderboard, rank tracking, and performance comparison against other aspirants — mobile-optimized stat pills for small screens.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-store"></i></div>
+          <div>
+            <h4>Physical study center</h4>
+            <p>Launched a physical library and study space in Kanpur Nagar, UP — providing a structured environment for offline preparation alongside the digital platform.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-mobile-alt"></i></div>
+          <div>
+            <h4>Fully responsive & fast</h4>
+            <p>Optimized for mobile-first usage since most aspirants access the platform on budget Android devices. Built with TailwindCSS + Vanilla JS — no heavy frameworks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TECH DECISIONS ─────────────────────── -->
+    <section class="cs-section">
+      <div class="cs-section-label">04 — Technical Decisions</div>
+      <h2>Why these choices?</h2>
+
+      <div class="cs-decision-grid">
+        <div class="cs-decision">
+          <h4><i class="fas fa-database"></i> Supabase over Firebase</h4>
+          <p>Postgres-based, generous free tier, real-time subscriptions, and row-level security. The SQL interface made content querying significantly easier than Firestore's document model for structured exam data.</p>
+        </div>
+        <div class="cs-decision">
+          <h4><i class="fab fa-js"></i> Vanilla JS over React</h4>
+          <p>No build pipeline overhead. Faster initial load for users on slow connections. Easier to hand off to non-React-familiar co-founders for small changes without a full dev environment.</p>
+        </div>
+        <div class="cs-decision">
+          <h4><i class="fas fa-wind"></i> TailwindCSS for speed</h4>
+          <p>Utility-first approach cut CSS authoring time by ~60% compared to custom CSS. PurgeCSS kept the production bundle small despite Tailwind's large class library.</p>
+        </div>
+        <div class="cs-decision">
+          <h4><i class="fas fa-cloud-upload-alt"></i> Vercel for deployment</h4>
+          <p>Zero-config deployment from GitHub, automatic HTTPS, edge CDN, and preview deployments for each PR. Free tier covers full traffic needs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CHALLENGES ─────────────────────────── -->
+    <section class="cs-section">
+      <div class="cs-section-label">05 — Challenges</div>
+      <h2>What was hard</h2>
+
+      <div class="cs-challenge-list">
+        <div class="cs-challenge">
+          <div class="cs-challenge-num">01</div>
+          <div>
+            <h4>Content pipeline at scale</h4>
+            <p>Ingesting 1,200+ articles with consistent structure, UUID-based tagging across five subject sections, and deduplication required building a Node.js CSV-to-Supabase pipeline — done manually at first, then automated.</p>
+          </div>
+        </div>
+        <div class="cs-challenge">
+          <div class="cs-challenge-num">02</div>
+          <div>
+            <h4>Mock test architecture</h4>
+            <p>Building a fair, tamper-resistant timer and scoring system without a backend — using Supabase RLS, client-side state, and submission timestamps to prevent score manipulation.</p>
+          </div>
+        </div>
+        <div class="cs-challenge">
+          <div class="cs-challenge-num">03</div>
+          <div>
+            <h4>Balancing coursework + startup</h4>
+            <p>As a 3rd year B.Tech student with coursework obligations, managing feature development, content strategy, and business decisions simultaneously required strict prioritization.</p>
+          </div>
+        </div>
+        <div class="cs-challenge">
+          <div class="cs-challenge-num">04</div>
+          <div>
+            <h4>Mobile performance on slow networks</h4>
+            <p>Target users are on budget phones with 2G/3G connections. Required aggressive image optimization, lazy loading, and deferring non-critical JS to hit acceptable load times.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LEARNINGS ──────────────────────────── -->
+    <section class="cs-section">
+      <div class="cs-section-label">06 — Learnings</div>
+      <h2>What I took away</h2>
+      <div class="cs-learning-grid">
+        <div class="cs-learning-card">
+          <i class="fas fa-lightbulb"></i>
+          <p>Shipping fast and iterating beats waiting for perfection. Version 1 was rough — the current platform looks nothing like it.</p>
+        </div>
+        <div class="cs-learning-card">
+          <i class="fas fa-users"></i>
+          <p>Talk to users constantly. Several features we almost built were not what aspirants actually needed. Direct feedback saved weeks.</p>
+        </div>
+        <div class="cs-learning-card">
+          <i class="fas fa-code-branch"></i>
+          <p>Architectural decisions compound. The choice to use Vanilla JS initially made early development fast but introduced friction when adding complex interactive features.</p>
+        </div>
+        <div class="cs-learning-card">
+          <i class="fas fa-chart-pie"></i>
+          <p>Google Tag Manager + analytics from day one. Without it you're guessing. Even basic pageview data changed our content strategy significantly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────── -->
+    <section class="cs-cta-section">
+      <h2>Want to work together?</h2>
+      <p>I'm always open to interesting projects, internships, and collaborations.</p>
+      <div class="cs-cta-buttons">
+        <a href="https://www.couragelibrary.in" target="_blank" rel="noopener noreferrer" class="btn">Visit Courage Library</a>
+        <a href="../index.html#contact" class="btn btn-outline">Get in Touch</a>
+        <a href="../Jan_Mohammad_CV.pdf" download class="btn btn-outline"><i class="fas fa-download"></i> Download CV</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cs-footer">
+    <p>© 2025 <a href="../index.html">Jan Mohammad</a>. All Rights Reserved.</p>
+  </footer>
+
+  <button class="theme-toggle" aria-label="Toggle theme" id="themeBtn">
+    <i class="fas fa-sun" aria-hidden="true"></i>
+  </button>
+
+  <script>
+    // Sync icon with current theme
+    const btn = document.getElementById('themeBtn');
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    btn.querySelector('i').className = current === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+    btn.addEventListener('click', function() {
+      const t = document.documentElement.getAttribute('data-theme');
+      const n = t === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', n);
+      localStorage.setItem('theme', n);
+      btn.querySelector('i').className = n === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    });
+  </script>
+</body>
+</html>

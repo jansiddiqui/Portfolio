@@ -1,3 +1,11 @@
 User-agent: *
 Allow: /
-Sitemap: https://jansiddiqui.github.io/portfolio/sitemap.xml 
+
+# Portfolio sections
+Allow: /index.html
+Allow: /projects/courage-library.html
+
+# Sitemaps
+Sitemap: https://jansiddiqui.github.io/portfolio/sitemap.xml
+
+# Block nothing — this is a public portfolio

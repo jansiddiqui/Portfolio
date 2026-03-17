@@ -9,60 +9,50 @@
   <meta name="keywords"
     content="software engineer, full stack developer, portfolio, web development, competitive programming">
   <meta name="author" content="Jan Mohammad">
-
-  <!-- For google search engine console -->
   <meta name="google-site-verification" content="kaSDmhHzz7gstA7g3htdGAvnoKtw3sKwZBqr9SvGSiY" />
-
-  <!-- Open Graph / Social Media Meta Tags -->
-  <meta property="og:title" content="Jan Mohammad - Software Engineer">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jan Mohammad — Software Engineer & Co-Founder">
   <meta property="og:description"
-    content="Software Engineer | Full Stack Developer | Open Source Contributor | Competitive Programmer">
-  <meta property="og:image" content="Image/loo1.png">
+    content="3rd year CS student (AI/ML) at LPU. Co-founder of Courage Library & Oryza Creative Agency. 610+ problems solved. Infosys Springboard intern. Full Stack Developer.">
+  <meta property="og:image" content="https://jansiddiqui.github.io/portfolio/Image/og-banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:url" content="https://jansiddiqui.github.io/portfolio/">
-
-  <!-- Twitter Card Meta Tags -->
+  <meta property="og:site_name" content="Jan Mohammad Portfolio">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Jan Mohammad - Software Engineer">
+  <meta name="twitter:site" content="@JanMohamma47882">
+  <meta name="twitter:title" content="Jan Mohammad — Software Engineer & Co-Founder">
   <meta name="twitter:description"
-    content="Software Engineer | Full Stack Developer | Open Source Contributor | Competitive Programmer">
-  <meta name="twitter:image" content="Image/loo1.png">
-
-  <!-- Additional Meta Tags -->
+    content="3rd year CS student (AI/ML) at LPU. Co-founder of Courage Library & Oryza Creative Agency. 610+ problems solved. Infosys Springboard intern.">
+  <meta name="twitter:image" content="https://jansiddiqui.github.io/portfolio/Image/og-banner.png">
+  <meta name="description"
+    content="Jan Mohammad — Software Engineer, Full Stack Developer, Co-Founder of Courage Library (couragelibrary.in) and Oryza Creative Agency. B.Tech CS (AI/ML) at LPU. Infosys Springboard Intern. 610+ DSA problems solved across LeetCode, GFG & Codolio.">
   <meta name="theme-color" content="#38bdf8">
   <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  <meta name="revisit-after" content="7 days">
-  <meta name="generator" content="HTML5">
 
-  <!-- Preload Critical Resources -->
   <link rel="preload" href="styles.css" as="style">
   <link rel="preload" href="script.js" as="script">
-  <link rel="preload" href="../Image/loo1.png" as="image">
-
-  <!-- Favicon -->
+  <link rel="preload" href="Image/profile1.png" as="image">
   <link rel="icon" href="../Image/loo1.png" type="image/x-icon">
   <link rel="apple-touch-icon" href="../Image/loo1.png">
   <link rel="manifest" href="manifest.json">
 
-  <!-- Stylesheets -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 
   <title>Jan Mohammad - Software Engineer</title>
 </head>
 
 <body>
-  <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Cookie Consent Banner -->
@@ -74,7 +64,7 @@
   <!-- Header -->
   <header>
     <nav role="navigation" aria-label="Main navigation">
-      <h1 role="banner">My Portfolio</h1>
+      <h1 role="banner">Jan.dev</h1>
       <button class="navbar-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
         <div></div>
         <div></div>
@@ -83,72 +73,144 @@
       <ul id="nav-menu" role="menu">
         <li role="none"><a href="#hero" role="menuitem">Home</a></li>
         <li role="none"><a href="#about" role="menuitem">About</a></li>
+        <li role="none"><a href="#experience" role="menuitem">Experience</a></li>
         <li role="none"><a href="#skills" role="menuitem">Skills</a></li>
         <li role="none"><a href="#projects" role="menuitem">Projects</a></li>
-        <li role="none"><a href="#certificates" role="menuitem">Certificates</a></li>
+        <li role="none"><a href="#achievements" role="menuitem">Achievements</a></li>
         <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+        <li role="none" class="nav-cv-item">
+          <a href="Jan_Mohammad_CV.pdf" download class="nav-cv-btn" aria-label="Download CV">
+            <i class="fas fa-download"></i> Download CV
+          </a>
+        </li>
       </ul>
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main id="main-content">
-    <!-- Hero Section -->
+
+    <!-- ═══════════════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="hero" aria-label="Introduction">
-      <div>
+      <div class="hero-mindmap-container" aria-hidden="true">
+        <canvas id="mindmapCanvas"></canvas>
+      </div>
+      <div class="hero-skill-col hero-skill-left" aria-hidden="true">
+        <span class="hero-skill-pill" style="--d:0s">DSA</span>
+        <span class="hero-skill-pill" style="--d:0.2s">C++</span>
+        <span class="hero-skill-pill" style="--d:0.4s">Open Source</span>
+        <span class="hero-skill-pill" style="--d:0.6s">Python</span>
+      </div>
+      <div class="hero-center">
         <div class="profile-image">
           <img src="Image/profile1.png" alt="Jan Mohammad's profile picture">
         </div>
         <h1>Hello, I'm <span class="typewriter">Jan Mohammad</span></h1>
-        <p>Software Engineer | Full Stack Developer | Open Source Contributor</p>
+        <p class="hero-subtitle">Software Engineer &nbsp;&middot;&nbsp; Full Stack Developer &nbsp;&middot;&nbsp; Open
+          Source Contributor</p>
+        <div class="hero-tagline">
+          <span class="tagline-bracket">{</span>
+          <span class="tagline-text">I don't just write code — I engineer solutions</span>
+          <span class="tagline-bracket">}</span>
+        </div>
+        <div class="availability-badge">
+          <span class="avail-dot"></span>
+          Open to Summer 2026 Internships
+        </div>
         <div class="hero-buttons">
           <a href="#projects" class="btn" aria-label="View my projects">View Projects</a>
           <a href="#contact" class="btn btn-hire" aria-label="Contact me">Contact Me</a>
+          <a href="Jan_Mohammad_CV.pdf" download class="btn btn-cv" aria-label="Download CV">
+            <i class="fas fa-download"></i> Download CV
+          </a>
         </div>
       </div>
-      <div class="scroll-indicator">
-        <span>Scroll Down</span>
+      <div class="hero-skill-col hero-skill-right" aria-hidden="true">
+        <span class="hero-skill-pill" style="--d:0.1s">AI / ML</span>
+        <span class="hero-skill-pill" style="--d:0.3s">Web Dev</span>
+        <span class="hero-skill-pill" style="--d:0.5s">Node.js</span>
+        <span class="hero-skill-pill" style="--d:0.7s">SIH 2025</span>
       </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ═══════════════════════════════════════════════
+         ABOUT SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="about" aria-label="About me">
       <h2>About Me</h2>
       <div class="about-content">
         <div class="about-text">
-          <p>I am a passionate software engineer with a strong foundation in computer science and a keen interest in
-            artificial intelligence and machine learning. Currently pursuing my B.Tech in Computer Science with
-            specialization in AI & ML at Lovely Professional University, I combine academic excellence with practical
-            programming skills.</p>
-          <p>Beyond coding, I'm an active contributor to the tech community, participating in hackathons, technical
-            events, and open-source projects. I believe in continuous learning and staying updated with the latest
-            technological trends.</p>
+          <p class="about-intro">B.Tech CS (AI/ML) student at <strong>Lovely Professional University</strong> — building
+            real products, solving real problems, and growing every day.</p>
+          <ul class="about-points">
+            <li>
+              <i class="fas fa-rocket"></i>
+              <span><strong>Co-Founder</strong> of <a href="https://www.couragelibrary.in" target="_blank"
+                  rel="noopener noreferrer">Courage Library</a> — an EdTech platform with 1,200+ articles serving
+                government exam aspirants across India</span>
+            </li>
+            <li>
+              <i class="fas fa-briefcase"></i>
+              <span><strong>Infosys Springboard Intern</strong> — gaining hands-on industry experience in real-world
+                software development workflows</span>
+            </li>
+            <li>
+              <i class="fas fa-trophy"></i>
+              <span><strong>Smart India Hackathon 2025</strong> — built MindWell with Team NovaSix (SIH-S:133), an
+                AI-powered mental health platform for students</span>
+            </li>
+            <li>
+              <i class="fas fa-brain"></i>
+              <span><strong>AI/ML Specialization</strong> — exploring machine learning, deep learning, computer vision,
+                and NLP as part of my core academic focus</span>
+            </li>
+            <li>
+              <i class="fas fa-code"></i>
+              <span><strong>610+ DSA problems</strong> solved across LeetCode, GFG &amp; Codolio — consistency and
+                problem-solving are non-negotiable</span>
+            </li>
+            <li>
+              <i class="fas fa-users"></i>
+              <span><strong>Community contributor</strong> — attended IIT Kanpur Open Source Conference, IIT Delhi
+                Tryst, and multiple hackathons</span>
+            </li>
+            <li>
+              <i class="fas fa-lightbulb"></i>
+              <span><strong>Builder mindset</strong> — I don't just study technology, I ship it. Every project I take on
+                becomes a live product.</span>
+            </li>
+          </ul>
         </div>
         <div class="about-stats">
           <div class="stat-item">
-            <span class="stat-number">10+</span>
-            <span class="stat-label">Projects Completed</span>
+            <span class="stat-number" data-target="13">0</span><span class="stat-number">+</span>
+            <span class="stat-label">Projects</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">5+</span>
-            <span class="stat-label">Programming Languages</span>
+            <span class="stat-number" data-target="610">0</span><span class="stat-number">+</span>
+            <span class="stat-label">Problems Solved</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">3+</span>
-            <span class="stat-label">Years Experience</span>
+            <span class="stat-number" data-target="3">0</span><span class="stat-number">+</span>
+            <span class="stat-label">Years Coding</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-target="5">0</span><span class="stat-number">+</span>
+            <span class="stat-label">Languages</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Education Section -->
+    <!-- ═══════════════════════════════════════════════
+         EDUCATION SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="education" aria-label="My education">
       <h2>Education</h2>
       <div class="education-timeline">
         <div class="education-card" role="article">
-          <div class="education-icon">
-            <i class="fas fa-graduation-cap"></i>
-          </div>
+          <div class="education-icon"><i class="fas fa-graduation-cap"></i></div>
           <div class="education-content">
             <h3>Bachelor of Technology in Computer Science</h3>
             <p class="institution">Lovely Professional University</p>
@@ -156,15 +218,13 @@
             <p class="description">Specialized in Artificial Intelligence and Machine Learning. Pursuing comprehensive
               studies in computer science with focus on AI/ML technologies.</p>
             <div class="education-details">
-              <span class="specialization">AI & ML Specialization</span>
-              <span class="achievements">Active in Technical Projects</span>
+              <span>AI &amp; ML Specialization</span>
+              <span>Active in Technical Projects</span>
             </div>
           </div>
         </div>
         <div class="education-card" role="article">
-          <div class="education-icon">
-            <i class="fas fa-school"></i>
-          </div>
+          <div class="education-icon"><i class="fas fa-school"></i></div>
           <div class="education-content">
             <h3>Higher Secondary Education</h3>
             <p class="institution">Paritosh Inter College, Kanpur</p>
@@ -172,15 +232,13 @@
             <p class="description">Completed 12th grade with strong academic performance. Focused on Science and
               Mathematics.</p>
             <div class="education-details">
-              <span class="percentage">Percentage: 70%</span>
-              <span class="achievements">Science Stream</span>
+              <span>Percentage: 70%</span>
+              <span>Science Stream</span>
             </div>
           </div>
         </div>
         <div class="education-card" role="article">
-          <div class="education-icon">
-            <i class="fas fa-award"></i>
-          </div>
+          <div class="education-icon"><i class="fas fa-award"></i></div>
           <div class="education-content">
             <h3>Secondary Education</h3>
             <p class="institution">C.P.C.K. Inter College, Kanpur</p>
@@ -188,116 +246,322 @@
             <p class="description">Outstanding academic performance with consistent top rankings in school examinations
               and board exams.</p>
             <div class="education-details">
-              <span class="percentage">Percentage: 86%</span>
-              <span class="achievements">School Topper</span>
-              <span class="achievements">Board Exam Excellence</span>
+              <span>Percentage: 86%</span>
+              <span>School Topper</span>
+              <span>Board Exam Excellence</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- ═══════════════════════════════════════════════
+         EXPERIENCE SECTION
+    ═══════════════════════════════════════════════ -->
+    <section id="experience" aria-label="My experience">
+      <h2>Experience</h2>
+      <div class="experience-timeline">
+
+        <!-- Infosys Springboard — Current -->
+        <div class="exp-card current" role="article">
+          <div class="exp-status-dot"></div>
+          <div class="exp-card-inner">
+            <div class="exp-header">
+              <div class="exp-logo-wrap infosys-logo"><i class="fas fa-building"></i></div>
+              <div class="exp-meta">
+                <div class="exp-company-row">
+                  <h3 class="exp-company">Infosys Springboard</h3>
+                  <span class="exp-badge current-badge">● Current</span>
+                </div>
+                <p class="exp-role">Software Development Intern</p>
+                <p class="exp-duration"><i class="fas fa-calendar-alt"></i> 2025 &nbsp;·&nbsp; Remote</p>
+              </div>
+            </div>
+            <p class="exp-desc">Working on real-world software development tasks under Infosys Springboard's internship
+              program — building industry exposure in development workflows, collaborative coding, and professional
+              engineering practices.</p>
+            <div class="exp-tags">
+              <span>Software Development</span><span>Industry Training</span><span>Infosys</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Courage Library — Co-Founder -->
+        <div class="exp-card" role="article">
+          <div class="exp-card-inner">
+            <div class="exp-header">
+              <div class="exp-logo-wrap courage-logo"><i class="fas fa-book-open"></i></div>
+              <div class="exp-meta">
+                <div class="exp-company-row">
+                  <h3 class="exp-company">Courage Library</h3>
+                  <span class="exp-badge founder-badge">Co-Founder</span>
+                </div>
+                <p class="exp-role">Co-Founder &amp; Full Stack Developer</p>
+                <p class="exp-duration">
+                  <i class="fas fa-calendar-alt"></i> 2024 – Present &nbsp;·&nbsp;
+                  <a href="https://www.couragelibrary.in" target="_blank" rel="noopener noreferrer"
+                    class="exp-link">couragelibrary.in <i class="fas fa-external-link-alt"></i></a>
+                </p>
+              </div>
+            </div>
+            <p class="exp-desc">Co-founded and built an EdTech platform from scratch for government exam aspirants (SSC,
+              Banking, Railway, Defence, UPSC). Sole developer responsible for frontend architecture, database design
+              with Supabase, content pipeline for 1,200+ articles, mock test infrastructure, leaderboard system, and
+              physical study center in Kanpur Nagar, UP.</p>
+            <div class="exp-tags">
+              <span>Co-Founder</span><span>HTML/CSS/JS</span><span>TailwindCSS</span><span>Supabase</span><span>Vercel</span><span>EdTech</span><span>1,200+
+                Articles</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oryza Creative Agency — Co-Founder -->
+        <div class="exp-card" role="article">
+          <div class="exp-card-inner">
+            <div class="exp-header">
+              <div class="exp-logo-wrap oryza-logo"><i class="fas fa-paint-brush"></i></div>
+              <div class="exp-meta">
+                <div class="exp-company-row">
+                  <h3 class="exp-company">Oryza Creative Agency</h3>
+                  <span class="exp-badge founder-badge">Co-Founder</span>
+                </div>
+                <p class="exp-role">Co-Founder &amp; Creative Technologist</p>
+                <p class="exp-duration"><i class="fas fa-calendar-alt"></i> 2024 – Present &nbsp;·&nbsp; India</p>
+              </div>
+            </div>
+            <p class="exp-desc">Co-founded Oryza Creative Agency — a creative and digital solutions agency operating at
+              the intersection of design, branding, and technology. Delivering web development, UI/UX, and creative
+              projects for clients across India.</p>
+            <div class="exp-tags">
+              <span>Co-Founder</span><span>Creative Agency</span><span>Web
+                Development</span><span>Branding</span><span>UI/UX Design</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart India Hackathon 2025 -->
+        <div class="exp-card" role="article">
+          <div class="exp-card-inner">
+            <div class="exp-header">
+              <div class="exp-logo-wrap sih-logo"><i class="fas fa-trophy"></i></div>
+              <div class="exp-meta">
+                <div class="exp-company-row">
+                  <h3 class="exp-company">Smart India Hackathon 2025</h3>
+                  <span class="exp-badge sih-badge">National Level</span>
+                </div>
+                <p class="exp-role">Participant · Team NovaSix (SIH-S:133)</p>
+                <p class="exp-duration"><i class="fas fa-calendar-alt"></i> 2025 &nbsp;·&nbsp; India</p>
+              </div>
+            </div>
+            <p class="exp-desc">Built MindWell — an AI-powered digital mental health platform for students in higher
+              education. Features real-time mood detection, tailored exercises &amp; activities, mood tracking, and
+              direct video/audio call options with professional psychologists. India's most prestigious national student
+              hackathon.</p>
+            <div class="exp-tags">
+              <span>AI/ML</span><span>Mental Health Tech</span><span>Full Stack</span><span>WebRTC</span><span>Mood
+                Detection</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         SKILLS SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="skills" aria-label="My skills">
       <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-card" role="listitem">
+      <div class="skill-tabs" role="tablist" aria-label="Skill categories">
+        <button class="skill-tab active" data-category="all" role="tab" aria-selected="true">All</button>
+        <button class="skill-tab" data-category="frontend" role="tab" aria-selected="false">Frontend</button>
+        <button class="skill-tab" data-category="backend" role="tab" aria-selected="false">Backend</button>
+        <button class="skill-tab" data-category="aiml" role="tab" aria-selected="false">AI / ML</button>
+        <button class="skill-tab" data-category="database" role="tab" aria-selected="false">Database</button>
+        <button class="skill-tab" data-category="tools" role="tab" aria-selected="false">Tools &amp; Others</button>
+      </div>
+      <div class="skills-grid" role="list">
+        <div class="skill-card" data-skill-category="frontend" role="listitem">
           <i class="fab fa-js skill-icon" aria-hidden="true"></i>
           <span class="skill-name">JavaScript</span>
+          <span class="skill-tag">Frontend</span>
           <div class="skill-level" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="90"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
+        <div class="skill-card" data-skill-category="frontend" role="listitem">
           <i class="fab fa-html5 skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">HTML</span>
+          <span class="skill-name">HTML5</span>
+          <span class="skill-tag">Frontend</span>
           <div class="skill-level" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="95"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
-          <i class="fab fa-node-js skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">Node.js</span>
+        <div class="skill-card" data-skill-category="frontend" role="listitem">
+          <i class="fab fa-css3-alt skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">TailwindCSS</span>
+          <span class="skill-tag">Frontend</span>
           <div class="skill-level" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="85"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
+        <div class="skill-card" data-skill-category="backend" role="listitem">
+          <i class="fab fa-node-js skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Node.js</span>
+          <span class="skill-tag">Backend</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="85"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="backend" role="listitem">
           <i class="fab fa-python skill-icon" aria-hidden="true"></i>
           <span class="skill-name">Python</span>
+          <span class="skill-tag">Backend</span>
           <div class="skill-level" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="88"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
-          <i class="fab fa-supabase skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">Supabase</span>
-          <div class="skill-level" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
-            <div class="skill-progress" data-progress="88"></div>
-          </div>
-        </div>
-        <div class="skill-card" role="listitem">
+        <div class="skill-card" data-skill-category="backend" role="listitem">
           <i class="fas fa-code skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">C/C++</span>
+          <span class="skill-name">C / C++</span>
+          <span class="skill-tag">Backend</span>
           <div class="skill-level" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="82"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
+        <div class="skill-card" data-skill-category="backend" role="listitem">
           <i class="fab fa-java skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">JAVA</span>
+          <span class="skill-name">Java</span>
+          <span class="skill-tag">Backend</span>
           <div class="skill-level" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="80"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
-          <i class="fab fa-css3-alt skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">TailwindCSS</span>
-          <div class="skill-level" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-            <div class="skill-progress" data-progress="85"></div>
+        <div class="skill-card aiml-featured" data-skill-category="aiml" role="listitem">
+          <i class="fas fa-brain skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Machine Learning</span>
+          <span class="skill-tag aiml-tag">AI / ML ★</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="78"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
-          <i class="fas fa-database skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">SQL</span>
-          <div class="skill-level" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
-            <div class="skill-progress" data-progress="88"></div>
+        <div class="skill-card aiml-featured" data-skill-category="aiml" role="listitem">
+          <i class="fas fa-network-wired skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Deep Learning</span>
+          <span class="skill-tag aiml-tag">AI / ML ★</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="70"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
-          <i class="fas fa-server skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">DBMS</span>
-          <div class="skill-level" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-            <div class="skill-progress" data-progress="85"></div>
-          </div>
-        </div>
-        <div class="skill-card" role="listitem">
-          <i class="fas fa-leaf skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">MongoDB</span>
+        <div class="skill-card aiml-featured" data-skill-category="aiml" role="listitem">
+          <i class="fab fa-python skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">NumPy / Pandas</span>
+          <span class="skill-tag aiml-tag">AI / ML ★</span>
           <div class="skill-level" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="82"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
-          <i class="fas fa-paint-brush skill-icon" aria-hidden="true"></i>
-          <span class="skill-name">Canva</span>
-          <div class="skill-level" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-            <div class="skill-progress" data-progress="75"></div>
+        <div class="skill-card aiml-featured" data-skill-category="aiml" role="listitem">
+          <i class="fas fa-chart-bar skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Data Analysis</span>
+          <span class="skill-tag aiml-tag">AI / ML ★</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="80"></div>
           </div>
         </div>
-        <div class="skill-card" role="listitem">
+        <div class="skill-card aiml-featured" data-skill-category="aiml" role="listitem">
+          <i class="fas fa-eye skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Computer Vision</span>
+          <span class="skill-tag aiml-tag">AI / ML ★</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="65"></div>
+          </div>
+        </div>
+        <div class="skill-card aiml-featured" data-skill-category="aiml" role="listitem">
+          <i class="fas fa-comment-dots skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">NLP Basics</span>
+          <span class="skill-tag aiml-tag">AI / ML ★</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="60"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="database" role="listitem">
+          <i class="fab fa-supabase skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Supabase</span>
+          <span class="skill-tag">Database</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="88"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="database" role="listitem">
+          <i class="fas fa-database skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">SQL</span>
+          <span class="skill-tag">Database</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="88"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="database" role="listitem">
+          <i class="fas fa-server skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">DBMS</span>
+          <span class="skill-tag">Database</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="85"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="database" role="listitem">
+          <i class="fas fa-leaf skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">MongoDB</span>
+          <span class="skill-tag">Database</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="82"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="tools" role="listitem">
           <i class="fas fa-project-diagram skill-icon" aria-hidden="true"></i>
           <span class="skill-name">DSA</span>
+          <span class="skill-tag">Tools &amp; CS</span>
           <div class="skill-level" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
             <div class="skill-progress" data-progress="90"></div>
+          </div>
+        </div>
+        <div class="skill-card" data-skill-category="tools" role="listitem">
+          <i class="fas fa-paint-brush skill-icon" aria-hidden="true"></i>
+          <span class="skill-name">Canva</span>
+          <span class="skill-tag">Tools &amp; CS</span>
+          <div class="skill-level" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+            <div class="skill-progress" data-progress="75"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Competitive Programming Section -->
+    <!-- ═══════════════════════════════════════════════
+         COMPETITIVE PROGRAMMING SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="competitive-programming" aria-label="My competitive programming profiles">
       <h2>Competitive Programming</h2>
+      <div class="cp-banner">
+        <div class="cp-banner-stat">
+          <span class="cp-banner-num">610+</span>
+          <span class="cp-banner-label">Total Problems</span>
+        </div>
+        <div class="cp-banner-divider"></div>
+        <div class="cp-banner-stat">
+          <span class="cp-banner-num">175+</span>
+          <span class="cp-banner-label">Day Streak</span>
+        </div>
+        <div class="cp-banner-divider"></div>
+        <div class="cp-banner-stat">
+          <span class="cp-banner-num">1839+</span>
+          <span class="cp-banner-label">Best Rating</span>
+        </div>
+        <div class="cp-banner-divider"></div>
+        <div class="cp-banner-stat">
+          <span class="cp-banner-num">3</span>
+          <span class="cp-banner-label">Platforms</span>
+        </div>
+      </div>
       <div class="cp-profiles">
         <div class="cp-card" role="article">
           <div class="cp-header">
@@ -305,79 +569,250 @@
             <h3>GeeksforGeeks</h3>
           </div>
           <div class="cp-stats">
-            <div class="stat-row">
-              <span class="stat-label">Problems Solved</span>
-              <span class="stat-value">190+</span>
+            <div class="stat-row"><span class="stat-label">Problems Solved</span><span class="stat-value">190+</span>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">Contest Rating</span>
-              <span class="stat-value">1839+</span>
+            <div class="stat-row"><span class="stat-label">Contest Rating</span><span class="stat-value">1839+</span>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">Daily Streak</span>
-              <span class="stat-value">155+ Days</span>
+            <div class="stat-row"><span class="stat-label">Daily Streak</span><span class="stat-value">155+ Days</span>
             </div>
           </div>
           <a href="https://www.geeksforgeeks.org/user/jansiddiqui/" target="_blank" class="cp-link">View Profile</a>
         </div>
-
         <div class="cp-card" role="article">
           <div class="cp-header">
             <img src="Image/leetcode.png" alt="LeetCode Logo" class="cp-logo">
             <h3>LeetCode</h3>
           </div>
           <div class="cp-stats">
-            <div class="stat-row">
-              <span class="stat-label">Problems Solved</span>
-              <span class="stat-value">200+</span>
+            <div class="stat-row"><span class="stat-label">Problems Solved</span><span class="stat-value">200+</span>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">Contest Rating</span>
-              <span class="stat-value">1605+</span>
+            <div class="stat-row"><span class="stat-label">Contest Rating</span><span class="stat-value">1605+</span>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">Daily Streak</span>
-              <span class="stat-value">153+ Days</span>
+            <div class="stat-row"><span class="stat-label">Daily Streak</span><span class="stat-value">153+ Days</span>
             </div>
           </div>
           <a href="https://leetcode.com/u/Jan-11/" target="_blank" class="cp-link">View Profile</a>
         </div>
-
         <div class="cp-card" role="article">
           <div class="cp-header">
             <img src="../Image/codolio.png" alt="Codolio Logo" class="cp-logo">
             <h3>Codolio</h3>
           </div>
           <div class="cp-stats">
-            <div class="stat-row">
-              <span class="stat-label">Problems Solved</span>
-              <span class="stat-value">610+</span>
+            <div class="stat-row"><span class="stat-label">Problems Solved</span><span class="stat-value">610+</span>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">Contest Rating</span>
-              <span class="stat-value">1605+</span>
+            <div class="stat-row"><span class="stat-label">Contest Rating</span><span class="stat-value">1605+</span>
             </div>
-            <div class="stat-row">
-              <span class="stat-label">Daily Streak</span>
-              <span class="stat-value">175+ Days</span>
+            <div class="stat-row"><span class="stat-label">Daily Streak</span><span class="stat-value">175+ Days</span>
             </div>
           </div>
           <a href="https://codolio.com/profile/jansiddiaui" target="_blank" class="cp-link">View Profile</a>
         </div>
       </div>
+      <!-- GitHub Stats -->
+      <div class="github-stats-section">
+        <h3 class="github-strip-title"><i class="fab fa-github"></i> GitHub Stats</h3>
+
+        <div class="gh-highlight-grid">
+          <div class="gh-highlight-card">
+            <span class="gh-hl-icon"><i class="fas fa-history"></i></span>
+            <span class="gh-hl-num">473</span>
+            <span class="gh-hl-title">Total Commits</span>
+            <span class="gh-hl-sub">Last year</span>
+          </div>
+          <div class="gh-highlight-card gh-highlight-card--center">
+            <span class="gh-hl-icon"><i class="fas fa-code-branch"></i></span>
+            <span class="gh-hl-num">34</span>
+            <span class="gh-hl-title">Total Pull Requests</span>
+            <span class="gh-hl-sub">All time</span>
+          </div>
+          <div class="gh-highlight-card">
+            <span class="gh-hl-icon"><i class="fas fa-fire"></i></span>
+            <span class="gh-hl-num">23</span>
+            <span class="gh-hl-title">Longest Streak</span>
+            <span class="gh-hl-sub">Nov 21 – Dec 13, 2024</span>
+          </div>
+        </div>
+
+        <a href="https://github.com/jansiddiqui" target="_blank" rel="noopener" class="cp-link github-profile-link"
+          style="margin-top:1.5rem;display:block;text-align:center;max-width:200px;margin-left:auto;margin-right:auto;">
+          <i class="fab fa-github"></i> &nbsp;View Profile
+        </a>
+      </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- ═══════════════════════════════════════════════
+         ACHIEVEMENTS SECTION
+    ═══════════════════════════════════════════════ -->
+    <section id="achievements" aria-label="My achievements">
+      <h2>Achievements</h2>
+      <div class="achievements-grid">
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-trophy"></i></div>
+          <div class="achievement-body">
+            <h4>GFG Contest Rating 1839+</h4>
+            <p>Ranked among top competitive programmers on GeeksforGeeks with a consistent contest performance.</p>
+            <span class="achievement-tag">Competitive Programming</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-fire"></i></div>
+          <div class="achievement-body">
+            <h4>175+ Day Coding Streak</h4>
+            <p>Maintained an unbroken daily coding streak across multiple platforms — discipline over motivation.</p>
+            <span class="achievement-tag">Consistency</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-medal"></i></div>
+          <div class="achievement-body">
+            <h4>Smart India Hackathon 2025 — MindWell</h4>
+            <p>Built MindWell with Team NovaSix (SIH-S:133) — an AI-powered mental health platform for students. India's
+              most prestigious national hackathon.</p>
+            <span class="achievement-tag">SIH 2025</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-bolt"></i></div>
+          <div class="achievement-body">
+            <h4>CodeXpo Hackathon — WalletFlow</h4>
+            <p>Built WalletFlow (habit + expense tracker) in 24 hours at LPU's CodeXpo hackathon. Live and deployed.</p>
+            <span class="achievement-tag">Hackathon</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-code-branch"></i></div>
+          <div class="achievement-body">
+            <h4>Open Source Conference — IIT Kanpur</h4>
+            <p>Selected participant at Opportunity Open Source Conference 2024 hosted at IIT Kanpur.</p>
+            <span class="achievement-tag">Open Source</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-laptop-code"></i></div>
+          <div class="achievement-body">
+            <h4>Hackathon — IIT Kanpur</h4>
+            <p>Competed in the prestigious IIT Kanpur hackathon, building innovative solutions under pressure.</p>
+            <span class="achievement-tag">Hackathon</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-star"></i></div>
+          <div class="achievement-body">
+            <h4>School Board Topper — 86%</h4>
+            <p>Achieved top rank in board examinations at C.P.C.K. Inter College, Kanpur.</p>
+            <span class="achievement-tag">Academic</span>
+          </div>
+        </div>
+        <div class="achievement-card" role="article">
+          <div class="achievement-icon-wrap"><i class="fas fa-globe"></i></div>
+          <div class="achievement-body">
+            <h4>MUN — Represented Italy</h4>
+            <p>Represented Italy at the International Global Conference MUN 2024 at LPU, debating global issues.</p>
+            <span class="achievement-tag">Leadership</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         PROJECTS SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="projects" aria-label="My projects">
       <h2>Projects</h2>
       <div class="project-filters" role="group" aria-label="Project filters">
         <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
-        <button class="filter-btn" data-filter="python">Python</button>
-        <button class="filter-btn" data-filter="web">Web</button>
-        <button class="filter-btn" data-filter="ai">AI</button>
-        <button class="filter-btn" data-filter="game">Games</button>
+        <button class="filter-btn" data-filter="web" aria-pressed="false">Web</button>
+        <button class="filter-btn" data-filter="ai" aria-pressed="false">AI</button>
+        <button class="filter-btn" data-filter="hackathon" aria-pressed="false">Hackathon</button>
+        <button class="filter-btn" data-filter="python" aria-pressed="false">Python</button>
+        <button class="filter-btn" data-filter="game" aria-pressed="false">Games</button>
       </div>
       <div class="projects-grid">
+
+        <!-- Courage Library — FEATURED -->
+        <div class="project-card project-card--featured" data-category="web" role="article">
+          <img src="Image/library.png" alt="Courage Library Website Screenshot" loading="lazy">
+          <h3>Courage Library</h3>
+          <p>EdTech platform I co-founded for government exam aspirants — 1,200+ articles, mock tests, leaderboard, and
+            a physical study center in Kanpur.</p>
+          <a href="projects/courage-library.html" class="case-study-cta">
+            <i class="fas fa-book-open"></i> Read Full Case Study →
+          </a>
+          <div class="project-overlay" role="dialog" aria-label="Project details">
+            <h4>Courage Library</h4>
+            <p>Built end-to-end — frontend, Supabase DB, content pipeline, mock test system for SSC, Banking, Railway,
+              UPSC aspirants.</p>
+            <div class="tech-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>TailwindCSS</span><span>Supabase</span><span>Vercel</span>
+            </div>
+            <div class="project-links">
+              <a href="projects/courage-library.html">Case Study</a>
+              <a href="https://www.couragelibrary.in/" target="_blank" rel="noopener noreferrer">Live Link</a>
+              <a href="https://github.com/jansiddiqui/couragelibrary1.0" target="_blank"
+                rel="noopener noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- MindWell — SIH 2025 -->
+        <div class="project-card project-card--hackathon" data-category="ai hackathon" role="article">
+          <div class="project-hackathon-badge"><i class="fas fa-trophy"></i> Smart India Hackathon 2025</div>
+          <img src="Image/mindwell.png" onerror="this.src='Image/assiss.png'" alt="MindWell AI Mental Health Platform"
+            loading="lazy">
+          <h3>MindWell</h3>
+          <p>AI-powered digital mental health platform for students. Real-time mood detection, tailored exercises, mood
+            tracking, and professional psychologist video consultations. Team NovaSix (SIH-S:133).</p>
+          <div class="project-overlay" role="dialog" aria-label="Project details">
+            <h4>MindWell</h4>
+            <p>Built for Smart India Hackathon 2025. Solves the mental health crisis among students with AI mood
+              detection and professional support.</p>
+            <div class="tech-stack"><span>AI/ML</span><span>Python</span><span>WebRTC</span><span>Full
+                Stack</span><span>Mood Detection</span></div>
+            <div class="project-links">
+              <a href="#">SIH 2025</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- WalletFlow — CodeXpo Hackathon -->
+        <div class="project-card project-card--hackathon" data-category="web hackathon" role="article">
+          <div class="project-hackathon-badge"><i class="fas fa-bolt"></i> CodeXpo Hackathon · 24hrs</div>
+          <img src="Image/walletflow.png" onerror="this.src='Image/portfolio.png'"
+            alt="WalletFlow Habit and Expense Tracker" loading="lazy">
+          <h3>WalletFlow</h3>
+          <p>Habit tracker + expense manager built in 24 hours at CodeXpo Hackathon (LPU). Real-time updates, intuitive
+            UI to stay consistent with habits while managing finances. Built with a team of 5.</p>
+          <div class="project-overlay" role="dialog" aria-label="Project details">
+            <h4>WalletFlow</h4>
+            <p>Built in 24 hours at CodeXpo Hackathon. Combines habit tracking and expense management into one clean,
+              intuitive platform.</p>
+            <div class="tech-stack"><span>JavaScript</span><span>Supabase</span><span>HTML/CSS</span></div>
+            <div class="project-links">
+              <a href="https://lnkd.in/gasbZJUs" target="_blank" rel="noopener noreferrer">Live Link</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PCB Defect Detector -->
+        <div class="project-card" data-category="ai" role="article">
+          <img src="Image/pcb.png" onerror="this.src='Image/DLDT.png'" alt="PCB Defect Detection System" loading="lazy">
+          <h3>PCB Defect Detector</h3>
+          <p>Automated defect detection &amp; classification for Printed Circuit Boards using deep learning. CNN model,
+            reference-based image subtraction, contour extraction, and web interface for annotated output.</p>
+          <div class="project-overlay" role="dialog" aria-label="Project details">
+            <h4>PCB Defect Detector</h4>
+            <p>CNN-based system to detect and classify PCB defects. Upload an image, get an annotated result with
+              labeled defect locations.</p>
+            <div class="tech-stack"><span>Python</span><span>CNN</span><span>OpenCV</span><span>Flask</span><span>Deep
+                Learning</span></div>
+            <div class="project-links">
+              <a href="https://github.com/jansiddiqui/PCB-Defect" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Website -->
         <div class="project-card" data-category="web" role="article">
           <img src="Image/portfolio.png" alt="Portfolio Website Screenshot" loading="lazy">
           <h3>Portfolio Website</h3>
@@ -387,64 +822,77 @@
             <h4>Portfolio Website</h4>
             <p>Built with HTML5, CSS3, and JavaScript, featuring modern design principles and accessibility features.
             </p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">HTML5</span>
-              <span role="listitem">CSS3</span>
-              <span role="listitem">JavaScript</span>
-              <span role="listitem">Bootstrap</span>
-              <span role="listitem">TailwindCSS</span>
-              <span role="listitem">Vercel</span>
+            <div class="tech-stack">
+              <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Bootstrap</span><span>TailwindCSS</span><span>Vercel</span>
             </div>
-            <div class="project-links" role="list">
+            <div class="project-links">
               <a href="https://portfolio-six-ashy-46.vercel.app/" target="_blank" rel="noopener noreferrer">Live
                 Link</a>
               <a href="https://github.com/jansiddiqui/portfolio" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
         </div>
-        <div class="project-card" data-category="game" role="article">
-          <img src="Image/hang.png" alt="Hangman Game Screenshot - A word-guessing game with interactive GUI"
-            loading="lazy">
-          <h3>Hangman</h3>
-          <p>A classic word-guessing game with an interactive GUI, random word selection, visual hangman stages, and
-            real-time feedback.</p>
+
+        <!-- Deadlock Detection Tool -->
+        <div class="project-card" data-category="web" role="article">
+          <img src="Image/DLDT.png" alt="DeadLock Detection Tool Screenshot" loading="lazy">
+          <h3>DeadLock Detection Tool</h3>
+          <p>A web-based tool for detecting deadlocks in process-resource systems using graph algorithms, built with
+            Python, Flask, and modern deployment practices.</p>
           <div class="project-overlay" role="dialog" aria-label="Project details">
-            <h4>Hangman Game</h4>
-            <p>Built using Python and Tkinter for a fun gaming experience.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">Python</span>
-              <span role="listitem">Tkinter</span>
-              <span role="listitem">GUI</span>
+            <h4>DeadLock Detection Tool</h4>
+            <p>Built to automate deadlock detection using efficient graph-based algorithms.</p>
+            <div class="tech-stack">
+              <span>Python</span><span>Flask</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Render</span>
             </div>
-            <div class="project-links" role="list">
-              <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_python-gamedevelopment-tkinter-activity-7212079045654511616-zw34"
-                target="_blank" rel="noopener noreferrer">View Demo</a>
-              <a href="https://github.com/jansiddiqui/CodeAlpha_Hangman_game" target="_blank"
+            <div class="project-links">
+              <a href="https://automate-deadlock-detection-tool.onrender.com/" target="_blank"
+                rel="noopener noreferrer">Live Link</a>
+              <a href="https://github.com/jansiddiqui/Automate-Deadlock-Detection-Tool" target="_blank"
                 rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
         </div>
-        <div class="project-card" data-category="game" role="article">
-          <img src="Image/music.png" alt="BeatBoxr Music Player Screenshot" loading="lazy">
-          <h3>BeatBoxr</h3>
-          <p>A sleek and user-friendly music player built with Python. Features include play, pause, stop, volume
-            control, and real-time track updates.</p>
+
+        <div class="project-card" data-category="ai" role="article">
+          <img src="Image/hra.png" alt="Health Risk Advisor Screenshot" loading="lazy">
+
+          <h3>Health Risk Advisor</h3>
+
+          <p>
+            A web-based health assessment tool that uses fuzzy logic to evaluate risk levels based on body temperature,
+            heart rate, and cough severity. Generates personalized PDF reports for users.
+          </p>
+
           <div class="project-overlay" role="dialog" aria-label="Project details">
-            <h4>BeatBoxr Music Player</h4>
-            <p>Built using pygame, tkinter, PIL, and mutagen for a complete music experience.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">Python</span>
-              <span role="listitem">Pygame</span>
-              <span role="listitem">Tkinter</span>
+
+            <h4>Health Risk Advisor</h4>
+
+            <p>
+              Developed using fuzzy logic for intelligent health risk prediction with real-time inputs. Includes PDF
+              report generation, clean UI/UX, and CSV-based logging for tracking results.
+            </p>
+
+            <div class="tech-stack">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>scikit-fuzzy</span>
+              <span>ReportLab</span>
+              <span>Jinja2</span>
+              <span>CSV</span>
             </div>
-            <div class="project-links" role="list">
-              <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_digitalbhem-beatboxr-python-activity-7194681924638978049-xZzt"
-                target="_blank" rel="noopener noreferrer">View Demo</a>
-              <a href="https://github.com/jansiddiqui/DIGIBHEM_BeatBoxr_Music_Player" target="_blank"
-                rel="noopener noreferrer">GitHub</a>
+
+            <div class="project-links">
+              <a href="https://lnkd.in/gVtcm3_u" target="_blank" rel="noopener noreferrer">Live Link</a>
+              <a href="https://lnkd.in/gak2qmmK" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
+
           </div>
         </div>
+
+        <!-- Jan's Assistant -->
         <div class="project-card" data-category="ai" role="article">
           <img src="Image/assiss.png" alt="Jan's Assistant AI Project Screenshot" loading="lazy">
           <h3>Jan's Assistant</h3>
@@ -453,12 +901,8 @@
           <div class="project-overlay" role="dialog" aria-label="Project details">
             <h4>Jan's Assistant</h4>
             <p>Built using Python, JavaScript, and Eel for a seamless experience.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">Python</span>
-              <span role="listitem">JavaScript</span>
-              <span role="listitem">Eel</span>
-            </div>
-            <div class="project-links" role="list">
+            <div class="tech-stack"><span>Python</span><span>JavaScript</span><span>Eel</span></div>
+            <div class="project-links">
               <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_projects-ai-artificialintelligence-activity-7216854767476572162-10xo"
                 target="_blank" rel="noopener noreferrer">View Demo</a>
               <a href="https://github.com/jansiddiqui/Jan-Assistant" target="_blank"
@@ -466,20 +910,56 @@
             </div>
           </div>
         </div>
-        <div class="project-card" data-category="game" role="article">
-          <img src="Image/snake.png" alt="Snake Game Screenshot" loading="lazy">
+
+        <!-- Hangman -->
+        <div class="project-card" data-category="game python" role="article">
+          <img src="Image/1.png" alt="Hangman Game Screenshot" loading="lazy">
+          <h3>Hangman</h3>
+          <p>A classic word-guessing game with an interactive GUI, random word selection, visual hangman stages, and
+            real-time feedback.</p>
+          <div class="project-overlay" role="dialog" aria-label="Project details">
+            <h4>Hangman Game</h4>
+            <p>Built using Python and Tkinter for a fun gaming experience.</p>
+            <div class="tech-stack"><span>Python</span><span>Tkinter</span><span>GUI</span></div>
+            <div class="project-links">
+              <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_python-gamedevelopment-tkinter-activity-7212079045654511616-zw34"
+                target="_blank" rel="noopener noreferrer">View Demo</a>
+              <a href="https://github.com/jansiddiqui/CodeAlpha_Hangman_game" target="_blank"
+                rel="noopener noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BeatBoxr -->
+        <div class="project-card" data-category="game python" role="article">
+          <img src="Image/2.png" alt="BeatBoxr Music Player Screenshot" loading="lazy">
+          <h3>BeatBoxr</h3>
+          <p>A sleek and user-friendly music player built with Python. Features include play, pause, stop, volume
+            control, and real-time track updates.</p>
+          <div class="project-overlay" role="dialog" aria-label="Project details">
+            <h4>BeatBoxr Music Player</h4>
+            <p>Built using pygame, tkinter, PIL, and mutagen for a complete music experience.</p>
+            <div class="tech-stack"><span>Python</span><span>Pygame</span><span>Tkinter</span></div>
+            <div class="project-links">
+              <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_digitalbhem-beatboxr-python-activity-7194681924638978049-xZzt"
+                target="_blank" rel="noopener noreferrer">View Demo</a>
+              <a href="https://github.com/jansiddiqui/DIGIBHEM_BeatBoxr_Music_Player" target="_blank"
+                rel="noopener noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Snake Game -->
+        <div class="project-card" data-category="game python" role="article">
+          <img src="Image/4.png" alt="Snake Game Screenshot" loading="lazy">
           <h3>Snake-Game</h3>
           <p>Developed with Python using Turtle and Pygame, featuring smooth controls, real-time collision detection,
             and immersive background music.</p>
           <div class="project-overlay" role="dialog" aria-label="Project details">
             <h4>Snake Game</h4>
             <p>Built using Python, Turtle, and Pygame for an engaging gaming experience.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">Python</span>
-              <span role="listitem">Turtle</span>
-              <span role="listitem">Pygame</span>
-            </div>
-            <div class="project-links" role="list">
+            <div class="tech-stack"><span>Python</span><span>Turtle</span><span>Pygame</span></div>
+            <div class="project-links">
               <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_digitalbhem-internship-python-activity-7194738101921988608-3wJD"
                 target="_blank" rel="noopener noreferrer">View Demo</a>
               <a href="https://github.com/jansiddiqui/DIGIBHEM_Snake_Game_Python" target="_blank"
@@ -487,7 +967,9 @@
             </div>
           </div>
         </div>
-        <div class="project-card" data-category="game" role="article">
+
+        <!-- HappyBank ATM -->
+        <div class="project-card" data-category="game python" role="article">
           <img src="Image/atm.png" alt="HappyBank ATM Simulator Screenshot" loading="lazy">
           <h3>HappyBank-ATM</h3>
           <p>A fully functional ATM simulator with a secure login system, balance inquiries, withdrawals, and fund
@@ -495,93 +977,42 @@
           <div class="project-overlay" role="dialog" aria-label="Project details">
             <h4>HappyBank ATM</h4>
             <p>Built using Python, Tkinter for GUI, and Pygame for sound effects.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">Python</span>
-              <span role="listitem">Tkinter</span>
-              <span role="listitem">Pygame</span>
-            </div>
-            <div class="project-links" role="list">
+            <div class="tech-stack"><span>Python</span><span>Tkinter</span><span>Pygame</span></div>
+            <div class="project-links">
               <a href="https://www.linkedin.com/posts/jan-mohammad-sidd786_python-tkinter-pygame-activity-7202955117866741762-hkOs"
                 target="_blank" rel="noopener noreferrer">View Demo</a>
               <a href="https://github.com/jansiddiqui/OctaNet_ATM" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
         </div>
-        <div class="project-card" data-category="web" role="article">
-          <img src="Image/library.png" alt="Courage Library Website Screenshot" loading="lazy">
-          <h3>Courage Library</h3>
-          <p>A hybrid library website with seamless booking, flexible memberships, interactive testimonials, FAQs, and
-            mental health support.</p>
-          <div class="project-overlay" role="dialog" aria-label="Project details">
-            <h4>Courage Library</h4>
-            <p>Built for competitive exam aspirants with modern web technologies.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">HTML</span>
-              <span role="listitem">CSS</span>
-              <span role="listitem">JavaScript</span>
-              <span role="listitem">TailwindCSS</span>
-              <span role="listitem">FormSpree</span>
-              <span role="listitem">Vercel</span>
-            </div>
-            <div class="project-links" role="list">
-              <a href="https://www.couragelibrary.in/" target="_blank" rel="noopener noreferrer">Live Link</a>
-              <a href="https://github.com/jansiddiqui/couragelibrary1.0" target="_blank"
-                rel="noopener noreferrer">GitHub</a>
-            </div>
-          </div>
-        </div>
-        <div class="project-card" data-category="web" role="article">
-          <img src="Image/DLDT.png" alt="DeadLock Detection Tool Screenshot" loading="lazy">
-          <h3>DeadLock Detection Tool</h3>
-          <p>A web-based tool for detecting deadlocks in process-resource systems using graph algorithms, built with Python, Flask, and modern deployment practices.</p>
-          <div class="project-overlay" role="dialog" aria-label="Project details">
-            <h4>DeadLock Detection Tool</h4>
-            <p>Built to automate deadlock detection using efficient graph-based algorithms.</p>
-            <div class="tech-stack" role="list">
-              <span role="listitem">Python</span>
-              <span role="listitem">Flask</span>
-              <span role="listitem">HTML</span>
-              <span role="listitem">CSS</span>
-              <span role="listitem">JavaScript</span>
-              <span role="listitem">Render</span>
-              <span role="listitem">GitHub</span>
-            </div>
-            <div class="project-links" role="list">
-              <a href="https://automate-deadlock-detection-tool.onrender.com/" target="_blank" rel="noopener noreferrer">Live Link</a>
-              <a href="https://github.com/jansiddiqui/Automate-Deadlock-Detection-Tool" target="_blank"
-                rel="noopener noreferrer">GitHub</a>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
 
-    <!-- Certificates Section -->
+    <!-- ═══════════════════════════════════════════════
+         CERTIFICATES SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="certificates" aria-label="My certificates">
       <h2>Certificates</h2>
       <div class="projects-grid">
-        <div class="certificate-card" role="article">
-          <img src="../Image/img1.png" alt="Certificate 1" loading="lazy">
+        <div class="certificate-card" role="article"><img src="../Image/img1.png" alt="Certificate 1" loading="lazy">
         </div>
-        <div class="certificate-card" role="article">
-          <img src="../Image/img2.png" alt="Certificate 2" loading="lazy">
+        <div class="certificate-card" role="article"><img src="../Image/img2.png" alt="Certificate 2" loading="lazy">
         </div>
-        <div class="certificate-card" role="article">
-          <img src="../Image/img3.jpg" alt="Certificate 3" loading="lazy">
+        <div class="certificate-card" role="article"><img src="../Image/img3.jpg" alt="Certificate 3" loading="lazy">
         </div>
-        <div class="certificate-card" role="article">
-          <img src="../Image/img4.png" alt="Certificate 4" loading="lazy">
+        <div class="certificate-card" role="article"><img src="../Image/img4.png" alt="Certificate 4" loading="lazy">
         </div>
-        <div class="certificate-card" role="article">
-          <img src="../Image/img5.png" alt="Certificate 5" loading="lazy">
+        <div class="certificate-card" role="article"><img src="../Image/img5.png" alt="Certificate 5" loading="lazy">
         </div>
-        <div class="certificate-card" role="article">
-          <img src="../Image/img6.png" alt="Certificate 6" loading="lazy">
+        <div class="certificate-card" role="article"><img src="../Image/img6.png" alt="Certificate 6" loading="lazy">
         </div>
       </div>
     </section>
 
-    <!-- Tech Events Section -->
+    <!-- ═══════════════════════════════════════════════
+         TECH EVENTS SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="tech-events" aria-label="Tech events attended">
       <h2>Tech Events</h2>
       <div class="events-container">
@@ -605,7 +1036,6 @@
                 collaborative development and community building.</p>
             </div>
           </div>
-
           <div class="event-card" role="article">
             <div class="event-image-carousel">
               <div class="carousel-container">
@@ -626,7 +1056,6 @@
                 fellow developers.</p>
             </div>
           </div>
-
           <div class="event-card" role="article">
             <div class="event-image-carousel">
               <div class="carousel-container">
@@ -645,7 +1074,6 @@
                 and technical expertise.</p>
             </div>
           </div>
-
           <div class="event-card" role="article">
             <div class="event-image-carousel">
               <div class="carousel-container">
@@ -665,11 +1093,52 @@
                 knowledge in cutting-edge technologies.</p>
             </div>
           </div>
+          <div class="event-card" role="article">
+            <div class="event-image-carousel">
+              <div class="carousel-container">
+                <img src="../Image/codexpo1.jpg" alt="CodeXpo Hackathon LPU" class="active">
+                <img src="../Image/codexpo2.jpg" alt="CodeXpo Hackathon LPU">
+                <img src="../Image/codexpo3.jpg" alt="CodeXpo Hackathon LPU">
+                <img src="../Image/codexpo4.jpg" alt="CodeXpo Hackathon LPU">
+                <img src="../Image/codexpo5.jpg" alt="CodeXpo Hackathon LPU">
+              </div>
+              <button class="carousel-btn prev" aria-label="Previous image">❮</button>
+              <button class="carousel-btn next" aria-label="Next image">❯</button>
+              <div class="carousel-dots"></div>
+            </div>
+            <div class="event-content">
+              <h4>CodeXpo Hackathon</h4>
+              <p class="event-location">LPU School of Computer Science Engineering</p>
+              <p class="event-description">
+                Built <strong>WalletFlow</strong> — a habit tracking & expense management platform in just 24 hours.
+              </p>
+            </div>
+          </div>
+          <div class="event-card" role="article">
+            <div class="event-image-carousel">
+              <div class="carousel-container">
+                <img src="../Image/sih1.jpg" alt="Smart India Hackathon 2025" class="active">
+                <img src="../Image/sih2.jpg" alt="Smart India Hackathon 2025">
+                <img src="../Image/sih3.jpg" alt="Smart India Hackathon 2025">
+                <img src="../Image/sih4.jpg" alt="Smart India Hackathon 2025">
+              </div>
+              <button class="carousel-btn prev" aria-label="Previous image">❮</button>
+              <button class="carousel-btn next" aria-label="Next image">❯</button>
+              <div class="carousel-dots"></div>
+            </div>
+            <div class="event-content">
+              <h4>Smart India Hackathon 2025</h4>
+              <p class="event-location">Lovely Professional University (Team NovaSix)</p>
+              <p class="event-description">
+                Developed <strong>MindWell</strong> — an AI-powered platform for student mental health support.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Non-Tech Events Section -->
+    <!-- Non-Tech Events -->
     <section id="non-tech-events" aria-label="Non-tech events attended">
       <h2>Non-Tech Events</h2>
       <div class="events-container">
@@ -677,25 +1146,24 @@
           <div class="event-card" role="article">
             <div class="event-image-carousel">
               <div class="carousel-container">
-                <img src="../Image/IGC0.jpg" alt="International Global Conference Model United Nation-2024"
-                  class="active">
-                <img src="../Image/IGC.jpg" alt="International Global Conference Model United Nation-2024">
-                <img src="../Image/IGC1.jpg" alt="International Global Conference Model United Nation-2024">
-                <img src="../Image/IGC2.jpg" alt="International Global Conference Model United Nation-2024">
-                <img src="../Image/IGC3.jpg" alt="International Global Conference Model United Nation-2024">
+                <img src="../Image/IGC0.jpg" alt="International Global Conference MUN 2024" class="active">
+                <img src="../Image/IGC.jpg" alt="International Global Conference MUN 2024">
+                <img src="../Image/IGC1.jpg" alt="International Global Conference MUN 2024">
+                <img src="../Image/IGC2.jpg" alt="International Global Conference MUN 2024">
+                <img src="../Image/IGC3.jpg" alt="International Global Conference MUN 2024">
               </div>
               <button class="carousel-btn prev" aria-label="Previous image">❮</button>
               <button class="carousel-btn next" aria-label="Next image">❯</button>
               <div class="carousel-dots"></div>
             </div>
             <div class="event-content">
-              <h4>International Global Conference Model United Nation-2024</h4>
+              <h4>International Global Conference MUN-2024</h4>
               <p class="event-location">Lovely Professional University</p>
               <p class="event-description">Represented Italy and debated global issues, enhancing diplomatic and public
                 speaking skills.</p>
             </div>
           </div>
-          <div class="event-card" data-category="non-tech">
+          <div class="event-card" role="article">
             <div class="event-image-carousel">
               <div class="carousel-container">
                 <img src="../Image/f.jpg" alt="Hunar Fashion Talent Show 2024" loading="lazy" class="active">
@@ -719,7 +1187,9 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ═══════════════════════════════════════════════
+         CONTACT SECTION
+    ═══════════════════════════════════════════════ -->
     <section id="contact" aria-label="Contact me">
       <h2>Contact Me</h2>
       <div class="contact-container">
@@ -748,10 +1218,10 @@
         </div>
         <div class="column right">
           <h3>Get in Touch</h3>
-          <p>Feel free to reach out for collaborations or just a friendly chat.</p>
+          <p>Feel free to reach out for collaborations, internship opportunities, or just a friendly chat.</p>
           <div class="icons">
-            <a href="mailto:jan810693@gmail.com" class="icon" aria-label="Email"><img src="../Image/mail.png"
-                alt="Email"></a>
+            <a href="/cdn-cgi/l/email-protection#3b515a55030a0b0d02087b5c565a525715585456" class="icon"
+              aria-label="Email"><img src="../Image/mail.png" alt="Email"></a>
             <a href="https://github.com/jansiddiqui" target="_blank" class="icon" aria-label="GitHub"><img
                 src="../Image/github.png" alt="GitHub"></a>
             <a href="https://linkedin.com/in/jan-mohammad-sidd786" target="_blank" class="icon"
@@ -762,6 +1232,92 @@
         </div>
       </div>
     </section>
+
+    <!-- ═══════════════════════════════════════════════
+         TESTIMONIALS
+    ═══════════════════════════════════════════════ -->
+    <section id="testimonials" aria-label="Recommendations">
+      <h2>What People Say</h2>
+      <div class="testimonials-track-wrapper">
+        <div class="testimonials-grid">
+          <div class="testimonial-card" role="article">
+            <div class="testimonial-quote-icon">"</div>
+            <p class="testimonial-text">Jan demonstrated exceptional leadership and clarity, providing detailed
+              instructions about the library's goals. His collaborative approach ensured the redesign aligned perfectly
+              with the vision — resulting in a modern, intuitive, and accessible interface. His professionalism and
+              dedication made the design process smooth and efficient. I highly recommend Jan to any organisation
+              seeking a leader who is strategic, focused, and passionate about delivering high-quality results.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MS</div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Muhammad Shaaz</span>
+                <span class="testimonial-role">Founder &amp; Brand Identity Designer · Hidayah</span>
+              </div>
+              <a href="https://linkedin.com/in/jan-mohammad-sidd786" target="_blank" rel="noopener noreferrer"
+                class="testimonial-linkedin" aria-label="View on LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="testimonial-card" role="article">
+            <div class="testimonial-quote-icon">"</div>
+            <p class="testimonial-text">Jan demonstrated remarkable professionalism and technical expertise throughout
+              the project. His creativity shone through in the visually stunning and highly functional design he
+              delivered. Communication was seamless, deadlines were met, and the attention to detail ensured a flawless
+              final product. I highly recommend Jan for anyone looking for top-notch web development services.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PG</div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Payal Goel</span>
+                <span class="testimonial-role">LinkedIn Top Voice · Interior &amp; Furniture Designer</span>
+              </div>
+              <a href="https://linkedin.com/in/jan-mohammad-sidd786" target="_blank" rel="noopener noreferrer"
+                class="testimonial-linkedin" aria-label="View on LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+            </div>
+          </div>
+          <div class="testimonial-card" role="article">
+            <div class="testimonial-quote-icon">"</div>
+            <p class="testimonial-text">Always love to answer all the technical and non-technical questions asked by
+              Jan. He is always curious to learn new things — a tech enthusiast with qualities like hardworking,
+              punctuality, and dedication. He will be the cherry on top for the future organisations he will work with.
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MA</div>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">Mohammad Shafaque Arif</span>
+                <span class="testimonial-role">Mentor · Full Stack Developer &amp; DevOps Engineer</span>
+              </div>
+              <a href="https://linkedin.com/in/jan-mohammad-sidd786" target="_blank" rel="noopener noreferrer"
+                class="testimonial-linkedin" aria-label="View on LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonials-footer">
+        <a href="https://linkedin.com/in/jan-mohammad-sidd786" target="_blank" rel="noopener noreferrer"
+          class="btn btn-outline">
+          <i class="fab fa-linkedin"></i> &nbsp;View All on LinkedIn
+        </a>
+      </div>
+    </section>
+
+    <!-- OPEN TO WORK BANNER -->
+    <div class="open-to-work-banner" aria-label="Open to internship opportunities">
+      <div class="otw-content">
+        <div class="otw-pulse-dot"></div>
+        <div class="otw-text">
+          <h3>Open to Summer 2025 Internships</h3>
+          <p>Looking for opportunities in Software Development, Full Stack, or AI/ML roles</p>
+        </div>
+        <a href="#contact" class="otw-cta">Let's Connect
+          →</a>
+      </div>
+    </div>
+
   </main>
 
   <!-- Footer -->
@@ -769,7 +1325,6 @@
     <p>&copy; 2025 <span>Jan Mohammad</span>. All Rights Reserved.</p>
   </footer>
 
-  <!-- Back to Top Button -->
   <div class="back-to-top" aria-label="Back to top">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -777,16 +1332,15 @@
     </svg>
   </div>
 
-  <!-- Custom Cursor -->
   <div class="custom-cursor"></div>
 
-  <!-- Theme Toggle Button -->
   <button class="theme-toggle" aria-label="Toggle theme">
     <i class="fas fa-moon" aria-hidden="true"></i>
   </button>
 
   <!-- Particle Background -->
   <div id="particles-js" aria-hidden="true"></div>
+
 </body>
 
 </html>
