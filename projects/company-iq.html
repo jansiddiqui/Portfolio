@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CompanyIQ — Case Study by Jan Mohammad. An enterprise-grade AI-powered investment research platform.">
+  <meta property="og:title" content="CompanyIQ — Case Study | Jan Mohammad">
+  <meta property="og:description" content="Automating deep equity research and structured AI reasoning.">
+  <meta property="og:image" content="../Image/companyiq.png">
+  <link rel="icon" href="../Image/loo1.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="case-study.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+  <title>CompanyIQ — Case Study | Jan Mohammad</title>
+</head>
+<body>
+
+  <!-- Back nav -->
+  <div class="cs-back-nav">
+    <a href="../index.html" class="cs-back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+    <a href="#" class="cs-live-btn"><i class="fas fa-lock"></i> Enterprise Demo</a>
+  </div>
+
+  <main class="cs-main">
+
+    <!-- Hero -->
+    <div class="cs-hero">
+      <div class="cs-hero-badge">Case Study</div>
+      <h1 class="cs-title">CompanyIQ</h1>
+      <p class="cs-subtitle">An enterprise-grade AI-powered investment research platform designed to automate deep equity research, score assets mathematically, and justify recommendations with full explainability.</p>
+
+      <div class="cs-meta-row">
+        <div class="cs-meta-item"><i class="fas fa-user"></i><span>Product Lead & Developer</span></div>
+        <div class="cs-meta-item"><i class="fas fa-calendar"></i><span>2026</span></div>
+        <div class="cs-meta-item"><i class="fas fa-code-branch"></i><span>LangGraph.js Workflow</span></div>
+      </div>
+
+      <div class="cs-tech-pills">
+        <span>Next.js 16</span><span>TypeScript</span><span>TailwindCSS v4</span>
+        <span>LangGraph.js</span><span>Gemini 2.5 Flash</span><span>Prisma</span><span>PostgreSQL</span>
+      </div>
+    </div>
+
+    <!-- Project image -->
+    <div class="cs-image-block">
+      <img src="../Image/companyiq.png"
+           alt="CompanyIQ — Investment Research Platform Dashboard"
+           class="cs-hero-img"
+           onerror="this.parentElement.style.background='linear-gradient(135deg,#1e293b,#0f172a)';this.parentElement.style.minHeight='220px';this.style.display='none'">
+    </div>
+
+    <!-- Overview -->
+    <section class="cs-section">
+      <div class="cs-section-label">01 — Overview</div>
+      <h2>What is CompanyIQ?</h2>
+      <p>CompanyIQ is an AI-native SaaS platform modeled after premium, minimalist interfaces like Perplexity, Stripe, and Linear. It helps analysts automate the heavy lifting of equity research by pulling live data from market endpoints, evaluating it via a locked mathematical scoring model, and structuring the output with an explainable AI synthesis node.</p>
+      <p>By splitting Fact Retrieval from AI opinion generation, CompanyIQ guarantees that recommendations are anchored to actual data, shielding users from LLM hallucination risks.</p>
+    </section>
+
+    <!-- The Problem -->
+    <section class="cs-section">
+      <div class="cs-section-label">02 — The Problem</div>
+      <h2>The Hallucination & Trust Gap in AI Finance</h2>
+      <p>Traditional AI investment agents typically generate qualitative narratives without verified quantitative backing. Standard LLMs struggle with basic financial calculations and often make up numbers when scanning PDFs or web scrapers. This makes their summaries useless for institutional compliance.</p>
+
+      <div class="cs-problem-grid">
+        <div class="cs-problem-card">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h4>Hallucinated Metrics</h4>
+          <p>Standard LLMs frequently make mistakes with simple arithmetic and financial statement numbers (e.g. debt ratios).</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-times-circle"></i>
+          <h4>Unjustified Ratings</h4>
+          <p>Black-box LLMs provide bullish or bearish verdicts without an audit trail of how they arrived at that conclusion.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-sync-alt"></i>
+          <h4>Static Snapshots</h4>
+          <p>Financial reports represent single snapshots in time and fail to explain changes or shifts in score ratios over time.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-microchip"></i>
+          <h4>Complex API Latency</h4>
+          <p>Fetching multi-source datasets (Yahoo, news feeds, search indexes) causes page timeouts on traditional REST API models.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="cs-section">
+      <div class="cs-section-label">03 — Architecture</div>
+      <h2>LangGraph Workflow</h2>
+      <p>CompanyIQ handles complex orchestrations by utilizing a multi-stage LangGraph workflow. Raw financial extraction is separated from opinion generation, producing a reliable process flow:</p>
+      
+      <div style="background: rgba(56,189,248,0.05); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(56,189,248,0.1); margin: 1.5rem 0;">
+        <ol style="margin-left: 1.5rem; color: var(--text-secondary);">
+          <li style="margin-bottom: 0.5rem;"><strong>Input Validator</strong>: Sanitizes input query query strings (Zod validation).</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Company Resolver</strong>: Matches keywords to tickers (e.g., "Apple" ➔ AAPL) using Yahoo Finance search APIs.</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Financial Data Ingestion</strong>: Pulls income statements, balance sheets, cash flows, and valuation multiples using <code>yahoo-finance2</code>.</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Business & Moat Search</strong>: Queries product details, qualitative parameters, and competitor listings via Tavily.</li>
+          <li style="margin-bottom: 0.5rem;"><strong>News & Sentiment Node</strong>: Filters last 30 days of media coverage to weight sentiment ratios.</li>
+        </ol>
+      </div>
+
+      <h3>Deterministic Scoring Engine</h3>
+      <p>Rather than letting the LLM estimate the stock score, CompanyIQ calculates a mathematically locked index using specific weights:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; border-left: 3px solid var(--accent-color);">
+          <strong>Financial Health (30%)</strong><br><span style="font-size: 0.85rem; color: var(--text-secondary);">Cash/debt ratios, net margins, leverage</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; border-left: 3px solid var(--accent-color);">
+          <strong>Growth Metrics (25%)</strong><br><span style="font-size: 0.85rem; color: var(--text-secondary);">YoY top-line revenue & trailing EPS</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; border-left: 3px solid var(--accent-color);">
+          <strong>Competitive Moat (15%)</strong><br><span style="font-size: 0.85rem; color: var(--text-secondary);">Margin deviations vs sector baseline</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; border-left: 3px solid var(--accent-color);">
+          <strong>Valuation & News (20%)</strong><br><span style="font-size: 0.85rem; color: var(--text-secondary);">P/E, PEG metrics, and media coverage sentiment</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & Explainability -->
+    <section class="cs-section">
+      <div class="cs-section-label">04 — Trust & Auditing</div>
+      <h2>Enterprise Trust Features</h2>
+      
+      <div class="cs-feature-list">
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <h4>Decision Provenance Grid</h4>
+            <p>Maps every AI thesis assertion back to a reliability trace (High, Medium, Low), specifying the exact sentence source and audit context.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-history"></i></div>
+          <div>
+            <h4>Delta Change Logs</h4>
+            <p>Before running the agent, CompanyIQ queries PostgreSQL for the company's previous report, automatically generating an objective verdict change log detailing rating changes.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-info-circle"></i></div>
+          <div>
+            <h4>Hidden Diagnostics Drawer (Ctrl + Shift + I)</h4>
+            <p>A hidden engineering console displays active LangGraph variables, latency telemetry, API request costs, and the state graph traversal sequence in real time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering Highlights -->
+    <section class="cs-section">
+      <div class="cs-section-label">05 — Engineering Highlights</div>
+      <h2>Highlights & Performance Optimizations</h2>
+      <ul>
+        <li><strong>Lazy-Loaded Database Client Proxy:</strong> Solved build-time static pre-rendering compilation errors by wrapping Prisma Client in a JavaScript proxy, delaying runtime initialization.</li>
+        <li><strong>SSE Progress Streaming:</strong> Next.js edge handlers stream LangGraph node logs in real-time, illuminating active processing stages on the client dashboard.</li>
+        <li><strong>Stress-Testing Engine:</strong> Integrates scenario modeling (simulating interest rate spikes or margins compressions) to dynamically recalculate metric scores.</li>
+      </ul>
+    </section>
+
+    <!-- CTA / Footer -->
+    <footer class="cs-footer" style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+      <p>&copy; 2026 Jan Mohammad. Engineered for High Integrity AI solutions.</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

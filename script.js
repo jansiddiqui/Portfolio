@@ -36,6 +36,8 @@ class ThemeManager {
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(THEME_KEY, next);
       this.updateThemeIcon(next);
+      // Re-initialize particles to update their color matching the new theme
+      initParticlesSafe();
     } catch(e) { console.error('Theme toggle error:', e); }
   }
   updateThemeIcon(theme) {
@@ -49,12 +51,37 @@ class NavigationManager {
     this.navbarToggle = document.querySelector('.navbar-toggle');
     this.navList      = document.querySelector('nav ul');
     this.navLinks     = document.querySelectorAll('nav ul li a');
+    this.dropdowns    = document.querySelectorAll('.nav-dropdown');
     this.init();
   }
   init() {
     try {
       this.navbarToggle.addEventListener('click', () => this.toggleMenu());
-      this.navLinks.forEach(link => link.addEventListener('click', () => this.closeMenu()));
+      
+      this.navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          if (link.classList.contains('dropdown-trigger')) {
+            e.preventDefault();
+            this.toggleDropdown(link);
+          } else {
+            this.closeMenu();
+          }
+        });
+      });
+
+      // Close dropdowns on outside click
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-dropdown') && !e.target.closest('.navbar-toggle')) {
+          this.closeAllDropdowns();
+        }
+      });
+      
+      // Close mobile menu on Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.closeMenu();
+        }
+      });
     } catch(e) { console.error('Nav init error:', e); }
   }
   toggleMenu() {
@@ -63,12 +90,113 @@ class NavigationManager {
       this.navbarToggle.setAttribute('aria-expanded', !isExpanded);
       this.navList.classList.toggle('open');
       this.navbarToggle.classList.toggle('open');
+      if (isExpanded) {
+        this.closeAllDropdowns();
+      }
     } catch(e) { console.error('Menu toggle error:', e); }
   }
   closeMenu() {
     this.navbarToggle.setAttribute('aria-expanded', 'false');
     this.navList.classList.remove('open');
     this.navbarToggle.classList.remove('open');
+    this.closeAllDropdowns();
+  }
+  toggleDropdown(trigger) {
+    const parent = trigger.parentElement;
+    const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+    
+    // Close other dropdowns first (accordion behavior on mobile)
+    this.dropdowns.forEach(dropdown => {
+      if (dropdown !== parent) {
+        dropdown.classList.remove('open');
+        dropdown.querySelector('.dropdown-trigger').setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    parent.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', !isExpanded);
+  }
+  closeAllDropdowns() {
+    this.dropdowns.forEach(dropdown => {
+      dropdown.classList.remove('open');
+      const trigger = dropdown.querySelector('.dropdown-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+}
+
+// ── HEADER SCROLL MANAGER (HIDE ON SCROLL DOWN, SHOW UP) ──
+class HeaderScrollManager {
+  constructor() {
+    this.header = document.querySelector('header');
+    this.lastScroll = 0;
+    this.init();
+  }
+  init() {
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScroll > 100) {
+        if (currentScroll > this.lastScroll) {
+          this.header.classList.add('hide');
+        } else {
+          this.header.classList.remove('hide');
+        }
+      } else {
+        this.header.classList.remove('hide');
+      }
+      this.lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+    }, { passive: true });
+  }
+}
+
+// ── SCROLLSPY MANAGER ─────────────────────────────────────
+class ScrollSpyManager {
+  constructor() {
+    this.sections = document.querySelectorAll('section[id]');
+    this.navLinks = document.querySelectorAll('nav ul li a:not(.dropdown-trigger)');
+    this.dropdowns = document.querySelectorAll('.nav-dropdown');
+    this.init();
+  }
+  init() {
+    window.addEventListener('scroll', debounce(() => this.onScroll(), 50), { passive: true });
+    // Run once on load
+    this.onScroll();
+  }
+  onScroll() {
+    const scrollPos = window.scrollY || document.documentElement.scrollTop;
+    // Add offset for floating header height
+    const headerHeight = document.querySelector('header').offsetHeight || 80;
+    const triggerOffset = scrollPos + headerHeight + 150;
+    
+    let activeSectionId = '';
+    
+    this.sections.forEach(section => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if (triggerOffset >= top && triggerOffset < top + height) {
+        activeSectionId = section.getAttribute('id');
+      }
+    });
+
+    if (!activeSectionId) return;
+
+    // Remove active class from all links and dropdowns
+    this.navLinks.forEach(link => link.classList.remove('active'));
+    this.dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+
+    // Highlight the active link and parent dropdown if applicable
+    this.navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === `#${activeSectionId}`) {
+        link.classList.add('active');
+        
+        // If this link is inside a dropdown, highlight the dropdown parent
+        const parentDropdown = link.closest('.nav-dropdown');
+        if (parentDropdown) {
+          parentDropdown.classList.add('active');
+        }
+      }
+    });
   }
 }
 
@@ -147,7 +275,6 @@ class FormManager {
 }
 
 // ── PROJECT FILTER MANAGER ────────────────────────────────
-// UPDATED: supports multi-category data-category values e.g. "ai hackathon"
 class ProjectFilterManager {
   constructor() {
     this.filterButtons = document.querySelectorAll('.filter-btn');
@@ -166,7 +293,6 @@ class ProjectFilterManager {
       button.setAttribute('aria-pressed', 'true');
       const filterValue = button.getAttribute('data-filter');
       this.projectCards.forEach(card => {
-        // support space-separated multi-category: "ai hackathon"
         const cats = (card.getAttribute('data-category') || '').split(' ');
         const show = filterValue === 'all' || cats.includes(filterValue);
         if (show) {
@@ -181,7 +307,7 @@ class ProjectFilterManager {
   }
 }
 
-// ── SCROLL PROGRESS ───────────────────────────────────────
+// ── SCROLL PROGRESS (GLOBAL TOP BAR) ──────────────────────
 class ScrollProgressManager {
   constructor() {
     this.progressBar = document.createElement('div');
@@ -244,32 +370,79 @@ class BackToTopManager {
   toggleButton() { this.button.classList.toggle('visible', window.scrollY > 300); }
 }
 
-// ── CUSTOM CURSOR ─────────────────────────────────────────
-class CustomCursorManager {
+// ── ROLE MORPHER CONTROLLER (INFINITE LOOPS) ──────────────
+class RoleMorpherController {
   constructor() {
-    this.cursor = document.querySelector('.custom-cursor');
+    this.slides = document.querySelectorAll('.role-morpher .role-slide');
+    this.currentIndex = 0;
+    this.intervalId = null;
     this.init();
   }
   init() {
-    try {
-      document.addEventListener('mousemove', (e) => { this.cursor.style.left = e.clientX + 'px'; this.cursor.style.top = e.clientY + 'px'; });
-      document.addEventListener('mousedown', () => this.cursor.classList.add('active'));
-      document.addEventListener('mouseup',   () => this.cursor.classList.remove('active'));
-      document.querySelectorAll('a, button, input, textarea').forEach(el => {
-        el.addEventListener('mouseenter', () => this.cursor.classList.add('active'));
-        el.addEventListener('mouseleave', () => this.cursor.classList.remove('active'));
-      });
-    } catch(e) { console.error('Custom cursor init error:', e); }
+    if (!this.slides.length) return;
+    this.intervalId = setInterval(() => this.morphRole(), 3000);
+  }
+  morphRole() {
+    this.slides[this.currentIndex].classList.remove('active');
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+    this.slides[this.currentIndex].classList.add('active');
   }
 }
 
-// ── SKILL CARD MOUSE EFFECT ───────────────────────────────
-function initSkillCardMouseEffect() {
-  document.querySelectorAll('.skill-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', `${((e.clientX - rect.left) / rect.width) * 100}%`);
-      card.style.setProperty('--mouse-y', `${((e.clientY - rect.top)  / rect.height) * 100}%`);
+// ── SCROLL TIMELINE PROGRESS TRACKER ─────────────────────
+class ScrollTimelineTracker {
+  constructor() {
+    this.progressLine = document.querySelector('.timeline-progress-line');
+    this.timeline = document.querySelector('.journey-timeline-wrap');
+    this.cards = document.querySelectorAll('.journey-card');
+    if (!this.timeline || !this.progressLine) return;
+    this.init();
+  }
+  init() {
+    window.addEventListener('scroll', () => this.trackProgress(), { passive: true });
+    this.trackProgress();
+  }
+  trackProgress() {
+    const rect = this.timeline.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const start = rect.top - windowHeight / 2;
+    const totalHeight = rect.height;
+    
+    let progress = 0;
+    if (start < 0) {
+      progress = Math.min(Math.abs(start) / totalHeight, 1);
+    }
+    
+    this.progressLine.style.height = `${progress * 100}%`;
+    
+    this.cards.forEach(card => {
+      const cardRect = card.getBoundingClientRect();
+      if (cardRect.top < windowHeight * 0.6) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+  }
+}
+
+// ── CLICK COPY EMAIL ACTION ──────────────────────────────
+function initCopyEmail() {
+  const card = document.getElementById('copy-email-card');
+  if (!card) return;
+  const emailText = card.querySelector('p').textContent.trim();
+  card.addEventListener('click', () => {
+    navigator.clipboard.writeText(emailText).then(() => {
+      card.classList.add('copied');
+      const notice = card.querySelector('.copy-notice');
+      const original = notice.textContent;
+      notice.textContent = 'Copied to Clipboard!';
+      setTimeout(() => {
+        card.classList.remove('copied');
+        notice.textContent = original;
+      }, 2000);
+    }).catch(err => {
+      console.error('Copy failed: ', err);
     });
   });
 }
@@ -280,6 +453,7 @@ function initSkillProgress() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const bar      = entry.target.querySelector('.skill-progress');
+        if (!bar) return;
         const progress = bar.getAttribute('data-progress');
         bar.style.width = '0%';
         bar.offsetHeight;
@@ -326,14 +500,16 @@ function initCarousels() {
     const nextBtn       = carousel.querySelector('.next');
     const dotsContainer = carousel.querySelector('.carousel-dots');
     let currentIndex    = 0;
-
-    images.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.classList.add('carousel-dot');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => goToSlide(i));
-      dotsContainer.appendChild(dot);
-    });
+ 
+    if (dotsContainer.children.length === 0) {
+      images.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('carousel-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      });
+    }
 
     const dots = dotsContainer.querySelectorAll('.carousel-dot');
 
@@ -354,29 +530,11 @@ function initCarousels() {
   });
 }
 
-// ── TYPEWRITER ────────────────────────────────────────────
-function initTypewriter() {
-  const typewriter = document.querySelector('.typewriter');
-  if (!typewriter) return;
-  const text     = typewriter.textContent;
-  const tempSpan = document.createElement('span');
-  tempSpan.style.cssText = 'visibility:hidden;position:absolute;white-space:nowrap';
-  tempSpan.style.font    = window.getComputedStyle(typewriter).font;
-  tempSpan.textContent   = text;
-  document.body.appendChild(tempSpan);
-  const textWidth = tempSpan.offsetWidth;
-  document.body.removeChild(tempSpan);
-  typewriter.style.width = '0';
-  typewriter.offsetHeight;
-  typewriter.style.width = `${textWidth}px`;
-  setTimeout(() => typewriter.classList.add('typing-complete'), 3500);
-}
-
 // ── SKILL TABS ────────────────────────────────────────────
 class SkillTabManager {
   constructor() {
     this.tabs  = document.querySelectorAll('.skill-tab');
-    this.cards = document.querySelectorAll('.skill-card[data-skill-category]');
+    this.wrappers = document.querySelectorAll('.skill-category-wrap');
     this.init();
   }
   init() {
@@ -388,15 +546,15 @@ class SkillTabManager {
     tab.classList.add('active');
     tab.setAttribute('aria-selected', 'true');
     const category = tab.getAttribute('data-category');
-    this.cards.forEach(card => {
-      const show = category === 'all' || card.getAttribute('data-skill-category') === category;
-      card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    this.wrappers.forEach(wrap => {
+      const show = category === 'all' || wrap.getAttribute('data-skill-category') === category;
+      wrap.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       if (show) {
-        card.classList.remove('skill-hidden');
-        requestAnimationFrame(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; });
+        wrap.classList.remove('hidden');
+        requestAnimationFrame(() => { wrap.style.opacity = '1'; wrap.style.transform = 'scale(1)'; });
       } else {
-        card.style.opacity = '0'; card.style.transform = 'scale(0.9)';
-        setTimeout(() => card.classList.add('skill-hidden'), 280);
+        wrap.style.opacity = '0'; wrap.style.transform = 'scale(0.9)';
+        setTimeout(() => wrap.classList.add('hidden'), 280);
       }
     });
   }
@@ -439,18 +597,34 @@ class CounterAnimation {
   }
 }
 
-// ── MINDMAP ORB ───────────────────────────────────────────
+// ── INTERACTIVE MINDMAP CANVAS ────────────────────────────
 class MindmapOrb {
   constructor() {
     this.canvas = document.getElementById('mindmapCanvas');
     if (!this.canvas) return;
     this.ctx   = this.canvas.getContext('2d');
     this.nodes = [];
+    this.mouseX = null;
+    this.mouseY = null;
     this.init();
   }
   init() {
     this.resize();
     window.addEventListener('resize', debounce(() => this.resize(), 200));
+
+    const hero = document.getElementById('hero');
+    if (hero) {
+      hero.addEventListener('mousemove', (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        this.mouseX = e.clientX - rect.left;
+        this.mouseY = e.clientY - rect.top;
+      });
+      hero.addEventListener('mouseleave', () => {
+        this.mouseX = null;
+        this.mouseY = null;
+      });
+    }
+
     this.animate();
   }
   resize() {
@@ -462,8 +636,21 @@ class MindmapOrb {
     this.buildNodes();
   }
   buildNodes() {
-    const labels = ['DSA','AI/ML','Web Dev','Node.js','Supabase','Python','C++','Open Source'];
-    const radius = Math.min(this.canvas.width, this.canvas.height) * 0.35;
+    const labels = [
+      'Courage Library',
+      'LangGraph Agents',
+      'Supabase',
+      'System Design',
+      'CNTS Platform',
+      'Oryza Agency',
+      'AI Products',
+      'Full Stack'
+    ];
+    let radiusScale = 0.33;
+    if (this.canvas.width < 600) {
+      radiusScale = 0.22;
+    }
+    const radius = Math.min(this.canvas.width, this.canvas.height) * radiusScale;
     this.nodes = labels.map((label, i) => {
       const angle = (i / labels.length) * Math.PI * 2 - Math.PI / 2;
       return {
@@ -481,68 +668,328 @@ class MindmapOrb {
     const ctx = this.ctx;
     const t   = Date.now();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const colorRGB = theme === 'dark' ? '45,212,191' : '29,78,216'; // Teal vs Royal Blue
+
+    // Physics attraction simulation
     this.nodes.forEach(n => {
-      n.x = n.baseX + Math.cos(t * n.speed + n.offset)       * n.floatR;
-      n.y = n.baseY + Math.sin(t * n.speed * 1.3 + n.offset) * n.floatR;
+      let targetX = n.baseX + Math.cos(t * n.speed + n.offset)       * n.floatR;
+      let targetY = n.baseY + Math.sin(t * n.speed * 1.3 + n.offset) * n.floatR;
+
+      if (this.mouseX !== null && this.mouseY !== null) {
+        const dx = this.mouseX - targetX;
+        const dy = this.mouseY - targetY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 180) {
+          const force = (180 - dist) / 180;
+          targetX += dx * force * 0.16;
+          targetY += dy * force * 0.16;
+        }
+      }
+
+      if (!n.x) {
+        n.x = targetX;
+        n.y = targetY;
+      } else {
+        n.x += (targetX - n.x) * 0.1;
+        n.y += (targetY - n.y) * 0.1;
+      }
     });
+
+    // Draw connecting hub lines
     this.nodes.forEach(n => {
       ctx.beginPath(); ctx.moveTo(this.cx, this.cy); ctx.lineTo(n.x, n.y);
-      ctx.strokeStyle = `rgba(56,189,248,${0.1 + 0.06 * Math.sin(t * 0.001 + n.offset)})`;
+      ctx.strokeStyle = `rgba(${colorRGB},${0.07 + 0.05 * Math.sin(t * 0.001 + n.offset)})`;
       ctx.lineWidth = 0.8; ctx.stroke();
     });
+
+    // Draw cross mesh lines
     const maxDist = Math.min(this.canvas.width, this.canvas.height) * 0.38;
     for (let i = 0; i < this.nodes.length; i++) {
       for (let j = i + 1; j < this.nodes.length; j++) {
         const d = Math.hypot(this.nodes[i].x - this.nodes[j].x, this.nodes[i].y - this.nodes[j].y);
         if (d < maxDist) {
           ctx.beginPath(); ctx.moveTo(this.nodes[i].x, this.nodes[i].y); ctx.lineTo(this.nodes[j].x, this.nodes[j].y);
-          ctx.strokeStyle = `rgba(56,189,248,${(1 - d / maxDist) * 0.07})`; ctx.lineWidth = 0.5; ctx.stroke();
+          ctx.strokeStyle = `rgba(${colorRGB},${(1 - d / maxDist) * 0.05})`; ctx.lineWidth = 0.5; ctx.stroke();
         }
       }
     }
+
+    // pulsing center orb gradient
     const pulse = 1 + 0.04 * Math.sin(t * 0.002);
     const orbR  = Math.min(this.canvas.width, this.canvas.height) * 0.06 * pulse;
     const grad  = ctx.createRadialGradient(this.cx, this.cy, 0, this.cx, this.cy, orbR * 2.2);
-    grad.addColorStop(0, 'rgba(56,189,248,0.18)'); grad.addColorStop(1, 'rgba(56,189,248,0)');
+    grad.addColorStop(0, `rgba(${colorRGB},0.15)`); grad.addColorStop(1, `rgba(${colorRGB},0)`);
     ctx.beginPath(); ctx.arc(this.cx, this.cy, orbR * 2.2, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
     ctx.beginPath(); ctx.arc(this.cx, this.cy, orbR, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(56,189,248,0.12)'; ctx.strokeStyle = 'rgba(56,189,248,0.5)'; ctx.lineWidth = 1; ctx.fill(); ctx.stroke();
+    ctx.fillStyle = `rgba(${colorRGB},0.12)`; ctx.strokeStyle = `rgba(${colorRGB},0.45)`; ctx.lineWidth = 1; ctx.fill(); ctx.stroke();
+
+    // label inside center orb
+    ctx.fillStyle = theme === 'dark' ? '#F8FAFC' : '#111827';
+    ctx.font = '700 11px "Space Grotesk", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Jan', this.cx, this.cy);
+
+    // outer nodes & label strings
     this.nodes.forEach(n => {
-      ctx.beginPath(); ctx.arc(n.x, n.y, 4, 0, Math.PI * 2); ctx.fillStyle = 'rgba(56,189,248,0.6)'; ctx.fill();
-      ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, Math.PI * 2); ctx.fillStyle = 'rgba(56,189,248,1)';   ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2); ctx.fillStyle = `rgba(${colorRGB},0.45)`; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, Math.PI * 2); ctx.fillStyle = `rgba(${colorRGB},0.95)`;   ctx.fill();
+
+      // Text Labels
+      ctx.fillStyle = theme === 'dark' ? 'rgba(248,250,252,0.85)' : 'rgba(17,24,39,0.85)';
+      ctx.font = '600 11px "Space Grotesk", sans-serif';
+      ctx.textAlign = n.x < this.cx ? 'right' : 'left';
+      ctx.textBaseline = 'middle';
+      const offsetAmt = n.x < this.cx ? -10 : 10;
+      ctx.fillText(n.label, n.x + offsetAmt, n.y);
     });
+
     requestAnimationFrame(() => this.animate());
+  }
+}
+
+// ── COMMAND PALETTE MANAGER ──────────────────────────────
+class CommandPaletteManager {
+  constructor() {
+    this.modal = document.getElementById('cmdPaletteModal');
+    this.searchInput = document.getElementById('cmdSearchInput');
+    this.resultsList = document.getElementById('cmdResultsList');
+    this.searchBtn = document.querySelector('.nav-search-btn');
+    
+    this.commands = [
+      { id: 'courage-library', title: 'Open Courage Library', desc: 'Case study for EdTech Startup', category: 'projects', icon: 'fas fa-book', action: () => this.scrollTo('#projects') },
+      { id: 'companyiq', title: 'Open CompanyIQ', desc: 'Case study for AI Agent Platform', category: 'projects', icon: 'fas fa-brain', action: () => this.scrollTo('#projects') },
+      { id: 'splitsync', title: 'Open SplitSync', desc: 'Case study for Expense SaaS', category: 'projects', icon: 'fas fa-file-invoice-dollar', action: () => this.scrollTo('#projects') },
+      { id: 'deadline-hero', title: 'Open Deadline Hero AI', desc: 'Case study for Planner OS', category: 'projects', icon: 'fas fa-hourglass-half', action: () => this.scrollTo('#projects') },
+      { id: 'cnts', title: 'Open Courage CNTS', desc: 'Case study for Assessment Portal', category: 'projects', icon: 'fas fa-graduation-cap', action: () => this.scrollTo('#projects') },
+      
+      { id: 'home', title: 'Go to Home', desc: 'Go to hero top section', category: 'navigation', icon: 'fas fa-home', action: () => this.scrollTo('#hero') },
+      { id: 'who-i-am', title: 'Go to Who I Am', desc: 'About bio and values', category: 'navigation', icon: 'fas fa-user', action: () => this.scrollTo('#about') },
+      { id: 'journey', title: 'Go to Journey', desc: 'Experience and timeline', category: 'navigation', icon: 'fas fa-briefcase', action: () => this.scrollTo('#experience') },
+      { id: 'toolkit', title: 'Go to Toolkit', desc: 'Technical stack & skills', category: 'navigation', icon: 'fas fa-code', action: () => this.scrollTo('#skills') },
+      { id: 'cp-profiles', title: 'Go to CP Profiles', desc: 'GFG, LeetCode, Codolio', category: 'navigation', icon: 'fas fa-laptop-code', action: () => this.scrollTo('#competitive-programming') },
+      { id: 'achievements', title: 'Go to Achievements', desc: 'Milestones & contests', category: 'navigation', icon: 'fas fa-trophy', action: () => this.scrollTo('#achievements') },
+      { id: 'events', title: 'Go to Events', desc: 'Conferences and Hackathons', category: 'navigation', icon: 'fas fa-calendar-alt', action: () => this.scrollTo('#tech-events') },
+      { id: 'contact', title: 'Go to Contact', desc: 'Send a message or check email', category: 'navigation', icon: 'fas fa-envelope', action: () => this.scrollTo('#contact') },
+      
+      { id: 'fast-track', title: 'Recruiter Fast-Track Mode', desc: 'Instant highlight on SIH/Startups + scroll to contact', category: 'recruiter', icon: 'fas fa-bolt', action: () => this.runFastTrack() },
+      { id: 'cv', title: 'Download Resume (CV)', desc: 'Download Jan Mohammad CV', category: 'utilities', icon: 'fas fa-download', action: () => this.downloadCV() },
+      { id: 'theme', title: 'Toggle Theme', desc: 'Switch Light / Dark theme', category: 'utilities', icon: 'fas fa-adjust', action: () => this.toggleTheme() },
+      { id: 'copy-email', title: 'Copy Email Address', desc: 'Copy to clipboard', category: 'utilities', icon: 'fas fa-copy', action: () => this.copyEmail() }
+    ];
+    
+    this.activeIndex = 0;
+    this.filteredCommands = [...this.commands];
+    this.init();
+  }
+  
+  init() {
+    if (!this.modal) return;
+    
+    // Ctrl+K / Cmd+K shortcut listener
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        this.open();
+      }
+      if (e.key === 'Escape') {
+        this.close();
+      }
+    });
+    
+    // Navbar search button trigger
+    if (this.searchBtn) {
+      this.searchBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.open();
+      });
+    }
+    
+    // Close overlay on click outside command palette container
+    this.modal.addEventListener('click', (e) => {
+      if (e.target === this.modal) {
+        this.close();
+      }
+    });
+    
+    // Keyboard navigation within the input field
+    this.searchInput.addEventListener('keydown', (e) => this.handleKeyDown(e));
+    this.searchInput.addEventListener('input', () => this.handleInput());
+    
+    this.render();
+  }
+  
+  open() {
+    this.modal.classList.add('show');
+    this.searchInput.value = '';
+    this.activeIndex = 0;
+    this.filteredCommands = [...this.commands];
+    this.render();
+    setTimeout(() => this.searchInput.focus(), 50);
+  }
+  
+  close() {
+    this.modal.classList.remove('show');
+    this.searchInput.blur();
+  }
+  
+  scrollTo(selector) {
+    const el = document.querySelector(selector);
+    if (el) {
+      this.close();
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+  toggleTheme() {
+    this.close();
+    // Use the ThemeManager toggle directly if initialized
+    const btn = document.querySelector('.theme-toggle');
+    if (btn) btn.click();
+  }
+  
+  downloadCV() {
+    this.close();
+    const link = document.createElement('a');
+    link.href = 'Jan_Mohammad_CV.pdf';
+    link.download = 'Jan_Mohammad_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  
+  copyEmail() {
+    this.close();
+    navigator.clipboard.writeText('jansiddiqui11@gmail.com').then(() => {
+      const emailCard = document.querySelector('.contact-card-premium');
+      if (emailCard) {
+        emailCard.classList.add('copied');
+        const notice = emailCard.querySelector('.copy-notice');
+        if (notice) notice.innerText = 'Email Copied!';
+        setTimeout(() => emailCard.classList.remove('copied'), 2000);
+      }
+    }).catch(err => console.error('Copy fail:', err));
+  }
+  
+  runFastTrack() {
+    this.close();
+    // 1. Highlight SIH/Startup work by filtering the projects list
+    const filterBtn = document.querySelector('.filter-btn[data-filter="web"]');
+    if (filterBtn) filterBtn.click();
+    
+    // 2. Scroll to Projects section first
+    this.scrollTo('#projects');
+    
+    // 3. Highlight Contact after 1 second delay
+    setTimeout(() => {
+      this.scrollTo('#contact');
+      const contactForm = document.querySelector('form');
+      if (contactForm) {
+        contactForm.style.transition = 'outline 0.5s ease';
+        contactForm.style.outline = '4px solid var(--accent-color)';
+        setTimeout(() => {
+          contactForm.style.outline = 'none';
+        }, 1500);
+      }
+    }, 1200);
+  }
+  
+  handleInput() {
+    const query = this.searchInput.value.toLowerCase().trim();
+    if (!query) {
+      this.filteredCommands = [...this.commands];
+    } else {
+      this.filteredCommands = this.commands.filter(cmd => 
+        cmd.title.toLowerCase().includes(query) || 
+        cmd.desc.toLowerCase().includes(query) ||
+        cmd.category.toLowerCase().includes(query)
+      );
+    }
+    this.activeIndex = 0;
+    this.render();
+  }
+  
+  handleKeyDown(e) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      this.activeIndex = (this.activeIndex + 1) % this.filteredCommands.length;
+      this.render();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      this.activeIndex = (this.activeIndex - 1 + this.filteredCommands.length) % this.filteredCommands.length;
+      this.render();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (this.filteredCommands[this.activeIndex]) {
+        this.filteredCommands[this.activeIndex].action();
+      }
+    }
+  }
+  
+  render() {
+    this.resultsList.innerHTML = '';
+    if (this.filteredCommands.length === 0) {
+      this.resultsList.innerHTML = `
+        <div style="padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+          No commands found matching "${this.searchInput.value}"
+        </div>
+      `;
+      return;
+    }
+    
+    this.filteredCommands.forEach((cmd, idx) => {
+      const activeClass = idx === this.activeIndex ? 'active' : '';
+      const div = document.createElement('div');
+      div.className = `cmd-item ${activeClass}`;
+      div.innerHTML = `
+        <i class="${cmd.icon}"></i>
+        <div class="cmd-item-info">
+          <span class="cmd-item-title">${cmd.title}</span>
+          <span class="cmd-item-desc">${cmd.desc}</span>
+        </div>
+        <span class="cmd-shortcut">${cmd.category}</span>
+      `;
+      
+      div.addEventListener('click', () => {
+        cmd.action();
+      });
+      
+      this.resultsList.appendChild(div);
+      
+      if (idx === this.activeIndex) {
+        div.scrollIntoView({ block: 'nearest' });
+      }
+    });
   }
 }
 
 // ── PARTICLES ─────────────────────────────────────────────
 function initParticlesSafe() {
-  if (typeof particlesJS === 'undefined') {
-    console.error("particles.js not loaded");
-    return;
-  }
-
+  if (typeof particlesJS === 'undefined') return;
   const el = document.getElementById('particles-js');
-  if (!el) {
-    console.error("particles-js div not found");
-    return;
-  }
+  if (!el) return;
+
+  const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const particleColor = theme === 'dark' ? '#2dd4bf' : '#1D4ED8';
 
   particlesJS('particles-js', {
     particles: {
-      number: { value: 80 },
-      color: { value: "#38bdf8" },
+      number: { value: 60 },
+      color: { value: particleColor },
       shape: { type: "circle" },
-      opacity: { value: 0.5 },
-      size: { value: 3, random: true },
+      opacity: { value: theme === 'dark' ? 0.3 : 0.15 },
+      size: { value: 2.5, random: true },
       line_linked: {
         enable: true,
-        distance: 140,
-        color: "#38bdf8",
-        opacity: 0.4,
+        distance: 130,
+        color: particleColor,
+        opacity: theme === 'dark' ? 0.25 : 0.15,
         width: 1
       },
-      move: { enable: true, speed: 3 }
+      move: { enable: true, speed: 2 }
     },
     interactivity: {
       events: {
@@ -554,26 +1001,249 @@ function initParticlesSafe() {
   });
 }
 
+// ── TERMINAL CONTROLLER ──────────────────────────────────
+class TerminalController {
+  constructor() {
+    this.input = document.getElementById('aboutTerminalInput');
+    this.output = document.getElementById('aboutTerminalOutput');
+    this.body = document.getElementById('aboutTerminalBody');
+    this.history = [];
+    this.historyIndex = -1;
+    this.commands = {
+      help: () => `Available commands:
+  - <span class="term-highlight">projects</span>: View list of core case studies
+  - <span class="term-highlight">skills</span>: List expert technologies in toolkit
+  - <span class="term-highlight">streak</span>: View current coding consistency stats
+  - <span class="term-highlight">sih</span>: Read details about Smart India Hackathon 2025
+  - <span class="term-highlight">whoami</span>: Print professional overview bio
+  - <span class="term-highlight">clear</span>: Clear terminal console buffer`,
+      projects: () => `JanOS Projects Registry:
+  1. [Courage Library]: Hybrid EdTech startup (1.2k+ users)
+  2. [CompanyIQ]: Multi-agent LangGraph equity analysis system
+  3. [SplitSync]: Database-native O(N) bill splitter app
+  4. [Deadline Hero AI]: Gemini timeline risk adaptation OS
+  5. [Courage CNTS]: Class 5-8 assessment system`,
+      skills: () => `Toolkit Core Stack:
+  - Frontend: JavaScript, TypeScript, React, Next.js, TailwindCSS
+  - Backend: Node.js, Python, Flask, LangGraph.js, Prisma
+  - Database: PostgreSQL, Supabase ACID blocks, SQL`,
+      streak: () => `Coding Streak Performance Metrics:
+  - Platform Streak: 175+ Days (Codolio), 155+ Days (GFG), 153+ (LeetCode)
+  - Total solved problems: 610+
+  - Best contest rating: 1839+ (GeeksforGeeks)`,
+      sih: () => `Smart India Hackathon 2025 - Team NovaSix (SIH-S:133):
+  - Project: MindWell (AI Student Mental Health OS)
+  - Role: Led ML and WebRTC video/audio analysis layers.
+  - Recognition: Top nationwide finals competitive qualifier.`,
+      whoami: () => `Role: Co-Founder, AI Builder & Software Engineer.
+Focus: Multi-agent architectures, ACID transactional ledger systems,
+high-performance EdTech pipelines, and clean algorithmic codebases.`,
+      clear: () => {
+        this.output.innerHTML = '';
+        return '';
+      }
+    };
+    this.init();
+  }
+  init() {
+    if (!this.input) return;
+    this.input.addEventListener('keydown', (e) => this.handleKey(e));
+    if (this.body) {
+      this.body.addEventListener('click', () => this.input.focus());
+    }
+  }
+  handleKey(e) {
+    if (e.key === 'Enter') {
+      const rawCmd = this.input.value;
+      const cmd = rawCmd.trim().toLowerCase();
+      this.input.value = '';
+      
+      const inputLine = document.createElement('div');
+      inputLine.className = 'terminal-line';
+      inputLine.innerHTML = `<span class="terminal-prompt">jan@dev:~$</span> ${rawCmd}`;
+      this.output.appendChild(inputLine);
+      
+      if (cmd) {
+        this.history.push(rawCmd);
+        this.historyIndex = this.history.length;
+        
+        let response = '';
+        if (this.commands[cmd]) {
+          response = this.commands[cmd]();
+        } else {
+          response = `Command not found: "${cmd}". Type <span class="term-highlight">help</span> for list of items.`;
+        }
+        
+        if (response) {
+          const resLine = document.createElement('div');
+          resLine.className = 'terminal-line';
+          resLine.innerHTML = response;
+          this.output.appendChild(resLine);
+        }
+      }
+      
+      this.body.scrollTop = this.body.scrollHeight;
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (this.historyIndex > 0) {
+        this.historyIndex--;
+        this.input.value = this.history[this.historyIndex];
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (this.historyIndex < this.history.length - 1) {
+        this.historyIndex++;
+        this.input.value = this.history[this.historyIndex];
+      } else {
+        this.historyIndex = this.history.length;
+        this.input.value = '';
+      }
+    }
+  }
+}
+
+// ── SPLITSYNC VISUALIZER ─────────────────────────────────
+class SplitSyncVisualizer {
+  constructor() {
+    this.btn = document.getElementById('btnOptimizeSplitSync');
+    this.statusTag = document.getElementById('splitsyncStatus');
+    this.balA = document.getElementById('balA');
+    this.balB = document.getElementById('balB');
+    this.balC = document.getElementById('balC');
+    this.edgeAB = document.getElementById('edgeAB');
+    this.edgeBC = document.getElementById('edgeBC');
+    this.edgeAC = document.getElementById('edgeAC');
+    this.nodeB = document.getElementById('nodeB');
+    
+    this.optimized = false;
+    this.init();
+  }
+  init() {
+    if (!this.btn) return;
+    this.btn.addEventListener('click', () => this.toggleOptimization());
+  }
+  toggleOptimization() {
+    if (!this.optimized) {
+      this.optimized = true;
+      this.btn.innerText = 'Reset Simulator';
+      this.statusTag.innerText = 'Optimized';
+      this.statusTag.classList.add('optimized');
+      
+      this.edgeAB.classList.add('hidden');
+      this.edgeBC.classList.add('hidden');
+      this.edgeAC.classList.remove('hidden');
+      
+      if (this.nodeB) this.nodeB.style.opacity = '0.35';
+      if (this.balB) this.balB.innerText = 'Settled';
+    } else {
+      this.optimized = false;
+      this.btn.innerText = 'Run Greedy Optimization';
+      this.statusTag.innerText = 'Unoptimized';
+      this.statusTag.classList.remove('optimized');
+      
+      this.edgeAB.classList.remove('hidden');
+      this.edgeBC.classList.remove('hidden');
+      this.edgeAC.classList.add('hidden');
+      
+      if (this.nodeB) this.nodeB.style.opacity = '1';
+      if (this.balB) this.balB.innerText = 'Owed $0';
+    }
+  }
+}
+
+// ── TECH STACK HIGHLIGHT MANAGER ─────────────────────────
+class TechStackHighlightManager {
+  constructor() {
+    this.projectCards = document.querySelectorAll('.project-landing-card, .projects-grid .project-card');
+    this.techTags = document.querySelectorAll('.project-tech-tags span, .skill-card');
+    this.init();
+  }
+  
+  getTechKey(text) {
+    const norm = text.toLowerCase().trim();
+    if (norm.includes('supabase')) return 'supabase';
+    if (norm.includes('postgres') || norm.includes('sql') || norm.includes('prisma')) return 'database';
+    if (norm.includes('next') || norm.includes('node')) return 'nextjs';
+    if (norm.includes('react') || norm.includes('vite')) return 'react';
+    if (norm.includes('typescript') || norm.includes('ts')) return 'typescript';
+    if (norm.includes('javascript') || norm.includes('js')) return 'javascript';
+    if (norm.includes('python')) return 'python';
+    if (norm.includes('gemini') || norm.includes('ai') || norm.includes('ml') || norm.includes('brain') || norm.includes('learning')) return 'ai';
+    if (norm.includes('tailwind') || norm.includes('css') || norm.includes('html')) return 'webfront';
+    return norm.replace(/[\s\.\-\/0-9]/g, '');
+  }
+  
+  init() {
+    this.projectCards.forEach(card => {
+      const spans = card.querySelectorAll('.project-tech-tags span');
+      const keys = Array.from(spans).map(span => this.getTechKey(span.textContent));
+      card.setAttribute('data-tech-keys', keys.join(','));
+    });
+    
+    this.techTags.forEach(tag => {
+      let text = '';
+      if (tag.classList.contains('skill-card')) {
+        const span = tag.querySelector('.skill-card-header span');
+        text = span ? span.textContent : '';
+      } else {
+        text = tag.textContent;
+      }
+      const key = this.getTechKey(text);
+      tag.setAttribute('data-tech-key', key);
+      
+      tag.addEventListener('mouseenter', () => this.highlight(key));
+      tag.addEventListener('mouseleave', () => this.clearHighlight());
+    });
+  }
+  
+  highlight(key) {
+    this.projectCards.forEach(card => {
+      const keys = card.getAttribute('data-tech-keys') || '';
+      if (keys.split(',').includes(key)) {
+        card.classList.add('highlight-tech-glow');
+      } else {
+        card.style.opacity = '0.35';
+        card.style.filter = 'blur(1px)';
+      }
+    });
+  }
+  
+  clearHighlight() {
+    this.projectCards.forEach(card => {
+      card.classList.remove('highlight-tech-glow');
+      card.style.opacity = '';
+      card.style.filter = '';
+    });
+  }
+}
+
 // ── MAIN INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   try {
     new ThemeManager();
     new NavigationManager();
+    new HeaderScrollManager();
+    new ScrollSpyManager();
     new FormManager();
     new ProjectFilterManager();
     new ScrollProgressManager();
     new CookieConsentManager();
     new BackToTopManager();
-    new CustomCursorManager();
+    new RoleMorpherController();
+    new ScrollTimelineTracker();
+    new CommandPaletteManager();
+    new TerminalController();
+    new SplitSyncVisualizer();
+    new TechStackHighlightManager();
+    
+    initCopyEmail();
     new CertificateManager();
     new SkillTabManager();
     new CounterAnimation();
     new MindmapOrb();
 
-    initSkillCardMouseEffect();
     initSkillProgress();
     initCarousels();
-    initTypewriter();
     initParticlesSafe();
 
   } catch(e) { console.error('App init error:', e); }

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Deadline Hero AI — Case Study by Jan Mohammad. An autonomous deadline execution system.">
+  <meta property="og:title" content="Deadline Hero AI — Case Study | Jan Mohammad">
+  <meta property="og:description" content="Proactive AI operating system for task execution, dynamic rescheduling, and rescue planning.">
+  <meta property="og:image" content="../Image/deadline_hero.png">
+  <link rel="icon" href="../Image/loo1.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="case-study.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+  <title>Deadline Hero AI — Case Study | Jan Mohammad</title>
+</head>
+<body>
+
+  <!-- Back nav -->
+  <div class="cs-back-nav">
+    <a href="../index.html" class="cs-back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+    <a href="#" class="cs-live-btn"><i class="fas fa-external-link-alt"></i> Visit Live App</a>
+  </div>
+
+  <main class="cs-main">
+
+    <!-- Hero -->
+    <div class="cs-hero">
+      <div class="cs-hero-badge">Case Study</div>
+      <h1 class="cs-title">Deadline Hero AI</h1>
+      <p class="cs-subtitle">A production-grade AI-powered productivity platform and autonomous execution engine that proactively prioritizes tasks, builds adaptive timelines, and suggests rescue plans to prevent missed deadlines.</p>
+
+      <div class="cs-meta-row">
+        <div class="cs-meta-item"><i class="fas fa-user"></i><span>Founder & Lead Developer</span></div>
+        <div class="cs-meta-item"><i class="fas fa-calendar"></i><span>2026</span></div>
+        <div class="cs-meta-item"><i class="fas fa-brain"></i><span>Multi-Agent Orchestration</span></div>
+      </div>
+
+      <div class="cs-tech-pills">
+        <span>Next.js 15</span><span>TypeScript</span><span>Tailwind CSS</span>
+        <span>shadcn/ui</span><span>Google Gemini</span><span>Supabase</span>
+      </div>
+    </div>
+
+    <!-- Project image -->
+    <div class="cs-image-block">
+      <img src="../Image/deadline_hero.png"
+           alt="Deadline Hero AI — Application Dashboard"
+           class="cs-hero-img"
+           onerror="this.parentElement.style.background='linear-gradient(135deg,#1e293b,#0f172a)';this.parentElement.style.minHeight='220px';this.style.display='none'">
+    </div>
+
+    <!-- Overview -->
+    <section class="cs-section">
+      <div class="cs-section-label">01 — Overview</div>
+      <h2>What is Deadline Hero AI?</h2>
+      <p>Deadline Hero AI is styled as an <strong>AI Operating System</strong> for productivity. While standard managers rely on passive alarms, Deadline Hero operates as an active planner. It leverages LLMs to decompose large milestones into small tasks, resolves dependencies, computes risk thresholds, and dynamically reschedules workloads if tasks are delayed.</p>
+    </section>
+
+    <!-- Key Features -->
+    <section class="cs-section">
+      <div class="cs-section-label">02 — Key Features</div>
+      <h2>Productivity Engine Subsystems</h2>
+
+      <div class="cs-feature-list">
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-robot"></i></div>
+          <div>
+            <h4>Autonomous Task Decomposition</h4>
+            <p>Converts high-level prompts into granular subtasks, automatically estimating effort parameters and execution paths.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-calendar-alt"></i></div>
+          <div>
+            <h4>Adaptive Timeline & What-If Engine</h4>
+            <p>Renders an interactive canvas. When a task slips, the scheduling engine recalculates remaining timelines and offers risk mitigation forecasts.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-heartbeat"></i></div>
+          <div>
+            <h4>Mission Readiness Index (MRI)</h4>
+            <p>Displays a core dashboard statistic indicating the likelihood of project completion, calculated based on current velocities, dependency chains, and active workloads.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-life-ring"></i></div>
+          <div>
+            <h4>Rescue Mode</h4>
+            <p>Triggers when major delays threaten milestones. The system prompts suggestions for scope reductions, resource redistribution, and recovery plans.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Diagram -->
+    <section class="cs-section">
+      <div class="cs-section-label">03 — System Design</div>
+      <h2>Multi-Agent Workflow</h2>
+      <p>The backend partitions responsibilities among specialized virtual agents, structured as follows:</p>
+
+      <div style="background: rgba(56,189,248,0.04); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(56,189,248,0.1); margin: 1.5rem 0; font-family: monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: var(--text-secondary);">
+User<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+AI Operating System Interface<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+Mission Controller<br>
+ &nbsp;│<br>
+ ┌────┼────────┬────────┬─────────┐<br>
+ ▼ &nbsp; &nbsp;▼ &nbsp; &nbsp; &nbsp; &nbsp;▼ &nbsp; &nbsp; &nbsp; &nbsp;▼ &nbsp; &nbsp; &nbsp; &nbsp;▼<br>
+Planning &nbsp;Priority &nbsp;Scheduling &nbsp;Risk &nbsp;Memory<br>
+ Agent &nbsp; &nbsp;Agent &nbsp; &nbsp; Agent &nbsp; &nbsp; Agent &nbsp;Agent<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+Execution Engine ➔ Timeline, Focus, Rescue, Insights<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+Gemini / OpenRouter ➔ Supabase DB<br>
+      </div>
+      <p>This separation lets each node focus on a singular parameter (e.g. Risk Agent calculates probability curves, Scheduling Agent builds layout calendars), resulting in faster inference speeds and reliable outputs.</p>
+    </section>
+
+    <!-- Engineering Challenges -->
+    <section class="cs-section">
+      <div class="cs-section-label">04 — Challenges Solved</div>
+      <h2>Engineering Complexities Resolved</h2>
+      <ul>
+        <li><strong>Explainable Recommendations:</strong> Generates formatted confidence tags explaining task placement choices.</li>
+        <li><strong>Adaptive Scheduling:</strong> Implements a recursive topological sort to adjust parent-child task dates whenever a child item gets rescheduled.</li>
+        <li><strong>Real-time State Synchronization:</strong> Employs Supabase Realtime listeners to sync dashboard widgets instantly as tasks progress.</li>
+      </ul>
+    </section>
+
+    <!-- CTA / Footer -->
+    <footer class="cs-footer" style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+      <p>&copy; 2026 Jan Mohammad. Proactive scheduling powered by Explainable AI.</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SplitSync — Case Study by Jan Mohammad. A database-native, transaction-safe expense splitting application.">
+  <meta property="og:title" content="SplitSync — Case Study | Jan Mohammad">
+  <meta property="og:description" content="Hardened expense-splitting web application featuring Postgres transaction safety.">
+  <meta property="og:image" content="../Image/splitsync.png">
+  <link rel="icon" href="../Image/loo1.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="case-study.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+  <title>SplitSync — Case Study | Jan Mohammad</title>
+</head>
+<body>
+
+  <!-- Back nav -->
+  <div class="cs-back-nav">
+    <a href="../index.html" class="cs-back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+    <a href="#" class="cs-live-btn"><i class="fas fa-lock"></i> Demo Protected</a>
+  </div>
+
+  <main class="cs-main">
+
+    <!-- Hero -->
+    <div class="cs-hero">
+      <div class="cs-hero-badge">Case Study</div>
+      <h1 class="cs-title">SplitSync</h1>
+      <p class="cs-subtitle">A database-native, transaction-hardened expense-splitting web application built with a custom Aurora Mint theme, PostgreSQL transaction isolation, and anomaly-detection CSV parsers.</p>
+
+      <div class="cs-meta-row">
+        <div class="cs-meta-item"><i class="fas fa-user"></i><span>Sole Full-Stack Developer</span></div>
+        <div class="cs-meta-item"><i class="fas fa-calendar"></i><span>2026</span></div>
+        <div class="cs-meta-item"><i class="fas fa-database"></i><span>Postgres + Supabase</span></div>
+      </div>
+
+      <div class="cs-tech-pills">
+        <span>React (Vite)</span><span>TypeScript</span><span>TailwindCSS v4</span>
+        <span>Supabase Auth</span><span>PostgreSQL RPC</span><span>Greedy Optimization</span>
+      </div>
+    </div>
+
+    <!-- Project image -->
+    <div class="cs-image-block">
+      <img src="../Image/splitsync.png"
+           alt="SplitSync — Expense-Splitting Dashboard"
+           class="cs-hero-img"
+           onerror="this.parentElement.style.background='linear-gradient(135deg,#1e293b,#0f172a)';this.parentElement.style.minHeight='220px';this.style.display='none'">
+    </div>
+
+    <!-- Overview -->
+    <section class="cs-section">
+      <div class="cs-section-label">01 — Overview</div>
+      <h2>What is SplitSync?</h2>
+      <p>SplitSync is a database-native application designed to handle group bill splits, transaction tracking, and debt clearing. Unlike traditional split bills apps that implement loose client-side mathematical logic, SplitSync is built as a highly robust, hardened transactional system. It features atomic writes, database-level isolation constraints, multi-currency support, and audit trail tables.</p>
+    </section>
+
+    <!-- The Problem -->
+    <section class="cs-section">
+      <div class="cs-section-label">02 — The Problem</div>
+      <h2>Floating-Point Errors & Weak Isolation</h2>
+      <p>Most expense trackers suffer from floating-point errors (e.g., fractional penny divisions like <code>0.33 + 0.33 + 0.33 = 0.99</code>) and network failures where an expense is written but group user splits are not, resulting in broken database balances. Furthermore, manual entry of large group bills or receipts via CSV uploads frequently introduces data anomalies.</p>
+
+      <div class="cs-problem-grid">
+        <div class="cs-problem-card">
+          <i class="fas fa-divide"></i>
+          <h4>Rounding Errors</h4>
+          <p>Dividing odd amounts leads to missing fractional decimals. SplitSync solves this by converting currency to integer sub-units (paise/cents).</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-link-slash"></i>
+          <h4>Partial Transactions</h4>
+          <p>If network connection cuts midway through an API call, expenses are created without corresponding splits. Atomic database RPCs eliminate this.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-file-excel"></i>
+          <h4>Invalid CSV Uploads</h4>
+          <p>Self-settlements, negative inputs, outliers, or totals mismatching split percentages are flagged instantly by a 24-category anomalies analyzer.</p>
+        </div>
+        <div class="cs-problem-card">
+          <i class="fas fa-project-diagram"></i>
+          <h4>Inefficient Settlements</h4>
+          <p>Group transactions often result in circular, redundant debts (e.g., A owes B, B owes C, C owes A). A greedy pathfinder simplifies balances to minimal edges.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subsystems -->
+    <section class="cs-section">
+      <div class="cs-section-label">03 — Subsystems</div>
+      <h2>Core Hardened Subsystems</h2>
+      
+      <div class="cs-feature-list">
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-file-csv"></i></div>
+          <div>
+            <h4>Staging Area & Custom Lexer</h4>
+            <p>Built a custom CSV lexer supporting double-quoted fields, comma separators, and local currency strings. The layout provides live staging feedback before committing rows.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-filter"></i></div>
+          <div>
+            <h4>Fuzzy Roster Mapping</h4>
+            <p>Avoids exact database matches by mapping upload identifiers with a substring distance metric (e.g., "Jan M" matches "Jan Mohammad").</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-balance-scale"></i></div>
+          <div>
+            <h4>Ledger Parity checks</h4>
+            <p>Maintains strict mathematical parity. A background loop automatically audits balance matrices, displaying warning cards if cumulative user balances do not sum to exactly zero.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DB Integrity -->
+    <section class="cs-section">
+      <div class="cs-section-label">04 — Database Architecture</div>
+      <h2>PostgreSQL Transactions (RPC)</h2>
+      <p>SplitSync moves transaction validation from client Node scripts directly into the database engine. Expenses are saved by invoking a dedicated PostgreSQL Remote Procedure Call (RPC) <code>create_expense_with_splits</code>.</p>
+      
+      <div style="background: rgba(56,189,248,0.05); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(56,189,248,0.1); margin: 1.5rem 0;">
+        <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;"><i class="fas fa-shield-virus"></i> Dual-layered Write Strategy</h4>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.8rem;">To ensure resilience, SplitSync supports client-side transaction fallbacks:</p>
+        <ul style="margin-left: 1.5rem; color: var(--text-secondary); font-size: 0.85rem;">
+          <li style="margin-bottom: 0.4rem;">The React application fires the atomic Postgres RPC transaction first.</li>
+          <li style="margin-bottom: 0.4rem;">If the migration hasn't been executed on the hosted database, it rolls back gracefully and executes an asynchronous client-side pipeline.</li>
+          <li>Every state modification triggers triggers that log actions in an <code>AuditLog</code> table.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Algorithms -->
+    <section class="cs-section">
+      <div class="cs-section-label">05 — Algorithms</div>
+      <h2>Greedy Debt Simplification</h2>
+      <p>Reduces cumulative bank transactions among roommates or travel groups by mapping balances to a directed network. The algorithm extracts maximum creditors and maximum debtors, iteratively clearing balances in $O(N \log N)$ operations until all debts are settled.</p>
+    </section>
+
+    <!-- CTA / Footer -->
+    <footer class="cs-footer" style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+      <p>&copy; 2026 Jan Mohammad. Secure, high-integrity financial calculations.</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>
