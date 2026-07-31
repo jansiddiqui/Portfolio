@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PCB Defect Detector — Case Study by Jan Mohammad. An automated computer vision anomaly inspection system.">
+  <meta property="og:title" content="PCB Defect Detector — Case Study | Jan Mohammad">
+  <meta property="og:description" content="Automated printed circuit board defect inspector featuring OpenCV homography and custom CNN classifiers.">
+  <meta property="og:image" content="../Image/pcb.png">
+  <link rel="icon" href="../Image/loo1.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="case-study.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      if (window.location.pathname.endsWith('.html')) {
+        const cleanPath = window.location.pathname.replace(/\.html$/, '');
+        window.history.replaceState({}, document.title, cleanPath + window.location.hash + window.location.search);
+      }
+      const savedAccent = localStorage.getItem('theme-accent') || 'teal';
+      const themes = {
+        teal: { accent: '#06b6d4', rgb: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.15)', secondary: '#10b981' },
+        purple: { accent: '#8b5cf6', rgb: '139, 92, 246', glow: 'rgba(139, 92, 246, 0.15)', secondary: '#ec4899' },
+        gold: { accent: '#f59e0b', rgb: '245, 158, 11', glow: 'rgba(245, 158, 11, 0.15)', secondary: '#10b981' },
+        ruby: { accent: '#ef4444', rgb: '239, 68, 68', glow: 'rgba(239, 68, 68, 0.15)', secondary: '#f59e0b' }
+      };
+      if (themes[savedAccent]) {
+        const theme = themes[savedAccent];
+        document.documentElement.style.setProperty('--accent-color', theme.accent);
+        document.documentElement.style.setProperty('--accent-color-rgb', theme.rgb); document.documentElement.style.setProperty('--accent-glow', theme.glow);
+        document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+      }
+    })();
+  </script>
+  <title>PCB Defect Detector — Case Study | Jan Mohammad</title>
+</head>
+<body>
+
+  <!-- Back nav -->
+  <div class="cs-back-nav">
+    <a href="../index.html" class="cs-back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+    <a href="https://pcb-defect.vercel.app/" target="_blank" class="cs-live-btn"><i class="fas fa-external-link-alt"></i> Visit Live App</a>
+  </div>
+
+  <main class="cs-main">
+
+    <!-- Hero -->
+    <div class="cs-hero">
+      <div class="cs-hero-badge">Case Study</div>
+      <h1 class="cs-title">PCB Defect Detector</h1>
+      <p class="cs-subtitle">An automated computer vision platform designed to detect and classify manufacturing anomalies on printed circuit boards (PCBs) using custom homography alignment and convolutional networks.</p>
+
+            <div class="cs-meta-board">
+        <div class="cs-meta-card">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-value">Sole Developer & Researcher</span>
+        </div>
+        <div class="cs-meta-card">
+          <span class="cs-meta-label">Timeline</span>
+          <span class="cs-meta-value">2026</span>
+        </div>
+        <div class="cs-meta-card">
+          <span class="cs-meta-label">Specialty</span>
+          <span class="cs-meta-value">Computer Vision</span>
+        </div>
+      </div>
+
+      <div class="cs-tech-pills">
+        <span>Python</span><span>OpenCV</span><span>TensorFlow</span>
+        <span>NumPy</span><span>CNN</span><span>Image Processing</span>
+      </div>
+    </div>
+
+    <!-- Project image slider -->
+    <div class="cs-image-block">
+      <div class="event-image-carousel project-image-carousel">
+        <div class="carousel-container">
+          <img src="../Image/pcb.png" alt="pcb view 1" class="active">
+          <img src="../Image/pcb2.png" alt="pcb view 2">
+          <img src="../Image/pcb3.png" alt="pcb view 3">
+        </div>
+        <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+        <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+        <div class="carousel-dots"></div>
+      </div>
+    </div>
+
+    <!-- Overview -->
+    <section class="cs-section">
+      <div class="cs-section-label">01 — Overview</div>
+      <h2>What is the PCB Defect Detector?</h2>
+      <p>The PCB Defect Detector is an automated inspection platform built to optimize quality control pipelines in hardware manufacturing. By leveraging computer vision techniques (OpenCV) and deep convolutional neural networks (CNNs), the system automatically aligns camera feeds of printed circuit boards, identifies discrepancies (such as trace anomalies, solder bridges, and component misplacements), and classifies them with high precision.</p>
+    </section>
+
+    <!-- Key Features -->
+    <section class="cs-section">
+      <div class="cs-section-label">02 — Key Features</div>
+      <h2>Defect Detection Subsystems</h2>
+
+      <div class="cs-feature-list">
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-crop-alt"></i></div>
+          <div>
+            <h4>Homography Alignment</h4>
+            <p>Utilizes SIFT feature detection and perspective transformation matrices to align raw, rotated, or skewed board camera inputs precisely with a golden reference board template.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-minus-square"></i></div>
+          <div>
+            <h4>Image Subtraction Delta Analysis</h4>
+            <p>Computes mathematical difference matrices using NumPy to instantly highlight copper trace breaks, missing drill holes, or foreign particles.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-brain"></i></div>
+          <div>
+            <h4>CNN Defect Classifier</h4>
+            <p>Runs delta outputs through a custom 3-layer Convolutional Neural Network trained to classify defects into component anomaly, trace damage, or solder bridges.</p>
+          </div>
+        </div>
+        <div class="cs-feature">
+          <div class="cs-feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+          <div>
+            <h4>High-Performance Evaluation</h4>
+            <p>Optimizes linear algebra delta loops in Python, resulting in sub-300ms cycle times suitable for active conveyor-belt inspection lines.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Diagram -->
+    <section class="cs-section">
+      <div class="cs-section-label">03 — System Design</div>
+      <h2>Vision & Classification Pipeline</h2>
+      <p>The system routes raw camera inputs through a structured linear pipeline before outputting anomalies:</p>
+
+      <div class="cs-terminal-mock">
+Camera Feed Input<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+SIFT Feature Matching ➔ Detect Skew & Scaling<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+Perspective Homography Transform ➔ Template Alignment<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+Matrix Image Subtraction (NumPy) ➔ Highlights deltas<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+CNN Model (TensorFlow) ➔ Classification & Anomaly Tags<br>
+ &nbsp;│<br>
+ &nbsp;▼<br>
+Inspection Logs & Alerts Dashboard<br>
+      </div>
+      <p>This sequential approach isolates template alignment errors from classification models, maximizing overall precision and reducing false positive anomaly tags.</p>
+    </section>
+
+    <!-- Engineering Learnings -->
+    <section class="cs-section">
+      <div class="cs-section-label">04 — Key Learnings</div>
+      <h2>Technical Insights & Enhancements</h2>
+      <ul>
+        <li><strong>Lighting Sensitivity:</strong> Illumination variations introduce severe noise in image subtraction. Normalizing pixel values with CLAHE histogram equalization dramatically improved stability.</li>
+        <li><strong>Performance Bottlenecks:</strong> Iterating over pixels in pure Python loops was too slow. Re-writing deltas as matrix-wide vector operations in NumPy reduced loop latencies by 95%.</li>
+        <li><strong>Dataset Scarcity:</strong> Augmenting PCB dataset folders with synthetic rotations, blurs, and random digital trace breaks helped prevent CNN overfitting during training.</li>
+      </ul>
+    </section>
+
+    <!-- CTA / Footer -->
+
+      <footer class="cs-footer">
+      <p>&copy; 2026 Jan Mohammad. Engineered for High Integrity AI solutions.</p>
+    </footer>
+  </main>
+
+  <script src="case-study.js"></script>
+</body>
+</html>

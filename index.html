@@ -102,12 +102,12 @@
         <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="nav-search-btn" aria-label="Search or command menu">
+        <button class="nav-search-btn" aria-label="Search or command menu" data-tooltip="Open Command Palette (Ctrl+K)">
           <i class="fas fa-search"></i>
           <span class="search-text">Search...</span>
           <span class="search-key-badge">Cmd K</span>
         </button>
-        <a href="Jan_Mohammad_CV.pdf" download class="nav-cv-icon-btn" aria-label="Download CV">
+        <a href="Jan_Mohammad_CV.pdf" download class="nav-cv-icon-btn" aria-label="Download CV" data-tooltip="Download Curriculum Vitae (CV)">
           <i class="fas fa-download"></i>
         </a>
       </div>
@@ -504,9 +504,23 @@
                   <span class="dot-yellow"></span>
                   <span class="dot-green"></span>
                 </div>
-                <div class="browser-address">couragelibrary.in</div>
+                <div class="browser-address">www.couragelibrary.in</div>
               </div>
-              <img src="Image/library.png" alt="Courage Library screenshot" loading="lazy">
+              <div class="event-image-carousel project-image-carousel">
+                <div class="carousel-container">
+                  <img src="Image/library.png" alt="Courage Library landing view" class="active">
+                  <img src="Image/library2.png" alt="Courage Library dashboard page">
+                  <img src="Image/library3.png" alt="Courage Library test engine">
+                  <img src="Image/library4.png" alt="Courage Library reading dashboard">
+                  <img src="Image/library5.png" alt="Courage Library physical center booking">
+                  <img src="Image/library6.png" alt="Courage Library student profiles">
+                  <img src="Image/library7.png" alt="Courage Library mock leaderboard">
+                  <img src="Image/library8.png" alt="Courage Library dark mode settings">
+                </div>
+                <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+                <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+                <div class="carousel-dots"></div>
+              </div>
             </div>
           </div>
           <div class="project-landing-content">
@@ -550,7 +564,7 @@
 
             <div class="project-actions">
               <a href="projects/courage-library.html" class="btn-case-study">Case Study</a>
-              <a href="https://www.couragelibrary.in/" target="_blank" class="btn-code">Live Link</a>
+              <a href="https://www.couragelibrary.in/" target="_blank" class="btn-demo">Live Link</a>
             </div>
           </div>
         </div>
@@ -565,9 +579,22 @@
                   <span class="dot-yellow"></span>
                   <span class="dot-green"></span>
                 </div>
-                <div class="browser-address">companyiq.ai</div>
+                <div class="browser-address">companyiq-ai.vercel.app</div>
               </div>
-              <img src="Image/companyiq.png" alt="CompanyIQ screenshot" loading="lazy">
+              <div class="event-image-carousel project-image-carousel">
+                <div class="carousel-container">
+                  <img src="Image/companyiq.png" alt="CompanyIQ dashboard" class="active">
+                  <img src="Image/companyiq2.png" alt="CompanyIQ analysis report">
+                  <img src="Image/companyiq3.png" alt="CompanyIQ agent monitoring">
+                  <img src="Image/companyiq4.png" alt="CompanyIQ metrics analysis">
+                  <img src="Image/companyiq5.png" alt="CompanyIQ data mapping panel">
+                  <img src="Image/companyiq6.png" alt="CompanyIQ performance charts">
+                  <img src="Image/companyiq7.png" alt="CompanyIQ database settings">
+                </div>
+                <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+                <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+                <div class="carousel-dots"></div>
+              </div>
             </div>
           </div>
           <div class="project-landing-content">
@@ -590,7 +617,38 @@
             <div class="project-tech-tags">
               <span>Next.js 16</span><span>TypeScript</span><span>LangGraph.js</span><span>Gemini</span><span>Prisma</span>
             </div>
-
+            <!-- LangGraph Agent Orchestrator Simulator -->
+            <div class="langgraph-orchestrator" role="region" aria-label="LangGraph Agent Orchestration Simulator">
+              <div class="vis-header">
+                <span class="vis-title"><i class="fas fa-network-wired"></i> LangGraph Agent Orchestrator</span>
+                <span class="vis-status-tag" id="langgraphStatus">Idle</span>
+              </div>
+              <div class="orchestrator-sandbox">
+                <div class="agent-nodes">
+                  <div class="agent-node" id="agentFact">
+                    <i class="fas fa-search-dollar"></i>
+                    <span class="agent-name">Fact Retriever</span>
+                    <span class="agent-status">Pending</span>
+                  </div>
+                  <div class="agent-node" id="agentAnalyze">
+                    <i class="fas fa-calculator"></i>
+                    <span class="agent-name">Analyst Agent</span>
+                    <span class="agent-status">Pending</span>
+                  </div>
+                  <div class="agent-node" id="agentWriter">
+                    <i class="fas fa-pen-nib"></i>
+                    <span class="agent-name">Writer Agent</span>
+                    <span class="agent-status">Pending</span>
+                  </div>
+                </div>
+                <div class="orchestrator-flows">
+                  <div class="flow-arrow flow-1" id="flow1"></div>
+                  <div class="flow-arrow flow-2" id="flow2"></div>
+                </div>
+              </div>
+              <div class="vis-log" id="langgraphLog">System idle. Pipeline diagnostics ready.</div>
+              <button type="button" class="btn-optimize-vis" id="btnRunLangGraph" data-tooltip="Simulate LangGraph agent state transitions">Trigger Agent Pipeline</button>
+            </div>
             <details class="cto-spec-sheet">
               <summary><i class="fas fa-terminal"></i> Technical Specifications (CTO Deep-Dive)</summary>
               <div class="spec-grid">
@@ -611,6 +669,7 @@
 
             <div class="project-actions">
               <a href="projects/company-iq.html" class="btn-case-study">Case Study</a>
+              <a href="https://companyiq-ai.vercel.app/" target="_blank" class="btn-demo">Live Link</a>
               <a href="https://github.com/jansiddiqui/companyiq" target="_blank" class="btn-code">GitHub Code</a>
             </div>
           </div>
@@ -626,9 +685,21 @@
                   <span class="dot-yellow"></span>
                   <span class="dot-green"></span>
                 </div>
-                <div class="browser-address">splitsync.net</div>
+                <div class="browser-address">splitsync-expenses.vercel.app</div>
               </div>
-              <img src="Image/splitsync.png" alt="SplitSync screenshot" loading="lazy">
+              <div class="event-image-carousel project-image-carousel">
+                <div class="carousel-container">
+                  <img src="Image/splitsync.png" alt="SplitSync transaction dashboard" class="active">
+                  <img src="Image/splitsync2.png" alt="SplitSync settlement ledger">
+                  <img src="Image/splitsync3.png" alt="SplitSync CSV data validation">
+                  <img src="Image/splitsync4.png" alt="SplitSync user activity timeline">
+                  <img src="Image/splitsync5.png" alt="SplitSync transaction reports">
+                  <img src="Image/splitsync6.png" alt="SplitSync group settlement dashboard">
+                </div>
+                <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+                <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+                <div class="carousel-dots"></div>
+              </div>
             </div>
           </div>
           <div class="project-landing-content">
@@ -688,7 +759,8 @@
                   </div>
                 </div>
               </div>
-              <button type="button" class="btn-optimize-vis" id="btnOptimizeSplitSync">Run Greedy Optimization</button>
+              <div class="vis-log" id="splitsyncLog">Ready. Direct ledger analysis pending.</div>
+              <button type="button" class="btn-optimize-vis" id="btnOptimizeSplitSync" data-tooltip="Simplify expense transaction ledger pathways">Run Greedy Optimization</button>
             </div>
 
             <details class="cto-spec-sheet">
@@ -711,6 +783,7 @@
 
             <div class="project-actions">
               <a href="projects/splitsync.html" class="btn-case-study">Case Study</a>
+              <a href="https://splitsync-expenses.vercel.app/" target="_blank" class="btn-demo">Live Link</a>
               <a href="https://github.com/jansiddiqui/splitsync" target="_blank" class="btn-code">GitHub Code</a>
             </div>
           </div>
@@ -728,7 +801,18 @@
                 </div>
                 <div class="browser-address">deadlinehero.ai</div>
               </div>
-              <img src="Image/deadline_hero.png" alt="Deadline Hero AI screenshot" loading="lazy">
+              <div class="event-image-carousel project-image-carousel">
+                <div class="carousel-container">
+                  <img src="Image/deadline_hero.png" alt="Deadline Hero planner overview" class="active">
+                  <img src="Image/deadline_hero2.png" alt="Deadline Hero task deadline predictor">
+                  <img src="Image/deadline_hero3.png" alt="Deadline Hero AI scheduler panel">
+                  <img src="Image/deadline_hero4.png" alt="Deadline Hero risk metrics visualizer">
+                  <img src="Image/deadline_hero5.png" alt="Deadline Hero user settings panel">
+                </div>
+                <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+                <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+                <div class="carousel-dots"></div>
+              </div>
             </div>
           </div>
           <div class="project-landing-content">
@@ -772,6 +856,7 @@
 
             <div class="project-actions">
               <a href="projects/deadline-hero.html" class="btn-case-study">Case Study</a>
+              <a href="https://deadlinehero.ai/" target="_blank" class="btn-demo">Live Link</a>
               <a href="https://github.com/jansiddiqui/deadline-hero" target="_blank" class="btn-code">GitHub Code</a>
             </div>
           </div>
@@ -787,9 +872,23 @@
                   <span class="dot-yellow"></span>
                   <span class="dot-green"></span>
                 </div>
-                <div class="browser-address">thecouragelibrary.com/cnts</div>
+                <div class="browser-address">thecouragelibrary.com</div>
               </div>
-              <img src="Image/cnts.png" alt="CNTS screenshot" loading="lazy">
+              <div class="event-image-carousel project-image-carousel">
+                <div class="carousel-container">
+                  <img src="Image/cnts.png" alt="Courage CNTS dashboard overview" class="active">
+                  <img src="Image/cnts2.png" alt="Courage CNTS bulk registration grid">
+                  <img src="Image/cnts3.png" alt="Courage CNTS online test screen">
+                  <img src="Image/cnts4.png" alt="Courage CNTS result analytics panel">
+                  <img src="Image/cnts5.png" alt="Courage CNTS digital certificate viewer">
+                  <img src="Image/cnts6.png" alt="Courage CNTS payment confirmation">
+                  <img src="Image/cnts7.png" alt="Courage CNTS school pins settings">
+                  <img src="Image/cnts8.png" alt="Courage CNTS test schedule grid">
+                </div>
+                <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+                <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+                <div class="carousel-dots"></div>
+              </div>
             </div>
           </div>
           <div class="project-landing-content">
@@ -833,7 +932,78 @@
 
             <div class="project-actions">
               <a href="projects/cnts.html" class="btn-case-study">Case Study</a>
-              <a href="https://thecouragelibrary.com/cnts" target="_blank" class="btn-code">Live Link</a>
+              <a href="https://www.thecouragelibrary.com/" target="_blank" class="btn-demo">Live Link</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PCB Defect Detector -->
+        <div class="project-card project-landing-card" data-category="ai" role="article">
+          <div class="project-landing-visual">
+            <div class="browser-window">
+              <div class="browser-header">
+                <div class="browser-dots">
+                  <span class="dot-red"></span>
+                  <span class="dot-yellow"></span>
+                  <span class="dot-green"></span>
+                </div>
+                <div class="browser-address">pcb-defect.vercel.app</div>
+              </div>
+              <div class="event-image-carousel project-image-carousel">
+                <div class="carousel-container">
+                  <img src="Image/pcb.png" alt="PCB Defect Detector landing view" class="active">
+                  <img src="Image/pcb2.png" alt="PCB Defect anomaly detection markers">
+                  <img src="Image/pcb3.png" alt="PCB Defect custom subtraction filter">
+                </div>
+                <button type="button" class="carousel-btn prev" aria-label="Previous image">❮</button>
+                <button type="button" class="carousel-btn next" aria-label="Next image">❯</button>
+                <div class="carousel-dots"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-landing-content">
+            <span class="project-cat-badge">Computer Vision & AI</span>
+            <h3>PCB Defect Detector</h3>
+            <p>An automated computer vision platform designed to detect and classify manufacturing anomalies on printed circuit boards (PCBs) using custom homography alignment and convolutional networks.</p>
+            <div class="project-problem-solution">
+              <div class="p-s-block">
+                <h5>Problem</h5>
+                <p>Manual PCB testing is slow, prone to human error, and delays high-frequency testing lines.</p>
+              </div>
+              <div class="p-s-block">
+                <h5>Solution</h5>
+                <p>OpenCV homography pipeline aligning test plates to templates, combined with a CNN defect classifier.</p>
+              </div>
+            </div>
+            <div class="project-metric-highlight">
+              <i class="fas fa-microchip"></i> 98.7% classification precision, 230ms evaluation latency
+            </div>
+            <div class="project-tech-tags">
+              <span>Python</span><span>OpenCV</span><span>TensorFlow</span><span>CNN</span><span>NumPy</span>
+            </div>
+
+            <details class="cto-spec-sheet">
+              <summary><i class="fas fa-terminal"></i> Technical Specifications (CTO Deep-Dive)</summary>
+              <div class="spec-grid">
+                <div class="spec-item">
+                  <strong>Vision Pipeline</strong>
+                  <span>Homography matrix alignment resolving skew, rotation, and scaling differences between board samples.</span>
+                </div>
+                <div class="spec-item">
+                  <strong>CNN Classifier</strong>
+                  <span>Custom convolutional network mapping subtraction deltas into component/track anomaly categories.</span>
+                </div>
+                <div class="spec-item">
+                  <strong>Evaluation</strong>
+                  <span>Fast inference pipelines optimizing NumPy matrix operations for sub-300ms cycle times.</span>
+                </div>
+              </div>
+            </details>
+
+            <div class="project-actions">
+              <a href="projects/pcb-defect.html" class="btn-case-study">Case Study</a>
+              <a href="https://pcb-defect.vercel.app/" target="_blank" class="btn-demo">Live Link</a>
+              <a href="https://github.com/jansiddiqui/PCB-Defect" target="_blank" class="btn-code">GitHub Code</a>
             </div>
           </div>
         </div>
@@ -871,18 +1041,6 @@
             </div>
           </div>
 
-          <!-- PCB Defect -->
-          <div class="project-card" data-category="ai" role="article">
-            <img src="Image/pcb.png" onerror="this.src='Image/DLDT.png'" alt="PCB Defect" loading="lazy">
-            <h4>PCB Defect Detector</h4>
-            <p>Automated defect classifier for printed circuit boards. Custom image subtraction + homography alignment.</p>
-            <div class="project-tech-tags">
-              <span>Python</span><span>CNN</span><span>OpenCV</span>
-            </div>
-            <div class="project-actions">
-              <a href="https://github.com/jansiddiqui/PCB-Defect" target="_blank" class="btn-code">GitHub</a>
-            </div>
-          </div>
 
           <!-- Portfolio Website -->
           <div class="project-card" data-category="web" role="article">
@@ -1083,6 +1241,7 @@
           <a href="https://codolio.com/profile/jansiddiaui" target="_blank" class="cp-link">View Profile</a>
         </div>
       </div>
+
       <!-- GitHub Stats -->
       <div class="github-stats-section">
         <h3 class="github-strip-title"><i class="fab fa-github"></i> GitHub Stats</h3>
@@ -1472,17 +1631,34 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 <span>Jan Mohammad</span>. All Rights Reserved.</p>
+    <div class="footer-content">
+      <p>&copy; 2026 <span>Jan Mohammad</span>. All Rights Reserved.</p>
+      <div class="footer-telemetry" id="performanceTelemetryWidget">
+        <span class="tel-dot"></span>
+        <span class="tel-item" id="telDomTime">DOM Ready: --ms</span>
+        <span class="tel-divider">|</span>
+        <span class="tel-item" id="telFps">FPS: --</span>
+        <span class="tel-divider">|</span>
+        <span class="tel-item">Status: Stable</span>
+      </div>
+    </div>
   </footer>
 
-  <div class="back-to-top" aria-label="Back to top">
+  <div class="back-to-top" aria-label="Back to top" data-tooltip="Scroll back to page top">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 15l-6-6-6 6" />
     </svg>
   </div>
 
-  <button class="theme-toggle" aria-label="Toggle theme">
+  <div class="theme-customizer">
+    <button class="color-dot active" data-color="teal" style="background: #06b6d4;" data-tooltip="Cyber Cyan"></button>
+    <button class="color-dot" data-color="purple" style="background: #8b5cf6;" data-tooltip="Amethyst Purple"></button>
+    <button class="color-dot" data-color="gold" style="background: #f59e0b;" data-tooltip="Matte Gold"></button>
+    <button class="color-dot" data-color="ruby" style="background: #ef4444;" data-tooltip="Ruby Crimson"></button>
+  </div>
+
+  <button class="theme-toggle" aria-label="Toggle theme" data-tooltip="Switch light / dark design system mode">
     <i class="fas fa-moon" aria-hidden="true"></i>
   </button>
 
@@ -1503,6 +1679,8 @@
       </div>
     </div>
   </div>
+
+
 
 </body>
 

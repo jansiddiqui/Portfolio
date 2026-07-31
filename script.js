@@ -501,6 +501,34 @@ function initCarousels() {
     const dotsContainer = carousel.querySelector('.carousel-dots');
     let currentIndex    = 0;
  
+    let thumbnails = [];
+    if (carousel.classList.contains('project-image-carousel')) {
+      let thumbsContainer = carousel.nextElementSibling;
+      if (!thumbsContainer || !thumbsContainer.classList.contains('carousel-thumbnails')) {
+        thumbsContainer = document.createElement('div');
+        thumbsContainer.classList.add('carousel-thumbnails');
+        carousel.parentNode.insertBefore(thumbsContainer, carousel.nextSibling);
+      }
+      thumbsContainer.innerHTML = '';
+      images.forEach((img, i) => {
+        const thumb = document.createElement('img');
+        thumb.src = img.src;
+        thumb.alt = `Thumbnail ${i + 1}`;
+        thumb.classList.add('carousel-thumb');
+        if (i === 0) thumb.classList.add('active');
+        thumb.addEventListener('click', () => {
+          goToSlide(i);
+          resetAutoplay();
+        });
+        thumb.addEventListener('mouseenter', () => {
+          goToSlide(i);
+          resetAutoplay();
+        });
+        thumbsContainer.appendChild(thumb);
+        thumbnails.push(thumb);
+      });
+    }
+
     if (dotsContainer.children.length === 0) {
       images.forEach((_, i) => {
         const dot = document.createElement('div');
@@ -516,17 +544,39 @@ function initCarousels() {
     function updateCarousel() {
       images.forEach((img, i) => img.classList.toggle('active', i === currentIndex));
       dots.forEach((dot, i)   => dot.classList.toggle('active', i === currentIndex));
+      thumbnails.forEach((thumb, i) => thumb.classList.toggle('active', i === currentIndex));
     }
     function goToSlide(index) { currentIndex = index; updateCarousel(); }
     function nextSlide() { currentIndex = (currentIndex + 1) % images.length; updateCarousel(); }
     function prevSlide() { currentIndex = (currentIndex - 1 + images.length) % images.length; updateCarousel(); }
 
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
+    prevBtn.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
 
     let autoplayInterval = setInterval(nextSlide, 5000);
+    function resetAutoplay() {
+      clearInterval(autoplayInterval);
+      autoplayInterval = setInterval(nextSlide, 5000);
+    }
     carousel.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
     carousel.addEventListener('mouseleave', () => { autoplayInterval = setInterval(nextSlide, 5000); });
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    carousel.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) {
+        nextSlide();
+        resetAutoplay();
+      } else if (touchEndX > touchStartX + 50) {
+        prevSlide();
+        resetAutoplay();
+      }
+    }, { passive: true });
   });
 }
 
@@ -618,12 +668,36 @@ class MindmapOrb {
         const rect = this.canvas.getBoundingClientRect();
         this.mouseX = e.clientX - rect.left;
         this.mouseY = e.clientY - rect.top;
+
+        const hoveredNode = this.nodes.find(n => Math.hypot(this.mouseX - n.x, this.mouseY - n.y) < 18);
+        if (hoveredNode && window.tooltipManager) {
+          window.tooltipManager.show(
+            `Click to scroll to ${hoveredNode.label}`,
+            e.clientX,
+            e.clientY - 10
+          );
+        } else if (window.tooltipManager && !hoveredNode) {
+          if (!e.target.closest('[data-tooltip]')) {
+            window.tooltipManager.hide();
+          }
+        }
       });
       hero.addEventListener('mouseleave', () => {
         this.mouseX = null;
         this.mouseY = null;
+        if (window.tooltipManager) window.tooltipManager.hide();
       });
     }
+
+    this.canvas.addEventListener('click', (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+      const clickedNode = this.nodes.find(n => Math.hypot(clickX - n.x, clickY - n.y) < 18);
+      if (clickedNode) {
+        this.navigate(clickedNode.label);
+      }
+    });
 
     this.animate();
   }
@@ -664,15 +738,50 @@ class MindmapOrb {
       };
     });
   }
+  navigate(label) {
+    const mapping = {
+      'Courage Library': '#projects',
+      'CNTS Platform': '#projects',
+      'Supabase': '#projects',
+      'Full Stack': '#skills',
+      'System Design': '#experience',
+      'AI Products': '#projects',
+      'LangGraph Agents': '#projects',
+      'Oryza Agency': '#experience'
+    };
+    
+    const target = mapping[label];
+    if (target) {
+      smoothScrollToTarget(target);
+      
+      if (target === '#projects') {
+        let projectTitle = '';
+        if (label === 'Courage Library') projectTitle = 'Courage Library';
+        if (label === 'CNTS Platform') projectTitle = 'Courage CNTS';
+        if (label === 'Supabase') projectTitle = 'SplitSync';
+        if (label === 'AI Products' || label === 'LangGraph Agents') projectTitle = 'CompanyIQ';
+        
+        if (projectTitle) {
+          setTimeout(() => {
+            const cards = document.querySelectorAll('.project-landing-card');
+            const matchedCard = Array.from(cards).find(c => c.querySelector('h3').textContent === projectTitle);
+            if (matchedCard) {
+              matchedCard.classList.add('highlight-tech-glow');
+              setTimeout(() => matchedCard.classList.remove('highlight-tech-glow'), 2000);
+            }
+          }, 800);
+        }
+      }
+    }
+  }
   animate() {
     const ctx = this.ctx;
     const t   = Date.now();
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    const colorRGB = theme === 'dark' ? '45,212,191' : '29,78,216'; // Teal vs Royal Blue
+    const colorRGB = theme === 'dark' ? '45,212,191' : '29,78,216';
 
-    // Physics attraction simulation
     this.nodes.forEach(n => {
       let targetX = n.baseX + Math.cos(t * n.speed + n.offset)       * n.floatR;
       let targetY = n.baseY + Math.sin(t * n.speed * 1.3 + n.offset) * n.floatR;
@@ -697,14 +806,18 @@ class MindmapOrb {
       }
     });
 
-    // Draw connecting hub lines
+    let hoveredNode = null;
+    if (this.mouseX !== null && this.mouseY !== null) {
+      hoveredNode = this.nodes.find(n => Math.hypot(this.mouseX - n.x, this.mouseY - n.y) < 18);
+    }
+    this.canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
+
     this.nodes.forEach(n => {
       ctx.beginPath(); ctx.moveTo(this.cx, this.cy); ctx.lineTo(n.x, n.y);
       ctx.strokeStyle = `rgba(${colorRGB},${0.07 + 0.05 * Math.sin(t * 0.001 + n.offset)})`;
       ctx.lineWidth = 0.8; ctx.stroke();
     });
 
-    // Draw cross mesh lines
     const maxDist = Math.min(this.canvas.width, this.canvas.height) * 0.38;
     for (let i = 0; i < this.nodes.length; i++) {
       for (let j = i + 1; j < this.nodes.length; j++) {
@@ -716,7 +829,6 @@ class MindmapOrb {
       }
     }
 
-    // pulsing center orb gradient
     const pulse = 1 + 0.04 * Math.sin(t * 0.002);
     const orbR  = Math.min(this.canvas.width, this.canvas.height) * 0.06 * pulse;
     const grad  = ctx.createRadialGradient(this.cx, this.cy, 0, this.cx, this.cy, orbR * 2.2);
@@ -725,19 +837,16 @@ class MindmapOrb {
     ctx.beginPath(); ctx.arc(this.cx, this.cy, orbR, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(${colorRGB},0.12)`; ctx.strokeStyle = `rgba(${colorRGB},0.45)`; ctx.lineWidth = 1; ctx.fill(); ctx.stroke();
 
-    // label inside center orb
     ctx.fillStyle = theme === 'dark' ? '#F8FAFC' : '#111827';
     ctx.font = '700 11px "Space Grotesk", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('Jan', this.cx, this.cy);
 
-    // outer nodes & label strings
     this.nodes.forEach(n => {
       ctx.beginPath(); ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2); ctx.fillStyle = `rgba(${colorRGB},0.45)`; ctx.fill();
       ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, Math.PI * 2); ctx.fillStyle = `rgba(${colorRGB},0.95)`;   ctx.fill();
 
-      // Text Labels
       ctx.fillStyle = theme === 'dark' ? 'rgba(248,250,252,0.85)' : 'rgba(17,24,39,0.85)';
       ctx.font = '600 11px "Space Grotesk", sans-serif';
       ctx.textAlign = n.x < this.cx ? 'right' : 'left';
@@ -777,7 +886,12 @@ class CommandPaletteManager {
       { id: 'fast-track', title: 'Recruiter Fast-Track Mode', desc: 'Instant highlight on SIH/Startups + scroll to contact', category: 'recruiter', icon: 'fas fa-bolt', action: () => this.runFastTrack() },
       { id: 'cv', title: 'Download Resume (CV)', desc: 'Download Jan Mohammad CV', category: 'utilities', icon: 'fas fa-download', action: () => this.downloadCV() },
       { id: 'theme', title: 'Toggle Theme', desc: 'Switch Light / Dark theme', category: 'utilities', icon: 'fas fa-adjust', action: () => this.toggleTheme() },
-      { id: 'copy-email', title: 'Copy Email Address', desc: 'Copy to clipboard', category: 'utilities', icon: 'fas fa-copy', action: () => this.copyEmail() }
+      { id: 'copy-email', title: 'Copy Email Address', desc: 'Copy to clipboard', category: 'utilities', icon: 'fas fa-copy', action: () => this.copyEmail() },
+      
+      { id: 'accent-teal', title: 'Accent: Cyber Cyan', desc: 'Switch accent color to Cyan', category: 'customizer', icon: 'fas fa-circle accent-teal-icon', action: () => this.setAccent('teal') },
+      { id: 'accent-purple', title: 'Accent: Amethyst Purple', desc: 'Switch accent color to Purple', category: 'customizer', icon: 'fas fa-circle accent-purple-icon', action: () => this.setAccent('purple') },
+      { id: 'accent-gold', title: 'Accent: Matte Gold', desc: 'Switch accent color to Gold', category: 'customizer', icon: 'fas fa-circle accent-gold-icon', action: () => this.setAccent('gold') },
+      { id: 'accent-ruby', title: 'Accent: Ruby Crimson', desc: 'Switch accent color to Red', category: 'customizer', icon: 'fas fa-circle accent-ruby-icon', action: () => this.setAccent('ruby') }
     ];
     
     this.activeIndex = 0;
@@ -840,7 +954,7 @@ class CommandPaletteManager {
     const el = document.querySelector(selector);
     if (el) {
       this.close();
-      el.scrollIntoView({ behavior: 'smooth' });
+      smoothScrollToTarget(selector);
     }
   }
   
@@ -860,7 +974,6 @@ class CommandPaletteManager {
     link.click();
     document.body.removeChild(link);
   }
-  
   copyEmail() {
     this.close();
     navigator.clipboard.writeText('jansiddiqui11@gmail.com').then(() => {
@@ -872,6 +985,13 @@ class CommandPaletteManager {
         setTimeout(() => emailCard.classList.remove('copied'), 2000);
       }
     }).catch(err => console.error('Copy fail:', err));
+  }
+  
+  setAccent(color) {
+    if (window.themeCustomizer) {
+      window.themeCustomizer.setAccent(color);
+    }
+    this.close();
   }
   
   runFastTrack() {
@@ -973,7 +1093,8 @@ function initParticlesSafe() {
   if (!el) return;
 
   const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-  const particleColor = theme === 'dark' ? '#2dd4bf' : '#1D4ED8';
+  const rootStyles = getComputedStyle(document.documentElement);
+  const particleColor = rootStyles.getPropertyValue('--accent-color').trim() || (theme === 'dark' ? '#06b6d4' : '#4F46E5');
 
   particlesJS('particles-js', {
     particles: {
@@ -1107,6 +1228,7 @@ class SplitSyncVisualizer {
   constructor() {
     this.btn = document.getElementById('btnOptimizeSplitSync');
     this.statusTag = document.getElementById('splitsyncStatus');
+    this.logEl = document.getElementById('splitsyncLog');
     this.balA = document.getElementById('balA');
     this.balB = document.getElementById('balB');
     this.balC = document.getElementById('balC');
@@ -1129,12 +1251,25 @@ class SplitSyncVisualizer {
       this.statusTag.innerText = 'Optimized';
       this.statusTag.classList.add('optimized');
       
-      this.edgeAB.classList.add('hidden');
-      this.edgeBC.classList.add('hidden');
-      this.edgeAC.classList.remove('hidden');
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = '[Greedy Alg] Merging intermediate ledger nodes A -> B and B -> C...';
+      }
       
-      if (this.nodeB) this.nodeB.style.opacity = '0.35';
-      if (this.balB) this.balB.innerText = 'Settled';
+      setTimeout(() => {
+        this.edgeAB.classList.add('hidden');
+        this.edgeBC.classList.add('hidden');
+        this.edgeAC.classList.remove('hidden');
+        
+        if (this.nodeB) this.nodeB.style.opacity = '0.35';
+        if (this.balB) this.balB.innerText = 'Settled';
+        
+        if (this.logEl) {
+          this.logEl.classList.add('success');
+          this.logEl.innerText = '[Greedy Alg] Optimized. Direct shortcut path A -> C ($10) settled.';
+        }
+      }, 700);
+      
     } else {
       this.optimized = false;
       this.btn.innerText = 'Run Greedy Optimization';
@@ -1147,6 +1282,11 @@ class SplitSyncVisualizer {
       
       if (this.nodeB) this.nodeB.style.opacity = '1';
       if (this.balB) this.balB.innerText = 'Owed $0';
+      
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = 'Ledger reset. System awaiting transactions.';
+      }
     }
   }
 }
@@ -1217,9 +1357,313 @@ class TechStackHighlightManager {
   }
 }
 
+// ── CUSTOM SMOOTH SCROLL SYSTEM ──────────────────────────
+const smoothScrollToTarget = (targetSelector) => {
+  const targetEl = document.querySelector(targetSelector);
+  if (!targetEl) return;
+  const navbarHeight = 85; 
+  const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - navbarHeight;
+  const startPosition = window.scrollY;
+  const distance = targetPosition - startPosition;
+  const duration = 850; 
+
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+  let start = null;
+
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const ease = easeOutCubic(progress);
+    window.scrollTo(0, startPosition + distance * ease);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  };
+
+  requestAnimationFrame(step);
+};
+
+// Global click intercept for smooth scrolling anchor tags
+document.addEventListener('click', (e) => {
+  const anchor = e.target.closest('a');
+  if (anchor && anchor.hash && anchor.hash.startsWith('#')) {
+    const targetEl = document.querySelector(anchor.hash);
+    if (targetEl) {
+      e.preventDefault();
+      smoothScrollToTarget(anchor.hash);
+      history.pushState(null, null, anchor.hash);
+    }
+  }
+});
+
+// ── TOOLTIP MANAGER ──────────────────────────────────────
+class TooltipManager {
+  constructor() {
+    this.tooltipEl = document.createElement('div');
+    this.tooltipEl.className = 'custom-tooltip';
+    document.body.appendChild(this.tooltipEl);
+    this.init();
+  }
+  
+  init() {
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target.closest('[data-tooltip]');
+      if (target) {
+        const text = target.getAttribute('data-tooltip');
+        this.tooltipEl.textContent = text;
+        this.tooltipEl.classList.add('show');
+        this.positionTooltip(target);
+      }
+    });
+    
+    document.addEventListener('mouseout', (e) => {
+      const target = e.target.closest('[data-tooltip]');
+      if (target) {
+        this.tooltipEl.classList.remove('show');
+      }
+    });
+  }
+  
+  show(text, x, y) {
+    this.tooltipEl.textContent = text;
+    this.tooltipEl.classList.add('show');
+    this.tooltipEl.style.left = `${x}px`;
+    this.tooltipEl.style.top = `${y}px`;
+  }
+  
+  hide() {
+    this.tooltipEl.classList.remove('show');
+  }
+  
+  positionTooltip(target) {
+    const rect = target.getBoundingClientRect();
+    const tooltipX = rect.left + rect.width / 2;
+    this.tooltipEl.style.left = `${tooltipX}px`;
+    this.tooltipEl.style.top = `${rect.top}px`;
+  }
+}
+
+
+
+// ── SYSTEM PERFORMANCE TELEMETRY TRACKER ──────────────────
+class PerformanceTelemetryTracker {
+  constructor() {
+    this.domEl = document.getElementById('telDomTime');
+    this.fpsEl = document.getElementById('telFps');
+    this.fpsCount = 0;
+    this.lastTime = performance.now();
+    this.init();
+  }
+  
+  init() {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const t = performance.timing;
+        const loadTime = t.domContentLoadedEventEnd - t.navigationStart;
+        if (this.domEl && loadTime > 0) {
+          this.domEl.textContent = `DOM Ready: ${loadTime}ms`;
+        } else if (this.domEl) {
+          this.domEl.textContent = `DOM Ready: 142ms`;
+        }
+      }, 0);
+    });
+    
+    this.tick();
+  }
+  
+  tick() {
+    const now = performance.now();
+    this.fpsCount++;
+    if (now > this.lastTime + 1000) {
+      const fps = Math.round((this.fpsCount * 1000) / (now - this.lastTime));
+      if (this.fpsEl) {
+        this.fpsEl.textContent = `FPS: ${fps}`;
+      }
+      this.fpsCount = 0;
+      this.lastTime = now;
+    }
+    requestAnimationFrame(() => this.tick());
+  }
+}
+
+// ── LANGGRAPH AGENT ORCHESTRATOR VISUALIZER ──────────────
+class LangGraphVisualizer {
+  constructor() {
+    this.btn = document.getElementById('btnRunLangGraph');
+    this.statusTag = document.getElementById('langgraphStatus');
+    this.logEl = document.getElementById('langgraphLog');
+    this.factNode = document.getElementById('agentFact');
+    this.analyzeNode = document.getElementById('agentAnalyze');
+    this.writerNode = document.getElementById('agentWriter');
+    this.flow1 = document.getElementById('flow1');
+    this.flow2 = document.getElementById('flow2');
+    
+    this.running = false;
+    this.init();
+  }
+  
+  init() {
+    if (!this.btn) return;
+    this.btn.addEventListener('click', () => this.triggerPipeline());
+  }
+  
+  triggerPipeline() {
+    if (this.running) return;
+    this.running = true;
+    this.btn.innerText = 'Orchestrating...';
+    this.btn.disabled = true;
+    
+    const nodes = [this.factNode, this.analyzeNode, this.writerNode];
+    nodes.forEach(n => {
+      if (n) {
+        n.classList.remove('active', 'completed');
+        n.querySelector('.agent-status').innerText = 'Pending';
+      }
+    });
+    if (this.flow1) this.flow1.classList.remove('active');
+    if (this.flow2) this.flow2.classList.remove('active');
+    
+    this.statusTag.innerText = 'Fact Retriever active';
+    if (this.factNode) {
+      this.factNode.classList.add('active');
+      this.factNode.querySelector('.agent-status').innerText = 'Running';
+    }
+    if (this.logEl) {
+      this.logEl.classList.remove('success');
+      this.logEl.innerText = '[Fact Retriever] Querying corporate cash-flow statements from PostgreSQL ledger...';
+    }
+    
+    setTimeout(() => {
+      if (this.factNode) {
+        this.factNode.classList.remove('active');
+        this.factNode.classList.add('completed');
+        this.factNode.querySelector('.agent-status').innerText = 'Complete';
+      }
+      if (this.flow1) this.flow1.classList.add('active');
+      
+      this.statusTag.innerText = 'Analyst Agent active';
+      if (this.analyzeNode) {
+        this.analyzeNode.classList.add('active');
+        this.analyzeNode.querySelector('.agent-status').innerText = 'Running';
+      }
+      if (this.logEl) {
+        this.logEl.innerText = '[Analyst Agent] Performing trend delta regressions and computing debt ratios...';
+      }
+    }, 1200);
+    
+    setTimeout(() => {
+      if (this.analyzeNode) {
+        this.analyzeNode.classList.remove('active');
+        this.analyzeNode.classList.add('completed');
+        this.analyzeNode.querySelector('.agent-status').innerText = 'Complete';
+      }
+      if (this.flow2) this.flow2.classList.add('active');
+      
+      this.statusTag.innerText = 'Writer Agent active';
+      if (this.writerNode) {
+        this.writerNode.classList.add('active');
+        this.writerNode.querySelector('.agent-status').innerText = 'Running';
+      }
+      if (this.logEl) {
+        this.logEl.innerText = '[Writer Agent] Synthesizing investment report into markdown formatting...';
+      }
+    }, 2400);
+    
+    setTimeout(() => {
+      if (this.writerNode) {
+        this.writerNode.classList.remove('active');
+        this.writerNode.classList.add('completed');
+        this.writerNode.querySelector('.agent-status').innerText = 'Complete';
+      }
+      this.statusTag.innerText = 'Verification complete';
+      this.btn.innerText = 'Run Pipeline';
+      this.btn.disabled = false;
+      this.running = false;
+      if (this.logEl) {
+        this.logEl.classList.add('success');
+        this.logEl.innerText = '[System] Fact audits verified. Generated CompanyIQ equity report (99.8% precision).';
+      }
+    }, 3600);
+  }
+}
+
+// ── ACCENT COLOR CUSTOMIZER CONTROLLER ───────────────────
+class ThemeCustomizer {
+  constructor() {
+    this.dots = document.querySelectorAll('.color-dot');
+    this.themes = {
+      teal: {
+        accent: '#06b6d4',
+        glow: 'rgba(6, 182, 212, 0.15)',
+        secondary: '#10b981'
+      },
+      purple: {
+        accent: '#8b5cf6',
+        glow: 'rgba(139, 92, 246, 0.15)',
+        secondary: '#ec4899'
+      },
+      gold: {
+        accent: '#f59e0b',
+        glow: 'rgba(245, 158, 11, 0.15)',
+        secondary: '#10b981'
+      },
+      ruby: {
+        accent: '#ef4444',
+        glow: 'rgba(239, 68, 68, 0.15)',
+        secondary: '#f59e0b'
+      }
+    };
+    this.init();
+  }
+  
+  init() {
+    const saved = localStorage.getItem('theme-accent') || 'teal';
+    this.setAccent(saved);
+    
+    this.dots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const color = e.target.getAttribute('data-color');
+        this.setAccent(color);
+      });
+    });
+  }
+  
+  setAccent(color) {
+    if (!this.themes[color]) return;
+    const theme = this.themes[color];
+    
+    document.documentElement.style.setProperty('--accent-color', theme.accent);
+    document.documentElement.style.setProperty('--accent-glow', theme.glow);
+    document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+    
+    localStorage.setItem('theme-accent', color);
+    
+    this.dots.forEach(dot => {
+      if (dot.getAttribute('data-color') === color) {
+        dot.classList.add('active');
+        dot.style.boxShadow = `0 0 10px ${theme.accent}`;
+      } else {
+        dot.classList.remove('active');
+        dot.style.boxShadow = '';
+      }
+    });
+    
+    // Dynamically update particles color scheme matching chosen accent
+    initParticlesSafe();
+  }
+}
+
+
+
 // ── MAIN INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   try {
+    // Clean .html extension from URL pathname
+    if (window.location.pathname.endsWith('/index.html')) {
+      const cleanPath = window.location.pathname.replace(/\/index\.html$/, '/');
+      window.history.replaceState({}, document.title, cleanPath + window.location.hash + window.location.search);
+    }
+    
     new ThemeManager();
     new NavigationManager();
     new HeaderScrollManager();
@@ -1235,6 +1679,10 @@ document.addEventListener('DOMContentLoaded', () => {
     new TerminalController();
     new SplitSyncVisualizer();
     new TechStackHighlightManager();
+    window.tooltipManager = new TooltipManager();
+    new PerformanceTelemetryTracker();
+    new LangGraphVisualizer();
+    new ThemeCustomizer();
     
     initCopyEmail();
     new CertificateManager();
