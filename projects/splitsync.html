@@ -16,10 +16,6 @@
     (function() {
       const saved = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', saved);
-      if (window.location.pathname.endsWith('.html')) {
-        const cleanPath = window.location.pathname.replace(/\.html$/, '');
-        window.history.replaceState({}, document.title, cleanPath + window.location.hash + window.location.search);
-      }
       const savedAccent = localStorage.getItem('theme-accent') || 'teal';
       const themes = {
         teal: { accent: '#06b6d4', rgb: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.15)', secondary: '#10b981' },
@@ -125,6 +121,47 @@
           <h4>Inefficient Settlements</h4>
           <p>Group transactions often result in circular, redundant debts (e.g., A owes B, B owes C, C owes A). A greedy pathfinder simplifies balances to minimal edges.</p>
         </div>
+      <!-- SplitSync Algorithm Visualizer Playground -->
+      <div class="splitsync-visualizer" style="max-width: 600px; margin: 2.5rem 0 0;" role="region" aria-label="SplitSync Transaction Simplification Simulator">
+        <div class="vis-header">
+          <span class="vis-title"><i class="fas fa-project-diagram"></i> SplitSync Algorithm Simulator</span>
+          <span class="vis-status-tag" id="splitsyncStatus">Unoptimized</span>
+        </div>
+        <div class="vis-sandbox">
+          <div class="vis-nodes">
+            <div class="vis-node" id="nodeA">
+              <div class="node-avatar"><i class="fas fa-user"></i></div>
+              <span class="node-label">Alice</span>
+              <span class="node-bal" id="balA">Owes $10</span>
+            </div>
+            <div class="vis-node" id="nodeB">
+              <div class="node-avatar"><i class="fas fa-user"></i></div>
+              <span class="node-label">Bob</span>
+              <span class="node-bal" id="balB">Owed $0</span>
+            </div>
+            <div class="vis-node" id="nodeC">
+              <div class="node-avatar"><i class="fas fa-user"></i></div>
+              <span class="node-label">Charlie</span>
+              <span class="node-bal" id="balC">Owed $10</span>
+            </div>
+          </div>
+          <div class="vis-edges">
+            <div class="vis-edge edge-a-b" id="edgeAB">
+              <span class="edge-val">$10</span>
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+            <div class="vis-edge edge-b-c" id="edgeBC">
+              <span class="edge-val">$10</span>
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </div>
+            <div class="vis-edge edge-a-c hidden" id="edgeAC">
+              <span class="edge-val green">$10</span>
+              <i class="fas fa-long-arrow-alt-right green"></i>
+            </div>
+          </div>
+        </div>
+        <div class="vis-log" id="splitsyncLog">Ready. Direct ledger analysis pending.</div>
+        <button type="button" class="btn-optimize-vis" id="btnOptimizeSplitSync" data-tooltip="Simplify expense transaction ledger pathways">Run Greedy Optimization</button>
       </div>
     </section>
 

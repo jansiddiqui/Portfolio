@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <!-- Dark background -->
+  <rect width="512" height="512" rx="80" fill="#0d1b2e"/>
+  <!-- Gradient accent strip across top -->
+  <rect x="0" y="0" width="512" height="8" rx="0" fill="url(#accent)"/>
+  <!-- JM in gradient -->
+  <text x="256" y="330" text-anchor="middle"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-size="240" font-weight="900" fill="url(#accent)"
+    letter-spacing="-10">JM</text>
+  <!-- Gradient underline bar -->
+  <rect x="80" y="366" width="352" height="6" rx="3" fill="url(#accent)"/>
+</svg>

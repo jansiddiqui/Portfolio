@@ -447,23 +447,46 @@ function initCopyEmail() {
   });
 }
 
-// ── SKILL PROGRESS ANIMATION ──────────────────────────────
+// ── SKILL DOT RATING SYSTEM (replaces % progress bars) ────
 function initSkillProgress() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const bar      = entry.target.querySelector('.skill-progress');
-        if (!bar) return;
-        const progress = bar.getAttribute('data-progress');
-        bar.style.width = '0%';
-        bar.offsetHeight;
-        setTimeout(() => { bar.style.width = `${progress}%`; }, 100);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+  const getLevelLabel = (p) => {
+    if (p >= 90) return 'Expert';
+    if (p >= 80) return 'Advanced';
+    if (p >= 65) return 'Proficient';
+    if (p >= 50) return 'Familiar';
+    return 'Learning';
+  };
+  const getFilledDots = (p) => {
+    if (p >= 90) return 5;
+    if (p >= 75) return 4;
+    if (p >= 55) return 3;
+    if (p >= 35) return 2;
+    return 1;
+  };
+
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const bar = card.querySelector('.skill-progress');
+    if (!bar) return;
+    const progress = parseInt(bar.getAttribute('data-progress'), 10);
+    const filled = getFilledDots(progress);
+    const label  = getLevelLabel(progress);
+
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'skill-dots';
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'skill-dot' + (i <= filled ? ' filled' : '');
+      dotsWrap.appendChild(dot);
+    }
+    const levelLabel = document.createElement('span');
+    levelLabel.className = 'skill-level-label';
+    levelLabel.textContent = label;
+    dotsWrap.appendChild(levelLabel);
+
+    card.appendChild(dotsWrap);
+  });
 }
+
 
 // ── CERTIFICATE MANAGER ───────────────────────────────────
 class CertificateManager {
@@ -648,214 +671,64 @@ class CounterAnimation {
 }
 
 // ── INTERACTIVE MINDMAP CANVAS ────────────────────────────
-class MindmapOrb {
+class NetInfographicController {
   constructor() {
-    this.canvas = document.getElementById('mindmapCanvas');
-    if (!this.canvas) return;
-    this.ctx   = this.canvas.getContext('2d');
-    this.nodes = [];
-    this.mouseX = null;
-    this.mouseY = null;
+    this.nodes = document.querySelectorAll('.net-node');
+    this.connections = document.querySelectorAll('.conn-line');
     this.init();
   }
   init() {
-    this.resize();
-    window.addEventListener('resize', debounce(() => this.resize(), 200));
-
-    const hero = document.getElementById('hero');
-    if (hero) {
-      hero.addEventListener('mousemove', (e) => {
-        const rect = this.canvas.getBoundingClientRect();
-        this.mouseX = e.clientX - rect.left;
-        this.mouseY = e.clientY - rect.top;
-
-        const hoveredNode = this.nodes.find(n => Math.hypot(this.mouseX - n.x, this.mouseY - n.y) < 18);
-        if (hoveredNode && window.tooltipManager) {
+    if (!this.nodes.length) return;
+    this.nodes.forEach((node, idx) => {
+      const line = document.querySelector(`.conn-line.line-${idx + 1}`);
+      
+      node.addEventListener('mouseenter', (e) => {
+        if (line) line.classList.add('active');
+        
+        const label = node.querySelector('.node-label').textContent;
+        if (window.tooltipManager) {
           window.tooltipManager.show(
-            `Click to scroll to ${hoveredNode.label}`,
+            `${label} →`,
             e.clientX,
             e.clientY - 10
           );
-        } else if (window.tooltipManager && !hoveredNode) {
-          if (!e.target.closest('[data-tooltip]')) {
-            window.tooltipManager.hide();
+        }
+      });
+      
+      node.addEventListener('mousemove', (e) => {
+        if (window.tooltipManager) {
+          window.tooltipManager.updatePosition(e.clientX, e.clientY - 10);
+        }
+      });
+      
+      node.addEventListener('mouseleave', () => {
+        if (line) line.classList.remove('active');
+        if (window.tooltipManager) window.tooltipManager.hide();
+      });
+      
+      node.addEventListener('click', () => {
+        const target = node.getAttribute('data-target');
+        const project = node.getAttribute('data-project');
+        
+        if (target) {
+          smoothScrollToTarget(target);
+          
+          if (target === '#projects' && project) {
+            setTimeout(() => {
+              const cards = document.querySelectorAll('.project-landing-card');
+              const matchedCard = Array.from(cards).find(c => {
+                const titleEl = c.querySelector('h3');
+                return titleEl && titleEl.textContent.trim() === project;
+              });
+              if (matchedCard) {
+                matchedCard.classList.add('highlight-tech-glow');
+                setTimeout(() => matchedCard.classList.remove('highlight-tech-glow'), 2000);
+              }
+            }, 800);
           }
         }
       });
-      hero.addEventListener('mouseleave', () => {
-        this.mouseX = null;
-        this.mouseY = null;
-        if (window.tooltipManager) window.tooltipManager.hide();
-      });
-    }
-
-    this.canvas.addEventListener('click', (e) => {
-      const rect = this.canvas.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-      const clickedNode = this.nodes.find(n => Math.hypot(clickX - n.x, clickY - n.y) < 18);
-      if (clickedNode) {
-        this.navigate(clickedNode.label);
-      }
     });
-
-    this.animate();
-  }
-  resize() {
-    const container    = this.canvas.parentElement;
-    this.canvas.width  = container.offsetWidth;
-    this.canvas.height = container.offsetHeight;
-    this.cx = this.canvas.width  / 2;
-    this.cy = this.canvas.height / 2;
-    this.buildNodes();
-  }
-  buildNodes() {
-    const labels = [
-      'Courage Library',
-      'LangGraph Agents',
-      'Supabase',
-      'System Design',
-      'CNTS Platform',
-      'Oryza Agency',
-      'AI Products',
-      'Full Stack'
-    ];
-    let radiusScale = 0.33;
-    if (this.canvas.width < 600) {
-      radiusScale = 0.22;
-    }
-    const radius = Math.min(this.canvas.width, this.canvas.height) * radiusScale;
-    this.nodes = labels.map((label, i) => {
-      const angle = (i / labels.length) * Math.PI * 2 - Math.PI / 2;
-      return {
-        label, angle,
-        baseX: this.cx + Math.cos(angle) * radius,
-        baseY: this.cy + Math.sin(angle) * radius,
-        x: 0, y: 0,
-        speed:  0.0003 + Math.random() * 0.0004,
-        offset: Math.random() * Math.PI * 2,
-        floatR: 4 + Math.random() * 5
-      };
-    });
-  }
-  navigate(label) {
-    const mapping = {
-      'Courage Library': '#projects',
-      'CNTS Platform': '#projects',
-      'Supabase': '#projects',
-      'Full Stack': '#skills',
-      'System Design': '#experience',
-      'AI Products': '#projects',
-      'LangGraph Agents': '#projects',
-      'Oryza Agency': '#experience'
-    };
-    
-    const target = mapping[label];
-    if (target) {
-      smoothScrollToTarget(target);
-      
-      if (target === '#projects') {
-        let projectTitle = '';
-        if (label === 'Courage Library') projectTitle = 'Courage Library';
-        if (label === 'CNTS Platform') projectTitle = 'Courage CNTS';
-        if (label === 'Supabase') projectTitle = 'SplitSync';
-        if (label === 'AI Products' || label === 'LangGraph Agents') projectTitle = 'CompanyIQ';
-        
-        if (projectTitle) {
-          setTimeout(() => {
-            const cards = document.querySelectorAll('.project-landing-card');
-            const matchedCard = Array.from(cards).find(c => c.querySelector('h3').textContent === projectTitle);
-            if (matchedCard) {
-              matchedCard.classList.add('highlight-tech-glow');
-              setTimeout(() => matchedCard.classList.remove('highlight-tech-glow'), 2000);
-            }
-          }, 800);
-        }
-      }
-    }
-  }
-  animate() {
-    const ctx = this.ctx;
-    const t   = Date.now();
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    const colorRGB = theme === 'dark' ? '45,212,191' : '29,78,216';
-
-    this.nodes.forEach(n => {
-      let targetX = n.baseX + Math.cos(t * n.speed + n.offset)       * n.floatR;
-      let targetY = n.baseY + Math.sin(t * n.speed * 1.3 + n.offset) * n.floatR;
-
-      if (this.mouseX !== null && this.mouseY !== null) {
-        const dx = this.mouseX - targetX;
-        const dy = this.mouseY - targetY;
-        const dist = Math.hypot(dx, dy);
-        if (dist < 180) {
-          const force = (180 - dist) / 180;
-          targetX += dx * force * 0.16;
-          targetY += dy * force * 0.16;
-        }
-      }
-
-      if (!n.x) {
-        n.x = targetX;
-        n.y = targetY;
-      } else {
-        n.x += (targetX - n.x) * 0.1;
-        n.y += (targetY - n.y) * 0.1;
-      }
-    });
-
-    let hoveredNode = null;
-    if (this.mouseX !== null && this.mouseY !== null) {
-      hoveredNode = this.nodes.find(n => Math.hypot(this.mouseX - n.x, this.mouseY - n.y) < 18);
-    }
-    this.canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
-
-    this.nodes.forEach(n => {
-      ctx.beginPath(); ctx.moveTo(this.cx, this.cy); ctx.lineTo(n.x, n.y);
-      ctx.strokeStyle = `rgba(${colorRGB},${0.07 + 0.05 * Math.sin(t * 0.001 + n.offset)})`;
-      ctx.lineWidth = 0.8; ctx.stroke();
-    });
-
-    const maxDist = Math.min(this.canvas.width, this.canvas.height) * 0.38;
-    for (let i = 0; i < this.nodes.length; i++) {
-      for (let j = i + 1; j < this.nodes.length; j++) {
-        const d = Math.hypot(this.nodes[i].x - this.nodes[j].x, this.nodes[i].y - this.nodes[j].y);
-        if (d < maxDist) {
-          ctx.beginPath(); ctx.moveTo(this.nodes[i].x, this.nodes[i].y); ctx.lineTo(this.nodes[j].x, this.nodes[j].y);
-          ctx.strokeStyle = `rgba(${colorRGB},${(1 - d / maxDist) * 0.05})`; ctx.lineWidth = 0.5; ctx.stroke();
-        }
-      }
-    }
-
-    const pulse = 1 + 0.04 * Math.sin(t * 0.002);
-    const orbR  = Math.min(this.canvas.width, this.canvas.height) * 0.06 * pulse;
-    const grad  = ctx.createRadialGradient(this.cx, this.cy, 0, this.cx, this.cy, orbR * 2.2);
-    grad.addColorStop(0, `rgba(${colorRGB},0.15)`); grad.addColorStop(1, `rgba(${colorRGB},0)`);
-    ctx.beginPath(); ctx.arc(this.cx, this.cy, orbR * 2.2, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
-    ctx.beginPath(); ctx.arc(this.cx, this.cy, orbR, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${colorRGB},0.12)`; ctx.strokeStyle = `rgba(${colorRGB},0.45)`; ctx.lineWidth = 1; ctx.fill(); ctx.stroke();
-
-    ctx.fillStyle = theme === 'dark' ? '#F8FAFC' : '#111827';
-    ctx.font = '700 11px "Space Grotesk", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Jan', this.cx, this.cy);
-
-    this.nodes.forEach(n => {
-      ctx.beginPath(); ctx.arc(n.x, n.y, 4.5, 0, Math.PI * 2); ctx.fillStyle = `rgba(${colorRGB},0.45)`; ctx.fill();
-      ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, Math.PI * 2); ctx.fillStyle = `rgba(${colorRGB},0.95)`;   ctx.fill();
-
-      ctx.fillStyle = theme === 'dark' ? 'rgba(248,250,252,0.85)' : 'rgba(17,24,39,0.85)';
-      ctx.font = '600 11px "Space Grotesk", sans-serif';
-      ctx.textAlign = n.x < this.cx ? 'right' : 'left';
-      ctx.textBaseline = 'middle';
-      const offsetAmt = n.x < this.cx ? -10 : 10;
-      ctx.fillText(n.label, n.x + offsetAmt, n.y);
-    });
-
-    requestAnimationFrame(() => this.animate());
   }
 }
 
@@ -1132,12 +1005,26 @@ class TerminalController {
     this.historyIndex = -1;
     this.commands = {
       help: () => `Available commands:
+  - <span class="term-highlight">quote</span>: Print Jan's engineering philosophy quote
+  - <span class="term-highlight">commits</span>: View total GitHub contributions & telemetry
   - <span class="term-highlight">projects</span>: View list of core case studies
   - <span class="term-highlight">skills</span>: List expert technologies in toolkit
   - <span class="term-highlight">streak</span>: View current coding consistency stats
   - <span class="term-highlight">sih</span>: Read details about Smart India Hackathon 2025
   - <span class="term-highlight">whoami</span>: Print professional overview bio
+  - <span class="term-highlight">contact</span>: Print primary email & social channels
   - <span class="term-highlight">clear</span>: Clear terminal console buffer`,
+      quote: () => `“I don't wait to have the perfect skill set. I build, break, fix, and ship — that's how I learn.”
+  — Jan Mohammad (Founder & Engineer)`,
+      commits: () => `GitHub Contributions Telemetry:
+  - Total Profile Commits: 1,718
+  - Repositories: 25+
+  - Status: Active & Shipping daily`,
+      contact: () => `Direct Contact & Channels:
+  - Email: janmohammad.sidd786@gmail.com
+  - GitHub: github.com/jansiddiqui
+  - LinkedIn: linkedin.com/in/jan-mohammad-siddiqui
+  - Twitter: twitter.com/JanMohamma47882`,
       projects: () => `JanOS Projects Registry:
   1. [Courage Library]: Hybrid EdTech startup (1.2k+ users)
   2. [CompanyIQ]: Multi-agent LangGraph equity analysis system
@@ -1431,6 +1318,11 @@ class TooltipManager {
     this.tooltipEl.style.top = `${y}px`;
   }
   
+  updatePosition(x, y) {
+    this.tooltipEl.style.left = `${x}px`;
+    this.tooltipEl.style.top = `${y}px`;
+  }
+  
   hide() {
     this.tooltipEl.classList.remove('show');
   }
@@ -1595,22 +1487,26 @@ class ThemeCustomizer {
       teal: {
         accent: '#06b6d4',
         glow: 'rgba(6, 182, 212, 0.15)',
-        secondary: '#10b981'
+        secondary: '#10b981',
+        rgb: '6, 182, 212'
       },
       purple: {
         accent: '#8b5cf6',
         glow: 'rgba(139, 92, 246, 0.15)',
-        secondary: '#ec4899'
+        secondary: '#ec4899',
+        rgb: '139, 92, 246'
       },
       gold: {
         accent: '#f59e0b',
         glow: 'rgba(245, 158, 11, 0.15)',
-        secondary: '#10b981'
+        secondary: '#10b981',
+        rgb: '245, 158, 11'
       },
       ruby: {
         accent: '#ef4444',
         glow: 'rgba(239, 68, 68, 0.15)',
-        secondary: '#f59e0b'
+        secondary: '#f59e0b',
+        rgb: '239, 68, 68'
       }
     };
     this.init();
@@ -1635,6 +1531,7 @@ class ThemeCustomizer {
     document.documentElement.style.setProperty('--accent-color', theme.accent);
     document.documentElement.style.setProperty('--accent-glow', theme.glow);
     document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+    document.documentElement.style.setProperty('--accent-color-rgb', theme.rgb);
     
     localStorage.setItem('theme-accent', color);
     
@@ -1653,7 +1550,35 @@ class ThemeCustomizer {
   }
 }
 
-
+// ── SCROLL REVEAL MANAGER ────────────────────────────────
+class ScrollRevealManager {
+  constructor() {
+    this.elements = document.querySelectorAll('section, .about-content, .about-terminal, .project-landing-card, .timeline-item, .contact-card-premium');
+    this.init();
+  }
+  init() {
+    if (!this.elements.length) return;
+    
+    this.elements.forEach(el => el.classList.add('reveal'));
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -10% 0px',
+      threshold: 0.05
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    this.elements.forEach(el => observer.observe(el));
+  }
+}
 
 // ── MAIN INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -1683,12 +1608,13 @@ document.addEventListener('DOMContentLoaded', () => {
     new PerformanceTelemetryTracker();
     new LangGraphVisualizer();
     new ThemeCustomizer();
+    new ScrollRevealManager();
     
     initCopyEmail();
     new CertificateManager();
     new SkillTabManager();
     new CounterAnimation();
-    new MindmapOrb();
+    new NetInfographicController();
 
     initSkillProgress();
     initCarousels();

@@ -1,11 +1,8 @@
 User-agent: *
 Allow: /
 
-# Portfolio sections
-Allow: /index.html
-Allow: /projects/courage-library.html
+# Sitemap location
+Sitemap: https://janmohammad.vercel.app/sitemap.xml
 
-# Sitemaps
-Sitemap: https://jansiddiqui.github.io/portfolio/sitemap.xml
-
-# Block nothing — this is a public portfolio
+# Crawl delay (be nice to bots)
+Crawl-delay: 1

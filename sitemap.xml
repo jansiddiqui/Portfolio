@@ -1,18 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- Main portfolio page -->
+  <!-- Main page -->
   <url>
-    <loc>https://jansiddiqui.github.io/portfolio/</loc>
-    <lastmod>2025-03-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://janmohammad.vercel.app/</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Case study pages -->
+  <!-- About Section -->
   <url>
-    <loc>https://jansiddiqui.github.io/portfolio/projects/courage-library.html</loc>
-    <lastmod>2025-03-16</lastmod>
+    <loc>https://janmohammad.vercel.app/#about</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Projects Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#projects</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Skills Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#skills</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Journey / Experience Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#journey</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Achievements Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#achievements</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Competitive Programming Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#competitive</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Open Source Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#opensource</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact Section -->
+  <url>
+    <loc>https://janmohammad.vercel.app/#contact</loc>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -17,10 +17,6 @@
     (function() {
       const saved = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', saved);
-      if (window.location.pathname.endsWith('.html')) {
-        const cleanPath = window.location.pathname.replace(/\.html$/, '');
-        window.history.replaceState({}, document.title, cleanPath + window.location.hash + window.location.search);
-      }
       const savedAccent = localStorage.getItem('theme-accent') || 'teal';
       const themes = {
         teal: { accent: '#06b6d4', rgb: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.15)', secondary: '#10b981' },
@@ -183,6 +179,39 @@
             <p>Optimized for mobile-first usage since most aspirants access the platform on budget Android devices. Built with TailwindCSS + Vanilla JS — no heavy frameworks.</p>
           </div>
         </div>
+      </div>
+
+      <!-- Interactive Book Distribution Pipeline -->
+      <div class="langgraph-orchestrator" style="max-width: 600px; margin: 2.5rem 0 0;" role="region" aria-label="Book Donation Flow Pipeline Simulator">
+        <div class="vis-header">
+          <span class="vis-title"><i class="fas fa-book-reader"></i> Book Donation Pipeline</span>
+          <span class="vis-status-tag" id="bookPipelineStatus">Idle</span>
+        </div>
+        <div class="orchestrator-sandbox">
+          <div class="agent-nodes">
+            <div class="agent-node" id="stepDonation">
+              <i class="fas fa-hand-holding-heart"></i>
+              <span class="agent-name">1. Donation</span>
+              <span class="agent-status">Pending</span>
+            </div>
+            <div class="agent-node" id="stepAudit">
+              <i class="fas fa-clipboard-check"></i>
+              <span class="agent-name">2. Quality Check</span>
+              <span class="agent-status">Pending</span>
+            </div>
+            <div class="agent-node" id="stepRegistry">
+              <i class="fas fa-archive"></i>
+              <span class="agent-name">3. Inventory</span>
+              <span class="agent-status">Pending</span>
+            </div>
+          </div>
+          <div class="orchestrator-flows">
+            <div class="flow-arrow flow-1" id="bookFlow1"></div>
+            <div class="flow-arrow flow-2" id="bookFlow2"></div>
+          </div>
+        </div>
+        <div class="vis-log" id="bookPipelineLog">System idle. Ready to simulate book allocation flow.</div>
+        <button type="button" class="btn-optimize-vis" id="btnRunBookPipeline" data-tooltip="Simulate Book Donation Flow">Simulate Book Flow</button>
       </div>
     </section>
 

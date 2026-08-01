@@ -16,10 +16,6 @@
     (function() {
       const saved = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', saved);
-      if (window.location.pathname.endsWith('.html')) {
-        const cleanPath = window.location.pathname.replace(/\.html$/, '');
-        window.history.replaceState({}, document.title, cleanPath + window.location.hash + window.location.search);
-      }
       const savedAccent = localStorage.getItem('theme-accent') || 'teal';
       const themes = {
         teal: { accent: '#06b6d4', rgb: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.15)', secondary: '#10b981' },
@@ -136,14 +132,37 @@
       <h2>LangGraph Workflow</h2>
       <p>CompanyIQ handles complex orchestrations by utilizing a multi-stage LangGraph workflow. Raw financial extraction is separated from opinion generation, producing a reliable process flow:</p>
       
-      <div class="cs-terminal-mock">
-        <ol style="margin-left: 1.5rem; color: var(--text-secondary);">
-          <li style="margin-bottom: 0.5rem;"><strong>Input Validator</strong>: Sanitizes input query query strings (Zod validation).</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Company Resolver</strong>: Matches keywords to tickers (e.g., "Apple" ➔ AAPL) using Yahoo Finance search APIs.</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Financial Data Ingestion</strong>: Pulls income statements, balance sheets, cash flows, and valuation multiples using <code>yahoo-finance2</code>.</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Business & Moat Search</strong>: Queries product details, qualitative parameters, and competitor listings via Tavily.</li>
-          <li style="margin-bottom: 0.5rem;"><strong>News & Sentiment Node</strong>: Filters last 30 days of media coverage to weight sentiment ratios.</li>
-        </ol>
+      <!-- LangGraph Agent Orchestrator Simulator -->
+      <div class="langgraph-orchestrator" style="max-width: 600px; margin: 2rem 0;" role="region" aria-label="LangGraph Agent Orchestration Simulator">
+        <div class="vis-header">
+          <span class="vis-title"><i class="fas fa-network-wired"></i> LangGraph Agent Orchestrator</span>
+          <span class="vis-status-tag" id="langgraphStatus">Idle</span>
+        </div>
+        <div class="orchestrator-sandbox">
+          <div class="agent-nodes">
+            <div class="agent-node" id="agentFact">
+              <i class="fas fa-search-dollar"></i>
+              <span class="agent-name">Fact Retriever</span>
+              <span class="agent-status">Pending</span>
+            </div>
+            <div class="agent-node" id="agentAnalyze">
+              <i class="fas fa-calculator"></i>
+              <span class="agent-name">Analyst Agent</span>
+              <span class="agent-status">Pending</span>
+            </div>
+            <div class="agent-node" id="agentWriter">
+              <i class="fas fa-pen-nib"></i>
+              <span class="agent-name">Writer Agent</span>
+              <span class="agent-status">Pending</span>
+            </div>
+          </div>
+          <div class="orchestrator-flows">
+            <div class="flow-arrow flow-1" id="flow1"></div>
+            <div class="flow-arrow flow-2" id="flow2"></div>
+          </div>
+        </div>
+        <div class="vis-log" id="langgraphLog">System idle. Pipeline diagnostics ready.</div>
+        <button type="button" class="btn-optimize-vis" id="btnRunLangGraph" data-tooltip="Simulate LangGraph agent state transitions">Trigger Agent Pipeline</button>
       </div>
 
       <h3>Deterministic Scoring Engine</h3>

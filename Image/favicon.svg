@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Crisp White/Off-white Canvas Gradient -->
+    <linearGradient id="whiteBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+
+    <!-- Deep Executive Dark Navy for Monogram -->
+    <linearGradient id="navyAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <!-- Vibrant Cyan Brand Accent for Founder Node & Highlight -->
+    <linearGradient id="cyanAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Container: Crisp White Rounded Square -->
+  <rect width="512" height="512" rx="110" fill="url(#whiteBg)"/>
+
+  <!-- Subtle Subtle Border Shadow Rim -->
+  <rect x="8" y="8" width="496" height="496" rx="102" fill="none" stroke="#e2e8f0" stroke-width="4"/>
+
+  <!-- FOUNDER EMBLEM: High-Contrast Navy & Cyan Architectural "J" & "M" -->
+  <g>
+    <!-- Custom "J" Path (Cyan Accent) -->
+    <path d="M 145 140 
+             L 205 140 
+             L 205 310 
+             C 205 355 170 380 125 380 
+             C 95 380 75 365 65 350 
+             L 95 310 
+             C 102 320 112 328 125 328 
+             C 140 328 145 318 145 305 
+             Z" 
+          fill="url(#cyanAccent)"/>
+
+    <!-- Custom "M" Path (Deep Executive Navy) -->
+    <path d="M 235 140 
+             L 285 140 
+             L 330 260 
+             L 375 140 
+             L 425 140 
+             L 425 375 
+             L 370 375 
+             L 370 230 
+             L 338 325 
+             L 322 325 
+             L 290 230 
+             L 290 375 
+             L 235 375 
+             Z" 
+          fill="url(#navyAccent)"/>
+  </g>
+
+  <!-- Founder Active Status Node (Cyan Dot) -->
+  <circle cx="410" cy="115" r="16" fill="#0284c7"/>
+  <circle cx="410" cy="115" r="28" fill="#38bdf8" opacity="0.25"/>
+</svg>

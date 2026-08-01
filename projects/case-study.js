@@ -192,4 +192,572 @@ document.addEventListener('DOMContentLoaded', () => {
     
     sections.forEach(sec => observer.observe(sec));
   }
+
+  // ── INFOGRAPHIC SIMULATORS ──────────────────────────────
+  
+  // 1. LangGraph Agent Orchestrator Simulator (CompanyIQ)
+  class SubpageLangGraphVisualizer {
+    constructor() {
+      this.btn = document.getElementById('btnRunLangGraph');
+      this.statusTag = document.getElementById('langgraphStatus');
+      this.logEl = document.getElementById('langgraphLog');
+      this.factNode = document.getElementById('agentFact');
+      this.analyzeNode = document.getElementById('agentAnalyze');
+      this.writerNode = document.getElementById('agentWriter');
+      this.flow1 = document.getElementById('flow1');
+      this.flow2 = document.getElementById('flow2');
+      this.running = false;
+      this.init();
+    }
+    init() {
+      if (!this.btn) return;
+      this.btn.addEventListener('click', () => this.triggerPipeline());
+    }
+    triggerPipeline() {
+      if (this.running) return;
+      this.running = true;
+      this.btn.innerText = 'Orchestrating...';
+      this.btn.disabled = true;
+      
+      const nodes = [this.factNode, this.analyzeNode, this.writerNode];
+      nodes.forEach(n => {
+        if (n) {
+          n.classList.remove('active', 'completed');
+          n.querySelector('.agent-status').innerText = 'Pending';
+        }
+      });
+      if (this.flow1) this.flow1.classList.remove('active');
+      if (this.flow2) this.flow2.classList.remove('active');
+      
+      this.statusTag.innerText = 'Fact Retriever active';
+      if (this.factNode) {
+        this.factNode.classList.add('active');
+        this.factNode.querySelector('.agent-status').innerText = 'Running';
+      }
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = '[Fact Retriever] Querying corporate cash-flow statements from PostgreSQL ledger...';
+      }
+      
+      setTimeout(() => {
+        if (this.factNode) {
+          this.factNode.classList.remove('active');
+          this.factNode.classList.add('completed');
+          this.factNode.querySelector('.agent-status').innerText = 'Complete';
+        }
+        if (this.flow1) this.flow1.classList.add('active');
+        
+        this.statusTag.innerText = 'Analyst Agent active';
+        if (this.analyzeNode) {
+          this.analyzeNode.classList.add('active');
+          this.analyzeNode.querySelector('.agent-status').innerText = 'Running';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Analyst Agent] Performing trend delta regressions and computing debt ratios...';
+        }
+      }, 1200);
+      
+      setTimeout(() => {
+        if (this.analyzeNode) {
+          this.analyzeNode.classList.remove('active');
+          this.analyzeNode.classList.add('completed');
+          this.analyzeNode.querySelector('.agent-status').innerText = 'Complete';
+        }
+        if (this.flow2) this.flow2.classList.add('active');
+        
+        this.statusTag.innerText = 'Writer Agent active';
+        if (this.writerNode) {
+          this.writerNode.classList.add('active');
+          this.writerNode.querySelector('.agent-status').innerText = 'Running';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Writer Agent] Synthesizing investment report into markdown formatting...';
+        }
+      }, 2400);
+      
+      setTimeout(() => {
+        if (this.writerNode) {
+          this.writerNode.classList.remove('active');
+          this.writerNode.classList.add('completed');
+          this.writerNode.querySelector('.agent-status').innerText = 'Complete';
+        }
+        this.statusTag.innerText = 'Verification complete';
+        this.btn.innerText = 'Run Pipeline';
+        this.btn.disabled = false;
+        this.running = false;
+        if (this.logEl) {
+          this.logEl.classList.add('success');
+          this.logEl.innerText = '[System] Fact audits verified. Generated CompanyIQ equity report (99.8% precision).';
+        }
+      }, 3600);
+    }
+  }
+
+  // 2. SplitSync Algorithm Simulator (SplitSync)
+  class SubpageSplitSyncVisualizer {
+    constructor() {
+      this.btn = document.getElementById('btnOptimizeSplitSync');
+      this.statusTag = document.getElementById('splitsyncStatus');
+      this.logEl = document.getElementById('splitsyncLog');
+      this.balA = document.getElementById('balA');
+      this.balB = document.getElementById('balB');
+      this.balC = document.getElementById('balC');
+      this.edgeAB = document.getElementById('edgeAB');
+      this.edgeBC = document.getElementById('edgeBC');
+      this.edgeAC = document.getElementById('edgeAC');
+      this.nodeB = document.getElementById('nodeB');
+      this.optimized = false;
+      this.init();
+    }
+    init() {
+      if (!this.btn) return;
+      this.btn.addEventListener('click', () => this.toggleOptimization());
+    }
+    toggleOptimization() {
+      if (!this.optimized) {
+        this.optimized = true;
+        this.btn.innerText = 'Reset Simulator';
+        this.statusTag.innerText = 'Optimized';
+        this.statusTag.classList.add('optimized');
+        
+        if (this.logEl) {
+          this.logEl.classList.remove('success');
+          this.logEl.innerText = '[Greedy Alg] Merging intermediate ledger nodes A -> B and B -> C...';
+        }
+        
+        setTimeout(() => {
+          this.edgeAB.classList.add('hidden');
+          this.edgeBC.classList.add('hidden');
+          this.edgeAC.classList.remove('hidden');
+          
+          if (this.nodeB) this.nodeB.style.opacity = '0.35';
+          if (this.balB) this.balB.innerText = 'Settled';
+          
+          if (this.logEl) {
+            this.logEl.classList.add('success');
+            this.logEl.innerText = '[Greedy Alg] Optimized. Direct shortcut path A -> C ($10) settled.';
+          }
+        }, 700);
+        
+      } else {
+        this.optimized = false;
+        this.btn.innerText = 'Run Greedy Optimization';
+        this.statusTag.innerText = 'Unoptimized';
+        this.statusTag.classList.remove('optimized');
+        
+        this.edgeAB.classList.remove('hidden');
+        this.edgeBC.classList.remove('hidden');
+        this.edgeAC.classList.add('hidden');
+        
+        if (this.nodeB) this.nodeB.style.opacity = '1';
+        if (this.balB) this.balB.innerText = 'Owed $0';
+        if (this.balA) this.balA.innerText = 'Owes $10';
+        
+        if (this.logEl) {
+          this.logEl.classList.remove('success');
+          this.logEl.innerText = '[Greedy Alg] Ledger reset to unoptimized circular transactions.';
+        }
+      }
+    }
+  }
+
+  // 3. Book Donation Pipeline Simulator (Courage Library)
+  class BookPipelineVisualizer {
+    constructor() {
+      this.btn = document.getElementById('btnRunBookPipeline');
+      this.statusTag = document.getElementById('bookPipelineStatus');
+      this.logEl = document.getElementById('bookPipelineLog');
+      this.stepDonation = document.getElementById('stepDonation');
+      this.stepAudit = document.getElementById('stepAudit');
+      this.stepRegistry = document.getElementById('stepRegistry');
+      this.flow1 = document.getElementById('bookFlow1');
+      this.flow2 = document.getElementById('bookFlow2');
+      this.running = false;
+      this.init();
+    }
+    init() {
+      if (!this.btn) return;
+      this.btn.addEventListener('click', () => this.triggerPipeline());
+    }
+    triggerPipeline() {
+      if (this.running) return;
+      this.running = true;
+      this.btn.innerText = 'Processing...';
+      this.btn.disabled = true;
+      
+      const nodes = [this.stepDonation, this.stepAudit, this.stepRegistry];
+      nodes.forEach(n => {
+        if (n) {
+          n.classList.remove('active', 'completed');
+          n.querySelector('.agent-status').innerText = 'Pending';
+        }
+      });
+      if (this.flow1) this.flow1.classList.remove('active');
+      if (this.flow2) this.flow2.classList.remove('active');
+      
+      this.statusTag.innerText = 'Donation node active';
+      if (this.stepDonation) {
+        this.stepDonation.classList.add('active');
+        this.stepDonation.querySelector('.agent-status').innerText = 'Receiving';
+      }
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = '[Donation Ingest] Creating transient donor record and printing receipt...';
+      }
+      
+      setTimeout(() => {
+        if (this.stepDonation) {
+          this.stepDonation.classList.remove('active');
+          this.stepDonation.classList.add('completed');
+          this.stepDonation.querySelector('.agent-status').innerText = 'Received';
+        }
+        if (this.flow1) this.flow1.classList.add('active');
+        
+        this.statusTag.innerText = 'Quality check active';
+        if (this.stepAudit) {
+          this.stepAudit.classList.add('active');
+          this.stepAudit.querySelector('.agent-status').innerText = 'Checking';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Quality Audit] Inspecting binding condition, cataloging category and tags...';
+        }
+      }, 1200);
+      
+      setTimeout(() => {
+        if (this.stepAudit) {
+          this.stepAudit.classList.remove('active');
+          this.stepAudit.classList.add('completed');
+          this.stepAudit.querySelector('.agent-status').innerText = 'Verified';
+        }
+        if (this.flow2) this.flow2.classList.add('active');
+        
+        this.statusTag.innerText = 'Registry storage active';
+        if (this.stepRegistry) {
+          this.stepRegistry.classList.add('active');
+          this.stepRegistry.querySelector('.agent-status').innerText = 'Saving';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Supabase Registry] Committing ledger record to global library index...';
+        }
+      }, 2400);
+      
+      setTimeout(() => {
+        if (this.stepRegistry) {
+          this.stepRegistry.classList.remove('active');
+          this.stepRegistry.classList.add('completed');
+          this.stepRegistry.querySelector('.agent-status').innerText = 'Committed';
+        }
+        this.statusTag.innerText = 'Allocation successful';
+        this.btn.innerText = 'Simulate Book Flow';
+        this.btn.disabled = false;
+        this.running = false;
+        if (this.logEl) {
+          this.logEl.classList.add('success');
+          this.logEl.innerText = '[System] Book allocated. Dispatched auto-notification to Kanpur aspirants.';
+        }
+      }, 3600);
+    }
+  }
+
+  // 4. Deadline Hero Timeline Rescue Simulator (Deadline Hero AI)
+  class DeadlineHeroVisualizer {
+    constructor() {
+      this.btn = document.getElementById('btnRunDeadlineHero');
+      this.statusTag = document.getElementById('deadlineHeroStatus');
+      this.logEl = document.getElementById('deadlineHeroLog');
+      this.stepController = document.getElementById('stepController');
+      this.stepRisk = document.getElementById('stepRisk');
+      this.stepRescue = document.getElementById('stepRescue');
+      this.flow1 = document.getElementById('deadlineFlow1');
+      this.flow2 = document.getElementById('deadlineFlow2');
+      this.running = false;
+      this.init();
+    }
+    init() {
+      if (!this.btn) return;
+      this.btn.addEventListener('click', () => this.triggerPipeline());
+    }
+    triggerPipeline() {
+      if (this.running) return;
+      this.running = true;
+      this.btn.innerText = 'Calculating...';
+      this.btn.disabled = true;
+      
+      const nodes = [this.stepController, this.stepRisk, this.stepRescue];
+      nodes.forEach(n => {
+        if (n) {
+          n.classList.remove('active', 'completed');
+          n.querySelector('.agent-status').innerText = 'Pending';
+        }
+      });
+      if (this.flow1) this.flow1.classList.remove('active');
+      if (this.flow2) this.flow2.classList.remove('active');
+      
+      this.statusTag.innerText = 'Controller active';
+      if (this.stepController) {
+        this.stepController.classList.add('active');
+        this.stepController.querySelector('.agent-status').innerText = 'Parsing';
+      }
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = '[Mission Controller] Parsing schedule matrix and task dependencies...';
+      }
+      
+      setTimeout(() => {
+        if (this.stepController) {
+          this.stepController.classList.remove('active');
+          this.stepController.classList.add('completed');
+          this.stepController.querySelector('.agent-status').innerText = 'Parsed';
+        }
+        if (this.flow1) this.flow1.classList.add('active');
+        
+        this.statusTag.innerText = 'Risk analyzer active';
+        if (this.stepRisk) {
+          this.stepRisk.classList.add('active');
+          this.stepRisk.querySelector('.agent-status').innerText = 'Modeling';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Risk Agent] Calculating probability curves and predicting task slips...';
+        }
+      }, 1200);
+      
+      setTimeout(() => {
+        if (this.stepRisk) {
+          this.stepRisk.classList.remove('active');
+          this.stepRisk.classList.add('completed');
+          this.stepRisk.querySelector('.agent-status').innerText = 'Reported';
+        }
+        if (this.flow2) this.flow2.classList.add('active');
+        
+        this.statusTag.innerText = 'Rescue planner active';
+        if (this.stepRescue) {
+          this.stepRescue.classList.add('active');
+          this.stepRescue.querySelector('.agent-status').innerText = 'Solving';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Rescue Agent] Building dynamic focus list and mitigation strategies...';
+        }
+      }, 2400);
+      
+      setTimeout(() => {
+        if (this.stepRescue) {
+          this.stepRescue.classList.remove('active');
+          this.stepRescue.classList.add('completed');
+          this.stepRescue.querySelector('.agent-status').innerText = 'Generated';
+        }
+        this.statusTag.innerText = 'Rescue plan ready';
+        this.btn.innerText = 'Simulate Timeline Rescue';
+        this.btn.disabled = false;
+        this.running = false;
+        if (this.logEl) {
+          this.logEl.classList.add('success');
+          this.logEl.innerText = '[Gemini AI] Recalculated timeline risk. Reallocated buffer times successfully.';
+        }
+      }, 3600);
+    }
+  }
+
+  // 5. CNTS Onboarding Pipeline Simulator (CNTS Platform)
+  class CntsPipelineVisualizer {
+    constructor() {
+      this.btn = document.getElementById('btnRunCntsPipeline');
+      this.statusTag = document.getElementById('cntsPipelineStatus');
+      this.logEl = document.getElementById('cntsPipelineLog');
+      this.stepOnboarding = document.getElementById('stepOnboarding');
+      this.stepGrading = document.getElementById('stepGrading');
+      this.stepAnalytics = document.getElementById('stepAnalytics');
+      this.flow1 = document.getElementById('cntsFlow1');
+      this.flow2 = document.getElementById('cntsFlow2');
+      this.running = false;
+      this.init();
+    }
+    init() {
+      if (!this.btn) return;
+      this.btn.addEventListener('click', () => this.triggerPipeline());
+    }
+    triggerPipeline() {
+      if (this.running) return;
+      this.running = true;
+      this.btn.innerText = 'Onboarding...';
+      this.btn.disabled = true;
+      
+      const nodes = [this.stepOnboarding, this.stepGrading, this.stepAnalytics];
+      nodes.forEach(n => {
+        if (n) {
+          n.classList.remove('active', 'completed');
+          n.querySelector('.agent-status').innerText = 'Pending';
+        }
+      });
+      if (this.flow1) this.flow1.classList.remove('active');
+      if (this.flow2) this.flow2.classList.remove('active');
+      
+      this.statusTag.innerText = 'Ingestion active';
+      if (this.stepOnboarding) {
+        this.stepOnboarding.classList.add('active');
+        this.stepOnboarding.querySelector('.agent-status').innerText = 'Loading';
+      }
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = '[Data Ingest] Uploading student Excel matrix and generating tracking IDs...';
+      }
+      
+      setTimeout(() => {
+        if (this.stepOnboarding) {
+          this.stepOnboarding.classList.remove('active');
+          this.stepOnboarding.classList.add('completed');
+          this.stepOnboarding.querySelector('.agent-status').innerText = 'Loaded';
+        }
+        if (this.flow1) this.flow1.classList.add('active');
+        
+        this.statusTag.innerText = 'Grading active';
+        if (this.stepGrading) {
+          this.stepGrading.classList.add('active');
+          this.stepGrading.querySelector('.agent-status').innerText = 'Scoring';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Grading Engine] Aligning multiple-choice sheets and calculating marks...';
+        }
+      }, 1200);
+      
+      setTimeout(() => {
+        if (this.stepGrading) {
+          this.stepGrading.classList.remove('active');
+          this.stepGrading.classList.add('completed');
+          this.stepGrading.querySelector('.agent-status').innerText = 'Scored';
+        }
+        if (this.flow2) this.flow2.classList.add('active');
+        
+        this.statusTag.innerText = 'Podium analysis active';
+        if (this.stepAnalytics) {
+          this.stepAnalytics.classList.add('active');
+          this.stepAnalytics.querySelector('.agent-status').innerText = 'Analyzing';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Roster Leaderboard] Generating podial metrics, percentiles, and ranks...';
+        }
+      }, 2400);
+      
+      setTimeout(() => {
+        if (this.stepAnalytics) {
+          this.stepAnalytics.classList.remove('active');
+          this.stepAnalytics.classList.add('completed');
+          this.stepAnalytics.querySelector('.agent-status').innerText = 'Published';
+        }
+        this.statusTag.innerText = 'Results published';
+        this.btn.innerText = 'Simulate Onboarding';
+        this.btn.disabled = false;
+        this.running = false;
+        if (this.logEl) {
+          this.logEl.classList.add('success');
+          this.logEl.innerText = '[System] Database sync complete. Auto-notified school principals & dispatched admit cards.';
+        }
+      }, 3600);
+    }
+  }
+
+  // 6. PCB Defect Ingestion & Classification Pipeline Simulator (PCB Defect Detector)
+  class PcbPipelineVisualizer {
+    constructor() {
+      this.btn = document.getElementById('btnRunPcbPipeline');
+      this.statusTag = document.getElementById('pcbPipelineStatus');
+      this.logEl = document.getElementById('pcbPipelineLog');
+      this.stepAlignment = document.getElementById('stepAlignment');
+      this.stepSubtract = document.getElementById('stepSubtract');
+      this.stepClassifier = document.getElementById('stepClassifier');
+      this.flow1 = document.getElementById('pcbFlow1');
+      this.flow2 = document.getElementById('pcbFlow2');
+      this.running = false;
+      this.init();
+    }
+    init() {
+      if (!this.btn) return;
+      this.btn.addEventListener('click', () => this.triggerPipeline());
+    }
+    triggerPipeline() {
+      if (this.running) return;
+      this.running = true;
+      this.btn.innerText = 'Inspecting...';
+      this.btn.disabled = true;
+      
+      const nodes = [this.stepAlignment, this.stepSubtract, this.stepClassifier];
+      nodes.forEach(n => {
+        if (n) {
+          n.classList.remove('active', 'completed');
+          n.querySelector('.agent-status').innerText = 'Pending';
+        }
+      });
+      if (this.flow1) this.flow1.classList.remove('active');
+      if (this.flow2) this.flow2.classList.remove('active');
+      
+      this.statusTag.innerText = 'Alignment active';
+      if (this.stepAlignment) {
+        this.stepAlignment.classList.add('active');
+        this.stepAlignment.querySelector('.agent-status').innerText = 'Aligning';
+      }
+      if (this.logEl) {
+        this.logEl.classList.remove('success');
+        this.logEl.innerText = '[SIFT Feature Engine] Aligning PCB image orientation using homography matrices...';
+      }
+      
+      setTimeout(() => {
+        if (this.stepAlignment) {
+          this.stepAlignment.classList.remove('active');
+          this.stepAlignment.classList.add('completed');
+          this.stepAlignment.querySelector('.agent-status').innerText = 'Aligned';
+        }
+        if (this.flow1) this.flow1.classList.add('active');
+        
+        this.statusTag.innerText = 'Subtraction active';
+        if (this.stepSubtract) {
+          this.stepSubtract.classList.add('active');
+          this.stepSubtract.querySelector('.agent-status').innerText = 'Subtracting';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[Matrix Subtraction] Running pixel-delta difference on NumPy arrays...';
+        }
+      }, 1200);
+      
+      setTimeout(() => {
+        if (this.stepSubtract) {
+          this.stepSubtract.classList.remove('active');
+          this.stepSubtract.classList.add('completed');
+          this.stepSubtract.querySelector('.agent-status').innerText = 'Highlighted';
+        }
+        if (this.flow2) this.flow2.classList.add('active');
+        
+        this.statusTag.innerText = 'Classification active';
+        if (this.stepClassifier) {
+          this.stepClassifier.classList.add('active');
+          this.stepClassifier.querySelector('.agent-status').innerText = 'Evaluating';
+        }
+        if (this.logEl) {
+          this.logEl.innerText = '[TensorFlow CNN] Running classification convolutions on highlighted pixel deltas...';
+        }
+      }, 2400);
+      
+      setTimeout(() => {
+        if (this.stepClassifier) {
+          this.stepClassifier.classList.remove('active');
+          this.stepClassifier.classList.add('completed');
+          this.stepClassifier.querySelector('.agent-status').innerText = 'Classified';
+        }
+        this.statusTag.innerText = 'Inspection ready';
+        this.btn.innerText = 'Simulate PCB Inspection';
+        this.btn.disabled = false;
+        this.running = false;
+        if (this.logEl) {
+          this.logEl.classList.add('success');
+          this.logEl.innerText = '[CNN Model] Inspection complete. Defect classified: Missing Capacitor (98.6% confidence).';
+        }
+      }, 3600);
+    }
+  }
+
+  // Instantiate subpage visualizers
+  new SubpageLangGraphVisualizer();
+  new SubpageSplitSyncVisualizer();
+  new BookPipelineVisualizer();
+  new DeadlineHeroVisualizer();
+  new CntsPipelineVisualizer();
+  new PcbPipelineVisualizer();
 });

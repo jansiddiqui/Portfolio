@@ -16,10 +16,6 @@
     (function() {
       const saved = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', saved);
-      if (window.location.pathname.endsWith('.html')) {
-        const cleanPath = window.location.pathname.replace(/\.html$/, '');
-        window.history.replaceState({}, document.title, cleanPath + window.location.hash + window.location.search);
-      }
       const savedAccent = localStorage.getItem('theme-accent') || 'teal';
       const themes = {
         teal: { accent: '#06b6d4', rgb: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.15)', secondary: '#10b981' },
@@ -138,23 +134,37 @@
       <h2>Vision & Classification Pipeline</h2>
       <p>The system routes raw camera inputs through a structured linear pipeline before outputting anomalies:</p>
 
-      <div class="cs-terminal-mock">
-Camera Feed Input<br>
- &nbsp;│<br>
- &nbsp;▼<br>
-SIFT Feature Matching ➔ Detect Skew & Scaling<br>
- &nbsp;│<br>
- &nbsp;▼<br>
-Perspective Homography Transform ➔ Template Alignment<br>
- &nbsp;│<br>
- &nbsp;▼<br>
-Matrix Image Subtraction (NumPy) ➔ Highlights deltas<br>
- &nbsp;│<br>
- &nbsp;▼<br>
-CNN Model (TensorFlow) ➔ Classification & Anomaly Tags<br>
- &nbsp;│<br>
- &nbsp;▼<br>
-Inspection Logs & Alerts Dashboard<br>
+      <!-- Interactive PCB Defect Pipeline -->
+      <div class="langgraph-orchestrator" style="max-width: 600px; margin: 2rem 0;" role="region" aria-label="PCB Defect Ingestion & Classification Pipeline Simulator">
+        <div class="vis-header">
+          <span class="vis-title"><i class="fas fa-microchip"></i> PCB Inspection Pipeline</span>
+          <span class="vis-status-tag" id="pcbPipelineStatus">Idle</span>
+        </div>
+        <div class="orchestrator-sandbox">
+          <div class="agent-nodes">
+            <div class="agent-node" id="stepAlignment">
+              <i class="fas fa-expand-arrows-alt"></i>
+              <span class="agent-name">1. Alignment</span>
+              <span class="agent-status">Pending</span>
+            </div>
+            <div class="agent-node" id="stepSubtract">
+              <i class="fas fa-adjust"></i>
+              <span class="agent-name">2. Subtraction</span>
+              <span class="agent-status">Pending</span>
+            </div>
+            <div class="agent-node" id="stepClassifier">
+              <i class="fas fa-microscope"></i>
+              <span class="agent-name">3. Classifier</span>
+              <span class="agent-status">Pending</span>
+            </div>
+          </div>
+          <div class="orchestrator-flows">
+            <div class="flow-arrow flow-1" id="pcbFlow1"></div>
+            <div class="flow-arrow flow-2" id="pcbFlow2"></div>
+          </div>
+        </div>
+        <div class="vis-log" id="pcbPipelineLog">System idle. Ready to inspect reference board image.</div>
+        <button type="button" class="btn-optimize-vis" id="btnRunPcbPipeline" data-tooltip="Simulate PCB Anomaly Check">Simulate PCB Inspection</button>
       </div>
       <p>This sequential approach isolates template alignment errors from classification models, maximizing overall precision and reducing false positive anomaly tags.</p>
     </section>
